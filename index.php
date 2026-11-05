@@ -195,24 +195,25 @@ while($b = $brands_result->fetch_assoc()) {
     </main>
 
     <!-- Google Maps Section -->
-<section id="map-section" class="max-w-7xl mx-auto px-4 py-12 border-t border-gray-800">
-    <div class="text-center mb-8">
-        <span class="text-red-500 font-bold uppercase tracking-widest text-xs">Chỉ đường đến showroom</span>
-        <h3 class="text-3xl font-black mt-1 mb-2">VỊ TRÍ SHOWROOM 4TL TRÊN BẢN ĐỒ</h3>
-        <p class="text-gray-400 text-sm">Địa chỉ: 95 Lê Văn Lương, Tân Hưng, Quận 7, TP. Hồ Chí Minh</p>
-    </div>
-    <div class="rounded-3xl overflow-hidden border border-gray-800 shadow-2xl h-[450px]">
-        <iframe 
-            src="https://maps.google.com/maps?q=95%20L%C3%AA%20V%C4%83n%20L%C6%B0%C6%A1ng,%20T%C3%A2n%20H%C6%B0ng,%20Qu%E1%BA%ADn%207,%20H%E1%BB%ᅩ%20Ch%C3%AD%20Minh&t=&z=17&ie=UTF8&iwloc=&output=embed" 
-            width="100%" 
-            height="100%" 
-            style="border:0;" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-    </div>
-</section>
+    <section id="map-section" class="max-w-7xl mx-auto px-4 py-12 border-t border-gray-800">
+        <div class="text-center mb-8">
+            <span class="text-red-500 font-bold uppercase tracking-widest text-xs">Chỉ đường đến showroom</span>
+            <h3 class="text-3xl font-black mt-1 mb-2">VỊ TRÍ SHOWROOM 4TL TRÊN BẢN ĐỒ</h3>
+            <p class="text-gray-400 text-sm">Địa chỉ: 95 Lê Văn Lương, Tân Hưng, Quận 7, TP. Hồ Chí Minh</p>
+        </div>
+        <div class="rounded-3xl overflow-hidden border border-gray-800 shadow-2xl h-[450px]">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.669611809053!2d106.7027581759654!3d10.759922959494396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f0f29910d5d%3A0x7d97b3992b8cdb6!2zOTUgTMOqIFbEgW4gTMSsxqFuZywgVMOubiBIxrBuZywgUXXhuq1uIDcsIEjhu5MgQ2jDrW
+ MinhLCBWaWV0bmFt!5e0!3m2!1svi!2svn!4v1700000000000!5m2!1svi!2svn" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer id="contact" class="bg-black border-t border-gray-800 py-12 text-gray-400 text-sm">
