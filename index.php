@@ -185,7 +185,7 @@ while($b = $brands_result->fetch_assoc()) {
                 <?php foreach($cars_array as $car): ?>
                     <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden hover:border-red-500 transition duration-300 shadow-xl group flex flex-col justify-between relative">
                         
-<!-- Huy hiệu Best Seller và Trả trước 36% nếu là VinFast VF3 -->
+                        <!-- Huy hiệu Best Seller và Trả trước 36% nếu là VinFast VF3 -->
                         <?php if (strpos($car['name'], 'VinFast VF3') !== false): ?>
                             <div class="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start">
                                 <span class="bg-red-600 text-white text-[11px] px-3 py-1 rounded-full font-black uppercase tracking-wider shadow-lg flex items-center gap-1">
@@ -310,7 +310,7 @@ while($b = $brands_result->fetch_assoc()) {
                 </div>
             </div>
 
-            <!-- Nút lựa chọn mẫu nhanh (Quick Replies mở rộng) -->
+            <!-- Nút lựa chọn mẫu nhanh (Quick Replies) -->
             <div class="px-3 py-2 bg-gray-100 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 flex flex-wrap gap-1.5">
                 <button onclick="sendQuickMessage('Cho tôi xem danh sách xe và giá')" class="bg-white dark:bg-gray-800 hover:bg-red-600 hover:text-white text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 text-[11px] px-2.5 py-1 rounded-full transition font-semibold">🚗 Giá xe</button>
                 <button onclick="sendQuickMessage('Chính sách trả góp 80%')" class="bg-white dark:bg-gray-800 hover:bg-red-600 hover:text-white text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 text-[11px] px-2.5 py-1 rounded-full transition font-semibold">🤝 Trả góp 80%</button>
@@ -358,7 +358,7 @@ while($b = $brands_result->fetch_assoc()) {
                     <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-earth-americas"></i> Nguồn Nhập Xe Uy Tín</h4>
                     <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">100% xe hơi cao cấp và xe điện tại Showroom 4TL được nhập khẩu chính ngạch từ Đức, Mỹ, Nhật Bản và VinFast.</p>
                 </div>
-<div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
+                <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
                     <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-headset"></i> Liên Hệ Tư Vấn Trực Tiếp</h4>
                     <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">
                         - Hotline/Zalo tư vấn 24/7: <strong class="text-white">0765650114</strong><br>
@@ -366,6 +366,7 @@ while($b = $brands_result->fetch_assoc()) {
                         - Địa chỉ: 95 Lê Văn Lương, Tân Hưng, Quận 7, TP. Hồ Chí Minh
                     </p>
                 </div>
+            </div>
 
             <div class="mt-6 text-right">
                 <button onclick="closeInfoModal()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold transition shadow-lg shadow-red-600/30">
@@ -449,7 +450,7 @@ while($b = $brands_result->fetch_assoc()) {
             <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Thanh toán tiền cọc xe qua ứng dụng ngân hàng</p>
 
             <div class="bg-white p-4 rounded-2xl inline-block shadow-lg mb-4 border border-gray-200">
-                <img src="images/qrcode.jpg" alt="QR Code Dat Coc" class="w-64 h-auto mx-auto rounded-lg">
+                <img src="qrcode.jpg" alt="QR Code Dat Coc" class="w-64 h-auto mx-auto rounded-lg">
             </div>
 
             <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-3.5 rounded-xl text-left text-xs space-y-1.5 mb-5">
