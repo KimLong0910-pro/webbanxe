@@ -299,7 +299,7 @@ while($b = $brands_result->fetch_assoc()) {
             </div>
 
             <!-- Nội dung tin nhắn -->
-            <div id="chatMessages" class="p-4 h-72 overflow-y-auto space-y-3 text-xs sm:text-sm bg-gray-50 dark:bg-black/50">
+            <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 text-xs sm:text-sm bg-gray-50 dark:bg-black/50">
                 <div class="flex items-start gap-2">
                     <div class="bg-red-600 text-white p-2.5 rounded-2xl rounded-tl-none max-w-[85%] leading-relaxed">
                         Dạ chào bro! Em là trợ lý AI của Showroom 4TL. Bro cần em tư vấn vấn đề gì ạ?
@@ -307,7 +307,7 @@ while($b = $brands_result->fetch_assoc()) {
                 </div>
             </div>
 
-<!-- Nút lựa chọn mẫu nhanh (Quick Replies) -->
+            <!-- Nút lựa chọn mẫu nhanh (Quick Replies mở rộng) -->
             <div class="px-3 py-2 bg-gray-100 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 flex flex-wrap gap-1.5">
                 <button onclick="sendQuickMessage('Cho tôi xem danh sách xe và giá')" class="bg-white dark:bg-gray-800 hover:bg-red-600 hover:text-white text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 text-[11px] px-2.5 py-1 rounded-full transition font-semibold">🚗 Giá xe</button>
                 <button onclick="sendQuickMessage('Chính sách trả góp 80%')" class="bg-white dark:bg-gray-800 hover:bg-red-600 hover:text-white text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 text-[11px] px-2.5 py-1 rounded-full transition font-semibold">🤝 Trả góp 80%</button>
@@ -378,7 +378,6 @@ while($b = $brands_result->fetch_assoc()) {
             <button onclick="closeModal()" class="absolute top-4 right-4 bg-gray-200 dark:bg-black/60 hover:bg-red-600 hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition z-10">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
-            
 
             <div class="p-6 md:p-8 max-h-[90vh] overflow-y-auto">
                 <div class="mb-6 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800">
@@ -442,12 +441,12 @@ while($b = $brands_result->fetch_assoc()) {
             <button onclick="closeDepositModal()" class="absolute top-4 right-4 bg-gray-200 dark:bg-black/60 hover:bg-red-600 hover:text-white w-9 h-9 rounded-full flex items-center justify-center transition">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            
+
             <h3 class="text-xl font-black mb-1"><i class="fa-solid fa-qrcode text-red-500 me-2"></i> QUÉT MÃ QR ĐẶT CỌC</h3>
             <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Thanh toán tiền cọc xe qua ứng dụng ngân hàng</p>
 
             <div class="bg-white p-4 rounded-2xl inline-block shadow-lg mb-4 border border-gray-200">
-                <img src="images/qrcode.jpg" alt="QR Code Dat Coc" class="w-64 h-auto mx-auto rounded-lg">
+                <img src="qrcode.jpg" alt="QR Code Dat Coc" class="w-64 h-auto mx-auto rounded-lg">
             </div>
 
             <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-3.5 rounded-xl text-left text-xs space-y-1.5 mb-5">
