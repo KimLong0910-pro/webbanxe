@@ -185,11 +185,14 @@ while($b = $brands_result->fetch_assoc()) {
                 <?php foreach($cars_array as $car): ?>
                     <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden hover:border-red-500 transition duration-300 shadow-xl group flex flex-col justify-between relative">
                         
-                        <!-- Huy hiệu Best Seller nếu là VinFast VF3 -->
+<!-- Huy hiệu Best Seller và Trả trước 36% nếu là VinFast VF3 -->
                         <?php if (strpos($car['name'], 'VinFast VF3') !== false): ?>
                             <div class="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start">
                                 <span class="bg-red-600 text-white text-[11px] px-3 py-1 rounded-full font-black uppercase tracking-wider shadow-lg flex items-center gap-1">
                                     <i class="fa-solid fa-fire"></i> Best Seller
+                                </span>
+                                <span class="bg-amber-500 text-black text-[11px] px-3 py-1 rounded-full font-black uppercase tracking-wider shadow-lg flex items-center gap-1">
+                                    <i class="fa-solid fa-percentage"></i> Trả trước 36%
                                 </span>
                             </div>
                         <?php endif; ?>
@@ -355,14 +358,14 @@ while($b = $brands_result->fetch_assoc()) {
                     <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-earth-americas"></i> Nguồn Nhập Xe Uy Tín</h4>
                     <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">100% xe hơi cao cấp và xe điện tại Showroom 4TL được nhập khẩu chính ngạch từ Đức, Mỹ, Nhật Bản và VinFast.</p>
                 </div>
-                <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
+<div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
                     <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-headset"></i> Liên Hệ Tư Vấn Trực Tiếp</h4>
                     <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">
                         - Hotline/Zalo tư vấn 24/7: <strong class="text-white">0765650114</strong><br>
+                        - Email: <strong class="text-white">anh.2574802012312@vanlanguni.vn</strong><br>
                         - Địa chỉ: 95 Lê Văn Lương, Tân Hưng, Quận 7, TP. Hồ Chí Minh
                     </p>
                 </div>
-            </div>
 
             <div class="mt-6 text-right">
                 <button onclick="closeInfoModal()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold transition shadow-lg shadow-red-600/30">
