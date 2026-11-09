@@ -342,6 +342,7 @@ while($b = $brands_result->fetch_assoc()) {
             <button onclick="closeModal()" class="absolute top-4 right-4 bg-gray-200 dark:bg-black/60 hover:bg-red-600 hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition z-10">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
+            
 
             <div class="p-6 md:p-8 max-h-[90vh] overflow-y-auto">
                 <div class="mb-6 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800">
@@ -410,12 +411,12 @@ while($b = $brands_result->fetch_assoc()) {
             <button onclick="closeDepositModal()" class="absolute top-4 right-4 bg-gray-200 dark:bg-black/60 hover:bg-red-600 hover:text-white w-9 h-9 rounded-full flex items-center justify-center transition">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-
+            
             <h3 class="text-xl font-black mb-1"><i class="fa-solid fa-qrcode text-red-500 me-2"></i> QUÉT MÃ QR ĐẶT CỌC</h3>
             <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Thanh toán tiền cọc xe nhanh chóng qua ứng dụng ngân hàng</p>
 
             <div class="bg-white p-4 rounded-2xl inline-block shadow-lg mb-4 border border-gray-200">
-                <img src="qrcode.jpg" alt="QR Code Dat Coc" class="w-64 h-auto mx-auto rounded-lg">
+                <img src="images/qrcode.jpg" alt="QR Code Dat Coc" class="w-64 h-auto mx-auto rounded-lg">
             </div>
 
             <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-3.5 rounded-xl text-left text-xs space-y-1.5 mb-5">
