@@ -1,10 +1,11 @@
 <?php
 require_once 'db.php';
 
-// Xử lý bộ lọc tìm kiếm (nếu có)
+// Xử lý bộ lọc tìm kiếm và sắp xếp
 $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
 $brand_filter = isset($_GET['brand']) ? $conn->real_escape_string($_GET['brand']) : '';
 $price_filter = isset($_GET['price']) ? $_GET['price'] : '';
+$sort_order = isset($_GET['sort']) ? $_GET['sort'] : '';
 
 $sql = "SELECT * FROM cars WHERE 1=1";
 if (!empty($search)) {
@@ -23,8 +24,14 @@ if (!empty($price_filter)) {
     }
 }
 
-// <<< DÁN ĐOẠN CODE NÀY VÀO ĐÂY ĐỂ GHIM VINFAST VF3 LÊN ĐẦU >>>
-$sql .= " ORDER BY CASE WHEN name LIKE '%VinFast VF3%' THEN 0 ELSE 1 END, id DESC";
+// Xử lý sắp xếp (Ưu tiên ghim VinFast VF3 lên đầu, sau đó sắp xếp theo giá nếu người dùng chọn)
+if ($sort_order == 'price_asc') {
+    $sql .= " ORDER BY CASE WHEN name LIKE '%VinFast VF3%' THEN 0 ELSE 1 END, price ASC";
+} elseif ($sort_order == 'price_desc') {
+    $sql .= " ORDER BY CASE WHEN name LIKE '%VinFast VF3%' THEN 0 ELSE 1 END, price DESC";
+} else {
+    $sql .= " ORDER BY CASE WHEN name LIKE '%VinFast VF3%' THEN 0 ELSE 1 END, id DESC";
+}
 
 $result = $conn->query($sql);
 
@@ -34,14 +41,6 @@ if ($result->num_rows > 0) {
         $cars_array[] = $row;
     }
 }
-
-// Lấy danh sách thương hiệu để đưa vào dropdown lọc
-$brands_result = $conn->query("SELECT DISTINCT brand FROM cars");
-$brands = [];
-while($b = $brands_result->fetch_assoc()) {
-    $brands[] = $b['brand'];
-}
-?>
 
 // Lấy danh sách thương hiệu để đưa vào dropdown lọc
 $brands_result = $conn->query("SELECT DISTINCT brand FROM cars");
@@ -123,9 +122,9 @@ while($b = $brands_result->fetch_assoc()) {
             <p class="text-gray-400 max-w-2xl mx-auto text-sm">Lựa chọn các mẫu xe thể thao, SUV cao cấp và sedan hạng sang được tuyển chọn kỹ lưỡng tại Showroom 4TL.</p>
         </div>
 
-        <!-- Thanh Tìm Kiếm & Bộ Lọc -->
+        <!-- Thanh Tìm Kiếm & Bộ Lọc / Sắp Xếp -->
         <div class="bg-gray-900/90 border border-gray-800 p-6 rounded-3xl shadow-2xl mb-12">
-            <form method="GET" action="#car-list" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+            <form method="GET" action="#car-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
                 <div class="relative">
                     <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                     <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Tìm tên xe..." class="w-full bg-gray-950 border border-gray-800 text-white placeholder-gray-500 pl-11 pr-4 py-3.5 rounded-xl text-sm focus:outline-none focus:border-red-500 transition">
@@ -149,9 +148,17 @@ while($b = $brands_result->fetch_assoc()) {
                     </select>
                 </div>
 
+                <div>
+                    <select name="sort" class="w-full bg-gray-950 border border-gray-800 text-white px-4 py-3.5 rounded-xl text-sm focus:outline-none focus:border-red-500 transition">
+                        <option value="">Sắp xếp theo giá</option>
+                        <option value="price_asc" <?= $sort_order == 'price_asc' ? 'selected' : '' ?>>Giá: Thấp đến Cao</option>
+                        <option value="price_desc" <?= $sort_order == 'price_desc' ? 'selected' : '' ?>>Giá: Cao đến Thấp</option>
+                    </select>
+                </div>
+
                 <div class="flex gap-2">
-                    <button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 px-4 rounded-xl text-sm transition shadow-lg shadow-red-600/30">
-                        <i class="fa-solid fa-filter me-1"></i> Lọc Xe
+                    <button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 px-3 rounded-xl text-sm transition shadow-lg shadow-red-600/30 text-center">
+                        <i class="fa-solid fa-filter me-1"></i> Lọc
                     </button>
                     <a href="index.php#car-list" class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-300 px-4 py-3.5 rounded-xl text-sm font-semibold transition flex items-center justify-center" title="Đặt lại bộ lọc">
                         <i class="fa-solid fa-rotate-right"></i>
@@ -205,25 +212,24 @@ while($b = $brands_result->fetch_assoc()) {
     </main>
 
     <!-- Google Maps Section -->
-
-<section id="map-section" class="max-w-7xl mx-auto px-4 py-12 border-t border-gray-800">
-    <div class="text-center mb-8">
-        <span class="text-red-500 font-bold uppercase tracking-widest text-xs">Chỉ đường đến showroom</span>
-        <h3 class="text-3xl font-black mt-1 mb-2">VỊ TRÍ SHOWROOM 4TL TRÊN BẢN ĐỒ</h3>
-        <p class="text-gray-400 text-sm">Địa chỉ: 95 Lê Văn Lương, Tân Hưng, Quận 7, TP. Hồ Chí Minh</p>
-    </div>
-    <div class="rounded-3xl overflow-hidden border border-gray-800 shadow-2xl h-[450px]">
-        <iframe 
-            src="https://maps.google.com/maps?q=95%20L%C3%AA%20V%C4%83n%20L%C6%B0%C6%A1ng,%20T%C3%A2n%20H%C6%B0ng,%20Qu%E1%BA%ADn%207,%20H%E1%BB%ᅩ%20Ch%C3%AD%20Minh&t=&z=17&ie=UTF8&iwloc=&output=embed" 
-            width="100%" 
-            height="100%" 
-            style="border:0;" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-    </div>
-</section>
+    <section id="map-section" class="max-w-7xl mx-auto px-4 py-12 border-t border-gray-800">
+        <div class="text-center mb-8">
+            <span class="text-red-500 font-bold uppercase tracking-widest text-xs">Chỉ đường đến showroom</span>
+            <h3 class="text-3xl font-black mt-1 mb-2">VỊ TRÍ SHOWROOM 4TL TRÊN BẢN ĐỒ</h3>
+            <p class="text-gray-400 text-sm">Địa chỉ: 95 Lê Văn Lương, Tân Hưng, Quận 7, TP. Hồ Chí Minh</p>
+        </div>
+        <div class="rounded-3xl overflow-hidden border border-gray-800 shadow-2xl h-[450px]">
+            <iframe 
+                src="https://maps.google.com/maps?q=95%20L%C3%AA%20V%C4%83n%20L%C6%B0%C6%A1ng,%20T%C3%A2n%20H%C6%B0ng,%20Qu%E1%BA%ADn%207,%20H%E1%BB%ᅩ%20Ch%C3%AD%20Minh&t=&z=17&ie=UTF8&iwloc=&output=embed" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer id="contact" class="bg-black border-t border-gray-800 py-12 text-gray-400 text-sm">
