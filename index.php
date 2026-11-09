@@ -22,7 +22,9 @@ if (!empty($price_filter)) {
         $sql .= " AND price > 5000000000";
     }
 }
-$sql .= " ORDER BY id DESC";
+
+// <<< DÁN ĐOẠN CODE NÀY VÀO ĐÂY ĐỂ GHIM VINFAST VF3 LÊN ĐẦU >>>
+$sql .= " ORDER BY CASE WHEN name LIKE '%VinFast VF3%' THEN 0 ELSE 1 END, id DESC";
 
 $result = $conn->query($sql);
 
@@ -32,6 +34,14 @@ if ($result->num_rows > 0) {
         $cars_array[] = $row;
     }
 }
+
+// Lấy danh sách thương hiệu để đưa vào dropdown lọc
+$brands_result = $conn->query("SELECT DISTINCT brand FROM cars");
+$brands = [];
+while($b = $brands_result->fetch_assoc()) {
+    $brands[] = $b['brand'];
+}
+?>
 
 // Lấy danh sách thương hiệu để đưa vào dropdown lọc
 $brands_result = $conn->query("SELECT DISTINCT brand FROM cars");
