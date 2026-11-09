@@ -4,7 +4,7 @@ $user = "root";
 $pass = "";
 $dbname = "web_ban_xe";
 
-$conn = new mysqli($host, $user, $pass, $dbname);
+$conn = new mysqli($host,$user, $pass,$dbname);
 if ($conn->connect_error) {
     die("Kết nối CSDL thất bại: " . $conn->connect_error);
 }
