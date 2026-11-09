@@ -24,7 +24,7 @@ if (!empty($price_filter)) {
     }
 }
 
-// Xử lý sắp xếp (Ưu tiên ghim VinFast VF3 lên đầu, sau đó sắp xếp theo giá nếu người dùng chọn)
+// Xử lý sắp xếp (Ưu tiên ghim VinFast VF3 lên đầu)
 if ($sort_order == 'price_asc') {
     $sql .= " ORDER BY CASE WHEN name LIKE '%VinFast VF3%' THEN 0 ELSE 1 END, price ASC";
 } elseif ($sort_order == 'price_desc') {
@@ -171,11 +171,24 @@ while($b = $brands_result->fetch_assoc()) {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <?php if (count($cars_array) > 0): ?>
                 <?php foreach($cars_array as $car): ?>
-                    <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-red-500 transition duration-300 shadow-xl group flex flex-col justify-between">
+                    <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-red-500 transition duration-300 shadow-xl group flex flex-col justify-between relative">
+                        
+                        <!-- Huy hiệu Best Seller và Trả trước 36% nếu là VinFast VF3 -->
+                        <?php if (strpos($car['name'], 'VinFast VF3') !== false): ?>
+                            <div class="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start">
+                                <span class="bg-red-600 text-white text-[11px] px-3 py-1 rounded-full font-black uppercase tracking-wider shadow-lg flex items-center gap-1">
+                                    <i class="fa-solid fa-fire"></i> Best Seller
+                                </span>
+                                <span class="bg-amber-500 text-black text-[11px] px-3 py-1 rounded-full font-black uppercase tracking-wider shadow-lg flex items-center gap-1">
+                                    <i class="fa-solid fa-percentage"></i> Trả trước 36%
+                                </span>
+                            </div>
+                        <?php endif; ?>
+
                         <div>
                             <div class="relative overflow-hidden">
                                 <img src="<?= htmlspecialchars($car['image']) ?>" class="w-full h-60 object-cover group-hover:scale-105 transition duration-500" alt="">
-                                <span class="absolute top-3 left-3 bg-black/70 backdrop-blur-md text-red-400 border border-red-500/30 text-xs px-3 py-1 rounded-full font-bold uppercase">
+                                <span class="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-red-400 border border-red-500/30 text-xs px-3 py-1 rounded-full font-bold uppercase">
                                     <?= htmlspecialchars($car['brand']) ?>
                                 </span>
                             </div>
@@ -196,8 +209,11 @@ while($b = $brands_result->fetch_assoc()) {
                                 <i class="fa-solid fa-circle-info"></i> Xem Chi Tiết
                             </button>
                             <div class="flex gap-2">
-                                <a href="tel:0765650114" class="flex-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-center py-2.5 rounded-xl text-xs font-semibold transition"><i class="fa-solid fa-phone text-red-500 me-1"></i> Gọi Ngay</a>
-                                <a href="mailto:anh.2574802012312@vanlanguni.vn" class="flex-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-center py-2.5 rounded-xl text-xs font-semibold transition"><i class="fa-solid fa-envelope text-red-500 me-1"></i> Gửi Email</a>
+                                <a href="tel:0765650114" class="flex-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-center py-2.5 rounded-xl text-xs font-semibold transition"><i class="fa-solid fa-phone text-red-500 me-1"></i> Gọi</a>
+                                <a href="mailto:anh.2574802012312@vanlanguni.vn" class="flex-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-center py-2.5 rounded-xl text-xs font-semibold transition"><i class="fa-solid fa-envelope text-red-500 me-1"></i> Email</a>
+                                <button onclick="openDepositModal('<?= htmlspecialchars($car['name']) ?>', '<?= number_format($car['price'] * 0.1, 0, ',', '.') ?> VNĐ')" class="flex-1 bg-red-600 hover:bg-red-700 text-center py-2.5 rounded-xl text-xs font-bold transition text-white shadow-md shadow-red-600/30">
+                                    <i class="fa-solid fa-qrcode me-1"></i> Cọc
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -323,6 +339,33 @@ while($b = $brands_result->fetch_assoc()) {
         </div>
     </div>
 
+    <!-- Modal QR Code Đặt Cọc -->
+    <div id="depositModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-gray-900 border border-gray-800 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl relative p-6 text-center">
+            <button onclick="closeDepositModal()" class="absolute top-4 right-4 bg-black/60 hover:bg-red-600 text-white w-9 h-9 rounded-full flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-xl font-black text-white mb-1"><i class="fa-solid fa-qrcode text-red-500 me-2"></i> QUÉT MÃ QR ĐẶT CỌC</h3>
+            <p class="text-xs text-gray-400 mb-4">Thanh toán tiền cọc xe nhanh chóng qua ứng dụng ngân hàng</p>
+
+            <div class="bg-white p-4 rounded-2xl inline-block shadow-lg mb-4">
+                <img src="qrcode.jpg" alt="QR Code Dat Coc" class="w-64 h-auto mx-auto rounded-lg">
+            </div>
+
+            <div class="bg-black/40 border border-gray-800 p-3.5 rounded-xl text-left text-xs space-y-1.5 mb-5">
+                <p class="text-gray-400">Xe đặt cọc: <strong id="depositCarName" class="text-white"></strong></p>
+                <p class="text-gray-400">Số tiền cọc tối thiểu (10%): <strong id="depositAmount" class="text-red-500 font-bold"></strong></p>
+                <p class="text-gray-400">Chủ tài khoản: <strong class="text-white">VU NGO QUOC ANH</strong></p>
+                <p class="text-gray-400">Số tài khoản MB Bank: <strong class="text-white">080820079</strong></p>
+            </div>
+
+            <button onclick="closeDepositModal()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-sm transition shadow-lg shadow-red-600/30">
+                Đã Hoàn Tất Chuyển Khoản
+            </button>
+        </div>
+    </div>
+
     <script>
         function openModal(car) {
             document.getElementById('modalImage').src = car.image;
@@ -343,10 +386,26 @@ while($b = $brands_result->fetch_assoc()) {
             document.body.style.overflow = 'auto';
         }
 
+        function openDepositModal(carName, amount) {
+            document.getElementById('depositCarName').innerText = carName;
+            document.getElementById('depositAmount').innerText = amount;
+            document.getElementById('depositModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDepositModal() {
+            document.getElementById('depositModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
         window.onclick = function(event) {
             let modal = document.getElementById('carModal');
+            let depositModal = document.getElementById('depositModal');
             if (event.target == modal) {
                 closeModal();
+            }
+            if (event.target == depositModal) {
+                closeDepositModal();
             }
         }
     </script>
