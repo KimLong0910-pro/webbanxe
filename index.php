@@ -185,14 +185,11 @@ while($b = $brands_result->fetch_assoc()) {
                 <?php foreach($cars_array as $car): ?>
                     <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden hover:border-red-500 transition duration-300 shadow-xl group flex flex-col justify-between relative">
                         
-                        <!-- Huy hiệu Best Seller và Trả trước 36% nếu là VinFast VF3 -->
+                        <!-- Huy hiệu Best Seller nếu là VinFast VF3 -->
                         <?php if (strpos($car['name'], 'VinFast VF3') !== false): ?>
                             <div class="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start">
                                 <span class="bg-red-600 text-white text-[11px] px-3 py-1 rounded-full font-black uppercase tracking-wider shadow-lg flex items-center gap-1">
                                     <i class="fa-solid fa-fire"></i> Best Seller
-                                </span>
-                                <span class="bg-amber-500 text-black text-[11px] px-3 py-1 rounded-full font-black uppercase tracking-wider shadow-lg flex items-center gap-1">
-                                    <i class="fa-solid fa-percentage"></i> Trả trước 36%
                                 </span>
                             </div>
                         <?php endif; ?>
@@ -283,7 +280,52 @@ while($b = $brands_result->fetch_assoc()) {
         </div>
     </footer>
 
-    <!-- Modal Popup Thông Tin Cửa Hàng (Nút 3 gạch ngang) -->
+    <!-- ==================== AI CHATBOT WIDGET ==================== -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <!-- Nút bong bóng chat -->
+        <button onclick="toggleChatBox()" id="chatToggleBtn" class="bg-red-600 hover:bg-red-700 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-xl transition transform hover:scale-110">
+            <i class="fa-solid fa-comments"></i>
+        </button>
+
+        <!-- Hộp thoại khung chat -->
+        <div id="chatBoxContainer" class="hidden bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 w-80 sm:w-96 rounded-3xl shadow-2xl overflow-hidden flex flex-col transition-all transform origin-bottom-right mb-4">
+            <!-- Header Chat -->
+            <div class="bg-red-600 text-white p-4 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                    <h4 class="font-bold text-sm">Trợ Lý AI - Showroom 4TL</h4>
+                </div>
+                <button onclick="toggleChatBox()" class="text-white hover:text-gray-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <!-- Nội dung tin nhắn -->
+            <div id="chatMessages" class="p-4 h-72 overflow-y-auto space-y-3 text-xs sm:text-sm bg-gray-50 dark:bg-black/50">
+                <div class="flex items-start gap-2">
+                    <div class="bg-red-600 text-white p-2.5 rounded-2xl rounded-tl-none max-w-[85%] leading-relaxed">
+                        Dạ chào bro! Em là trợ lý AI của Showroom 4TL. Bro cần em tư vấn vấn đề gì ạ?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút lựa chọn mẫu nhanh (Quick Replies) -->
+            <div class="px-3 py-2 bg-gray-100 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 flex flex-wrap gap-1.5">
+                <button onclick="sendQuickMessage('Cho tôi xem danh sách xe và giá')" class="bg-white dark:bg-gray-800 hover:bg-red-600 hover:text-white text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 text-[11px] px-2.5 py-1 rounded-full transition font-semibold">🚗 Giá xe</button>
+                <button onclick="sendQuickMessage('Chính sách trả góp 80%')" class="bg-white dark:bg-gray-800 hover:bg-red-600 hover:text-white text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 text-[11px] px-2.5 py-1 rounded-full transition font-semibold">🤝 Trả góp 80%</button>
+                <button onclick="sendQuickMessage('Thông tin đặt cọc MB Bank')" class="bg-white dark:bg-gray-800 hover:bg-red-600 hover:text-white text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 text-[11px] px-2.5 py-1 rounded-full transition font-semibold">💳 Đặt cọc</button>
+            </div>
+
+            <!-- Ô nhập tin nhắn -->
+            <div class="p-3 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 flex gap-2">
+                <input type="text" id="userInput" placeholder="Nhập câu hỏi cho AI..." class="flex-1 bg-gray-100 dark:bg-gray-950 border border-gray-300 dark:border-gray-800 px-4 py-2.5 rounded-xl text-xs focus:outline-none focus:border-red-500" onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================ -->
+
+    <!-- Modal Popup Thông Tin Cửa Hàng -->
     <div id="infoModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl relative transform transition-all p-6 md:p-8">
             <button onclick="closeInfoModal()" class="absolute top-4 right-4 bg-gray-200 dark:bg-black/60 hover:bg-red-600 hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition z-10">
@@ -299,30 +341,22 @@ while($b = $brands_result->fetch_assoc()) {
             </div>
 
             <div class="space-y-4 text-sm max-h-[60vh] overflow-y-auto pr-2">
-                <!-- Giảm giá -->
                 <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
                     <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-tags"></i> Chương Trình Giảm Giá & Ưu Đãi</h4>
-                    <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">Giảm ngay từ 2% đến 5% trực tiếp trên giá niêm yết cho khách hàng đặt cọc online hoặc mua xe trực tiếp tại showroom. Tặng kèm gói phụ kiện chính hãng, phim cách nhiệt cao cấp và bảo hiểm vật chất 1 năm.</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">Giảm ngay từ 2% đến 5% trực tiếp trên giá niêm yết cho khách hàng đặt cọc online hoặc mua xe trực tiếp tại showroom.</p>
                 </div>
-
-                <!-- Trả góp -->
                 <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
                     <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-hand-holding-dollar"></i> Chính Sách Trả Góp 80%</h4>
-                    <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">Hỗ trợ vay vốn ngân hàng lên đến 80% giá trị xe với lãi suất cực kỳ ưu đãi (chỉ từ 7.5%/năm). Thủ tục nhanh gọn, xét duyệt hồ sơ trong vòng 24h, hỗ trợ cả khách hàng chứng minh tài chính khó khăn.</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">Hỗ trợ vay vốn ngân hàng lên đến 80% giá trị xe với lãi suất cực kỳ ưu đãi (chỉ từ 7.5%/năm). Thủ tục nhanh gọn, xét duyệt trong 24h.</p>
                 </div>
-
-                <!-- Nơi nhập xe uy tín -->
                 <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
                     <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-earth-americas"></i> Nguồn Nhập Xe Uy Tín</h4>
-                    <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">100% xe hơi cao cấp và xe điện tại Showroom 4TL được nhập khẩu chính ngạch từ các thị trường phát triển hàng đầu thế giới như Đức, Mỹ, Nhật Bản và các nhà máy lắp ráp tiêu chuẩn quốc tế của VinFast.</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">100% xe hơi cao cấp và xe điện tại Showroom 4TL được nhập khẩu chính ngạch từ Đức, Mỹ, Nhật Bản và VinFast.</p>
                 </div>
-
-                <!-- Thông tin liên hệ tư vấn -->
                 <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
                     <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-headset"></i> Liên Hệ Tư Vấn Trực Tiếp</h4>
                     <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">
-                        - Hotline/Zalo tư vấn 24/7: <strong>0765650114</strong><br>
-                        - Email hỗ trợ: <strong>anh.2574802012312@vanlanguni.vn</strong><br>
+                        - Hotline/Zalo tư vấn 24/7: <strong class="text-white">0765650114</strong><br>
                         - Địa chỉ: 95 Lê Văn Lương, Tân Hưng, Quận 7, TP. Hồ Chí Minh
                     </p>
                 </div>
@@ -354,11 +388,8 @@ while($b = $brands_result->fetch_assoc()) {
                         <h2 id="modalPrice" class="text-2xl md:text-3xl font-black text-red-600 dark:text-red-500 mt-0.5"></h2>
                     </div>
                     <div class="flex gap-3 w-full md:w-auto">
-                        <a href="tel:0765650114" class="flex-1 md:flex-none bg-red-600 hover:bg-red-700 px-5 py-3 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-red-600/30 text-white">
+                        <a href="tel:0765650114" class="flex-1 md:flex-none bg-red-600 hover:bg-red-700 px-5 py-3 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2 text-white">
                             <i class="fa-solid fa-phone"></i> Gọi Tư Vấn Ngay
-                        </a>
-                        <a href="mailto:anh.2574802012312@vanlanguni.vn" class="flex-1 md:flex-none bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700 px-5 py-3 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-envelope text-red-500 dark:text-red-400"></i> Gửi Email
                         </a>
                     </div>
                 </div>
@@ -396,9 +427,7 @@ while($b = $brands_result->fetch_assoc()) {
                 </div>
 
                 <div class="mt-8 text-right">
-                    <button onclick="closeModal()" class="bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700 px-6 py-2.5 rounded-xl text-sm font-semibold transition">
-                        Đóng Window
-                    </button>
+                    <button onclick="closeModal()" class="bg-gray-200 dark:bg-gray-800 px-6 py-2.5 rounded-xl text-sm font-semibold transition">Đóng Window</button>
                 </div>
             </div>
         </div>
@@ -412,7 +441,7 @@ while($b = $brands_result->fetch_assoc()) {
             </button>
 
             <h3 class="text-xl font-black mb-1"><i class="fa-solid fa-qrcode text-red-500 me-2"></i> QUÉT MÃ QR ĐẶT CỌC</h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Thanh toán tiền cọc xe nhanh chóng qua ứng dụng ngân hàng</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Thanh toán tiền cọc xe qua ứng dụng ngân hàng</p>
 
             <div class="bg-white p-4 rounded-2xl inline-block shadow-lg mb-4 border border-gray-200">
                 <img src="qrcode.jpg" alt="QR Code Dat Coc" class="w-64 h-auto mx-auto rounded-lg">
@@ -420,19 +449,18 @@ while($b = $brands_result->fetch_assoc()) {
 
             <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-3.5 rounded-xl text-left text-xs space-y-1.5 mb-5">
                 <p class="text-gray-500 dark:text-gray-400">Xe đặt cọc: <strong id="depositCarName" class="text-gray-900 dark:text-white"></strong></p>
-                <p class="text-gray-500 dark:text-gray-400">Số tiền cọc tối thiểu (10%): <strong id="depositAmount" class="text-red-600 dark:text-red-500 font-bold"></strong></p>
+                <p class="text-gray-500 dark:text-gray-400">Số tiền cọc (10%): <strong id="depositAmount" class="text-red-600 dark:text-red-500 font-bold"></strong></p>
                 <p class="text-gray-500 dark:text-gray-400">Chủ tài khoản: <strong class="text-gray-900 dark:text-white">VU NGO QUOC ANH</strong></p>
-                <p class="text-gray-500 dark:text-gray-400">Số tài khoản MB Bank: <strong class="text-gray-900 dark:text-white">080820079</strong></p>
+                <p class="text-gray-500 dark:text-gray-400">STK MB Bank: <strong class="text-gray-900 dark:text-white">080820079</strong></p>
             </div>
 
-            <button onclick="closeDepositModal()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-sm transition shadow-lg shadow-red-600/30">
-                Đã Hoàn Tất Chuyển Khoản
-            </button>
+            <button onclick="closeDepositModal()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-sm transition shadow-lg">Đã Hoàn Tất Chuyển Khoản</button>
         </div>
     </div>
 
+    <!-- JavaScript xử lý giao diện và chatbot -->
     <script>
-        // Kiểm tra trạng thái giao diện đã lưu (Dark / Light Mode)
+        // Kiểm tra Dark/Light Mode
         if (localStorage.getItem('theme') === 'light') {
             document.documentElement.classList.remove('dark');
             document.getElementById('themeIcon').className = "fa-solid fa-moon text-gray-700";
@@ -453,17 +481,84 @@ while($b = $brands_result->fetch_assoc()) {
             }
         }
 
-        // Xử lý Modal Thông tin cửa hàng (Nút 3 gạch ngang)
+        // Đóng mở khung chat AI
+        function toggleChatBox() {
+            let box = document.getElementById('chatBoxContainer');
+            box.classList.toggle('hidden');
+        }
+
+        // Gửi tin nhắn nhanh từ nút gợi ý
+        function sendQuickMessage(text) {
+            document.getElementById('userInput').value = text;
+            sendMessage();
+        }
+
+        // Gửi tin nhắn đến file ai_chat.php
+        function sendMessage() {
+            let input = document.getElementById('userInput');
+            let message = input.value.trim();
+            if(!message) return;
+
+            let chatMessages = document.getElementById('chatMessages');
+            
+            // Hiện tin nhắn người dùng
+            chatMessages.innerHTML += `
+                <div class="flex justify-end">
+                    <div class="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white p-2.5 rounded-2xl rounded-tr-none max-w-[85%]">
+                        ${message}
+                    </div>
+                </div>
+            `;
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Fetch tới PHP backend
+            fetch('ai_chat.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                chatMessages.innerHTML += `
+                    <div class="flex items-start gap-2">
+                        <div class="bg-red-600 text-white p-2.5 rounded-2xl rounded-tl-none max-w-[85%] leading-relaxed">
+                            ${data.reply}
+                        </div>
+                    </div>
+                `;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            })
+            .catch(err => {
+                console.log('Lỗi:', err);
+                chatMessages.innerHTML += `
+                    <div class="flex items-start gap-2">
+                        <div class="bg-red-600 text-white p-2.5 rounded-2xl rounded-tl-none max-w-[85%]">
+                            Dạ, Showroom 4TL tại 95 Lê Văn Lương, Q.7 rất hân hạnh được phục vụ bro! Hotline: 0765650114.
+                        </div>
+                    </div>
+                `;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Modal thông tin cửa hàng
         function openInfoModal() {
             document.getElementById('infoModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
-
         function closeInfoModal() {
             document.getElementById('infoModal').classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
 
+        // Modal chi tiết xe
         function openModal(car) {
             document.getElementById('modalImage').src = car.image;
             document.getElementById('modalBrand').innerText = car.brand;
@@ -472,42 +567,25 @@ while($b = $brands_result->fetch_assoc()) {
             document.getElementById('modalEngine').innerText = car.engine || 'Đang cập nhật';
             document.getElementById('modalTransmission').innerText = car.transmission || 'Đang cập nhật';
             document.getElementById('modalFuel').innerText = car.fuel || 'Đang cập nhật';
-            document.getElementById('modalDesc').innerText = car.description || 'Chưa có mô tả chi tiết cho dòng xe này.';
-            
+            document.getElementById('modalDesc').innerText = car.description || 'Chưa có mô tả chi tiết.';
             document.getElementById('carModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
-
         function closeModal() {
             document.getElementById('carModal').classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
 
+        // Modal đặt cọc
         function openDepositModal(carName, amount) {
             document.getElementById('depositCarName').innerText = carName;
             document.getElementById('depositAmount').innerText = amount;
             document.getElementById('depositModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
-
         function closeDepositModal() {
             document.getElementById('depositModal').classList.add('hidden');
             document.body.style.overflow = 'auto';
-        }
-
-        window.onclick = function(event) {
-            let modal = document.getElementById('carModal');
-            let depositModal = document.getElementById('depositModal');
-            let infoModal = document.getElementById('infoModal');
-            if (event.target == modal) {
-                closeModal();
-            }
-            if (event.target == depositModal) {
-                closeDepositModal();
-            }
-            if (event.target == infoModal) {
-                closeInfoModal();
-            }
         }
     </script>
 </body>
