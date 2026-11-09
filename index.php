@@ -450,7 +450,7 @@ while($b = $brands_result->fetch_assoc()) {
             <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Thanh toán tiền cọc xe qua ứng dụng ngân hàng</p>
 
             <div class="bg-white p-4 rounded-2xl inline-block shadow-lg mb-4 border border-gray-200">
-                <img src="qrcode.jpg" alt="QR Code Dat Coc" class="w-64 h-auto mx-auto rounded-lg">
+                <img src="images/qrcode.jpg" alt="QR Code Dat Coc" class="w-64 h-auto mx-auto rounded-lg">
             </div>
 
             <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-3.5 rounded-xl text-left text-xs space-y-1.5 mb-5">
