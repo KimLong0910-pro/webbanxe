@@ -307,11 +307,13 @@ while($b = $brands_result->fetch_assoc()) {
                 </div>
             </div>
 
-            <!-- Nút lựa chọn mẫu nhanh (Quick Replies) -->
+<!-- Nút lựa chọn mẫu nhanh (Quick Replies) -->
             <div class="px-3 py-2 bg-gray-100 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 flex flex-wrap gap-1.5">
                 <button onclick="sendQuickMessage('Cho tôi xem danh sách xe và giá')" class="bg-white dark:bg-gray-800 hover:bg-red-600 hover:text-white text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 text-[11px] px-2.5 py-1 rounded-full transition font-semibold">🚗 Giá xe</button>
                 <button onclick="sendQuickMessage('Chính sách trả góp 80%')" class="bg-white dark:bg-gray-800 hover:bg-red-600 hover:text-white text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 text-[11px] px-2.5 py-1 rounded-full transition font-semibold">🤝 Trả góp 80%</button>
                 <button onclick="sendQuickMessage('Thông tin đặt cọc MB Bank')" class="bg-white dark:bg-gray-800 hover:bg-red-600 hover:text-white text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 text-[11px] px-2.5 py-1 rounded-full transition font-semibold">💳 Đặt cọc</button>
+                <button onclick="sendQuickMessage('Chương trình khuyến mãi hiện tại')" class="bg-white dark:bg-gray-800 hover:bg-red-600 hover:text-white text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 text-[11px] px-2.5 py-1 rounded-full transition font-semibold">🎁 Khuyến mãi</button>
+                <button onclick="sendQuickMessage('Chính sách bảo hành xe')" class="bg-white dark:bg-gray-800 hover:bg-red-600 hover:text-white text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 text-[11px] px-2.5 py-1 rounded-full transition font-semibold">🛠️ Bảo hành</button>
             </div>
 
             <!-- Ô nhập tin nhắn -->
