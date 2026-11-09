@@ -431,10 +431,6 @@ while($b = $brands_result->fetch_assoc()) {
                     </h4>
                     <p id="modalDesc" class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-xl"></p>
                 </div>
-
-                <div class="mt-8 text-right">
-                    <button onclick="closeModal()" class="bg-gray-200 dark:bg-gray-800 px-6 py-2.5 rounded-xl text-sm font-semibold transition">Đóng Window</button>
-                </div>
             </div>
         </div>
     </div>
