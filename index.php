@@ -92,9 +92,11 @@ while($b = $brands_result->fetch_assoc()) {
                 <a href="tel:0765650114" class="hidden sm:flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl font-bold text-sm transition shadow-lg shadow-red-600/30">
                     <i class="fa-solid fa-phone"></i> 0765650114
                 </a>
-                <a href="admin.php" class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700 px-4 py-2.5 rounded-xl text-sm font-semibold transition flex items-center gap-2">
-                    <i class="fa-solid fa-user-gear text-red-500 dark:text-red-400"></i> Quản Trị
-                </a>
+
+                <!-- Nút 3 gạch ngang thông tin cửa hàng -->
+                <button onclick="openInfoModal()" class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700 w-11 h-11 rounded-xl text-base font-black transition flex items-center justify-center text-red-500 dark:text-red-400 shadow-md" title="Thông tin cửa hàng & dịch vụ">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -281,6 +283,59 @@ while($b = $brands_result->fetch_assoc()) {
         </div>
     </footer>
 
+    <!-- Modal Popup Thông Tin Cửa Hàng (Nút 3 gạch ngang) -->
+    <div id="infoModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl relative transform transition-all p-6 md:p-8">
+            <button onclick="closeInfoModal()" class="absolute top-4 right-4 bg-gray-200 dark:bg-black/60 hover:bg-red-600 hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition z-10">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="bg-red-600/20 text-red-500 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2 text-xl font-black">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+                <h3 class="text-2xl font-black">THÔNG TIN & CHÍNH SÁCH SHOWROOM 4TL</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Tổng hợp thông tin ưu đãi, trả góp và đối tác nhập khẩu uy tín</p>
+            </div>
+
+            <div class="space-y-4 text-sm max-h-[60vh] overflow-y-auto pr-2">
+                <!-- Giảm giá -->
+                <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
+                    <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-tags"></i> Chương Trình Giảm Giá & Ưu Đãi</h4>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">Giảm ngay từ 2% đến 5% trực tiếp trên giá niêm yết cho khách hàng đặt cọc online hoặc mua xe trực tiếp tại showroom. Tặng kèm gói phụ kiện chính hãng, phim cách nhiệt cao cấp và bảo hiểm vật chất 1 năm.</p>
+                </div>
+
+                <!-- Trả góp -->
+                <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
+                    <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-hand-holding-dollar"></i> Chính Sách Trả Góp 80%</h4>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">Hỗ trợ vay vốn ngân hàng lên đến 80% giá trị xe với lãi suất cực kỳ ưu đãi (chỉ từ 7.5%/năm). Thủ tục nhanh gọn, xét duyệt hồ sơ trong vòng 24h, hỗ trợ cả khách hàng chứng minh tài chính khó khăn.</p>
+                </div>
+
+                <!-- Nơi nhập xe uy tín -->
+                <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
+                    <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-earth-americas"></i> Nguồn Nhập Xe Uy Tín</h4>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">100% xe hơi cao cấp và xe điện tại Showroom 4TL được nhập khẩu chính ngạch từ các thị trường phát triển hàng đầu thế giới như Đức, Mỹ, Nhật Bản và các nhà máy lắp ráp tiêu chuẩn quốc tế của VinFast.</p>
+                </div>
+
+                <!-- Thông tin liên hệ tư vấn -->
+                <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
+                    <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-headset"></i> Liên Hệ Tư Vấn Trực Tiếp</h4>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">
+                        - Hotline/Zalo tư vấn 24/7: <strong class="text-white">0765650114</strong><br>
+                        - Email hỗ trợ: <strong class="text-white">anh.2574802012312@vanlanguni.vn</strong><br>
+                        - Địa chỉ: 95 Lê Văn Lương, Tân Hưng, Quận 7, TP. Hồ Chí Minh
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-6 text-right">
+                <button onclick="closeInfoModal()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold transition shadow-lg shadow-red-600/30">
+                    Đã Hiểu
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Popup Chi Tiết Xe -->
     <div id="carModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl relative transform transition-all">
@@ -398,6 +453,17 @@ while($b = $brands_result->fetch_assoc()) {
             }
         }
 
+        // Xử lý Modal Thông tin cửa hàng (Nút 3 gạch ngang)
+        function openInfoModal() {
+            document.getElementById('infoModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeInfoModal() {
+            document.getElementById('infoModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
         function openModal(car) {
             document.getElementById('modalImage').src = car.image;
             document.getElementById('modalBrand').innerText = car.brand;
@@ -432,11 +498,15 @@ while($b = $brands_result->fetch_assoc()) {
         window.onclick = function(event) {
             let modal = document.getElementById('carModal');
             let depositModal = document.getElementById('depositModal');
+            let infoModal = document.getElementById('infoModal');
             if (event.target == modal) {
                 closeModal();
             }
             if (event.target == depositModal) {
                 closeDepositModal();
+            }
+            if (event.target == infoModal) {
+                closeInfoModal();
             }
         }
     </script>
