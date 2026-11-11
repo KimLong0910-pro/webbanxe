@@ -16,6 +16,29 @@ CREATE TABLE cars (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS bot_knowledge (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    keywords VARCHAR(255) NOT NULL,
+    response TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO users (username, password) VALUES
+('admin', 'admin123')
+ON DUPLICATE KEY UPDATE username=username;
+
+INSERT INTO bot_knowledge (keywords, response) VALUES
+('gia, bao nhieu, chi phi', 'Giá các dòng xe tại Showroom 4TL dao động từ 240 triệu (VinFast VF3) đến hơn 19 tỷ VNĐ (Ferrari F8 Tributo).'),
+('bao hanh, dich vu', 'Tất cả siêu xe và xe sang bán ra đều bảo hành 3 - 10 năm chính hãng, cam kết kiểm định 160 bước không đâm đụng, không ngập nước.'),
+('tra gop, vay', 'Showroom 4TL hỗ trợ trả góp qua ngân hàng lên đến 80% giá trị xe trong thời gian tối đa 7 năm với lãi suất ưu đãi chỉ từ 7.5%/năm.');
+
 INSERT INTO cars (name, brand, price, image, engine, transmission, fuel, description) VALUES
 -- Dữ liệu ban đầu
 ('VinFast VF3', 'VinFast', 240000000.00, 'https://vinfastquan12.com.vn/wp-content/uploads/2025/02/VinFast_VF3_Mau_trang.webp', 'Điện đơn', 'Tự động', 'Điện', 'Mẫu xe điện đô thị mini màu trắng thời thượng, là tâm điểm bán chạy nhất (Best Seller) tại Showroom 4TL.'),

@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOWROOM 4TL - Siêu Xe & Xe Sang Đẳng Cấp Hàng Đầu</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-gray-100 transition-colors duration-300 min-h-screen selection:bg-red-600 selection:text-white">
+
+    <!-- TOP PROMOTION BAR -->
+    <div class="bg-gradient-to-r from-red-800 via-red-600 to-red-800 text-white text-xs font-semibold py-2 px-4 text-center tracking-wide border-b border-red-500/30 flex items-center justify-center gap-2">
+        <span class="inline-block px-2 py-0.5 bg-black/40 rounded-full text-[10px] uppercase font-bold text-yellow-300">Ưu Đãi Đặc Biệt</span>
+        <span>Tặng gói bảo hiểm thân vỏ 2 năm + Gói phủ Ceramic VIP khi cọc xe online trong tháng</span>
+        <a href="#car-section" class="underline ml-2 hover:text-yellow-200">Khám Phá Ngay &rarr;</a>
+    </div>
+
+    <!-- MAIN HEADER / NAVBAR -->
+    <header class="sticky top-0 z-40 bg-white/85 dark:bg-slate-950/85 backdrop-blur-xl border-b border-gray-200/80 dark:border-white/10 px-4 md:px-8 py-3.5 transition-all duration-300 shadow-sm dark:shadow-none">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center text-white shadow-lg shadow-red-600/30 group-hover:scale-105 transition duration-300">
+                    <i class="fa-solid fa-shield-halved text-lg"></i>
+                </div>
+                <div>
+                    <div class="text-2xl font-black tracking-wider text-slate-900 dark:text-white font-heading leading-none flex items-center gap-1">
+                        4TL <span class="text-red-600 dark:text-red-500">MOTORS</span>
+                    </div>
+                    <span class="text-[10px] font-semibold text-gray-500 dark:text-gray-400 tracking-widest uppercase">Supercar & Luxury</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-600 dark:text-gray-300">
+                <a href="index.html" class="text-red-600 dark:text-red-500 hover:text-red-500 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-house text-xs"></i> Trang Chủ
+                </a>
+                <a href="#car-section" class="hover:text-red-600 dark:hover:text-red-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-car text-xs"></i> Bộ Sưu Tập Xe
+                </a>
+                <a href="#loan-calculator" class="hover:text-red-600 dark:hover:text-red-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-calculator text-xs"></i> Dự Toán Trả Góp
+                </a>
+                <!-- Comparison Nav Link -->
+                <button onclick="toggleCompareModal()" class="hover:text-red-600 dark:hover:text-red-400 transition flex items-center gap-1.5 font-semibold text-sm">
+                    <i class="fa-solid fa-code-compare text-xs text-red-500"></i>
+                    <span>So Sánh Xe</span>
+                    <span id="compareNavCount" class="bg-red-600 text-white text-[10px] px-1.5 py-0.2 rounded-full hidden">0</span>
+                </button>
+                <button onclick="toggleChat()" class="hover:text-red-600 dark:hover:text-red-400 transition flex items-center gap-1.5 font-semibold text-sm">
+                    <i class="fa-solid fa-headset text-xs text-red-500"></i>
+                    <span>Trợ Lý AI</span>
+                </button>
+                <a href="#services-section" class="hover:text-red-600 dark:hover:text-red-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-award text-xs"></i> Dịch Vụ 5 Sao
+                </a>
+                <a href="#map-section" class="hover:text-red-600 dark:hover:text-red-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-map-location-dot text-xs"></i> Showroom
+                </a>
+                <a href="admin.html" class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-yellow-400 transition flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10">
+                    <i class="fa-solid fa-lock text-[10px]"></i> Admin
+                </a>
+            </nav>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-3">
+                <!-- Theme Toggle Button (Dark / Light) -->
+                <button id="themeToggle" type="button" title="Chuyển chế độ Sáng / Tối" class="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 text-amber-500 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-yellow-400 flex items-center justify-center border border-gray-200 dark:border-white/10 transition shadow-sm">
+                    <i id="themeIcon" class="fa-solid fa-sun text-base"></i>
+                </button>
+
+                <!-- Hotline VIP Button -->
+                <a href="tel:0706850014" class="shine-hover relative group bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-red-600/25 transition">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <i class="fa-solid fa-phone-volume"></i>
+                    <span class="hidden sm:inline">0706.850.014</span>
+                    <span class="sm:hidden">Gọi VIP</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-[580px] lg:min-h-[640px] flex items-center hero-gradient-mesh overflow-hidden border-b border-gray-200 dark:border-white/10 py-12 lg:py-16">
+        <!-- Ambient Blur Glows -->
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-red-600/10 dark:bg-red-600/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                
+                <!-- Left Hero Content -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-wider">
+                        <i class="fa-solid fa-bolt text-red-600 dark:text-red-500"></i>
+                        <span>Showroom Siêu Xe & Xe Sang Uy Tín Hàng Đầu</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black font-heading leading-tight tracking-tight text-slate-900 dark:text-white">
+                        ĐẲNG CẤP <span class="text-gradient-red">THƯỢNG LƯU</span><br>
+                        BỨT PHÁ MỌI GIỚI HẠN
+                    </h1>
+
+                    <p class="text-gray-600 dark:text-gray-300 text-base sm:text-lg max-w-xl font-normal leading-relaxed">
+                        Khám phá bộ sưu tập hơn <strong class="text-slate-900 dark:text-white">50+ siêu xe thể thao, SUV cao cấp & xe điện thế hệ mới</strong> sẵn sàng bàn giao trong 24h. Cam kết kiểm định 160 bước nghiêm ngặt, hỗ trợ trả góp đến 80%.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <a href="#car-section" class="bg-red-600 hover:bg-red-700 text-white font-bold px-7 py-3.5 rounded-2xl text-sm shadow-xl shadow-red-600/30 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                            <span>Khám Phá Bộ Sưu Tập</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <a href="#loan-calculator" class="bg-white hover:bg-gray-100 text-gray-800 dark:bg-slate-900/80 dark:hover:bg-slate-800 dark:text-gray-200 font-bold px-6 py-3.5 rounded-2xl text-sm border border-gray-300 dark:border-white/10 hover:border-red-500/40 transition flex items-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-calculator text-red-600 dark:text-red-400"></i>
+                            <span>Dự Toán Trả Góp</span>
+                        </a>
+                        <button onclick="openBookingModal('Tất cả mẫu xe')" class="text-xs text-gray-500 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white underline underline-offset-4 transition">
+                            Đăng ký lái thử tận nhà &rarr;
+                        </button>
+                    </div>
+
+                    <!-- Trust Stats Bar -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-gray-200 dark:border-white/10">
+                        <div>
+                            <div class="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white font-heading">50+</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Siêu xe có sẵn</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl lg:text-3xl font-black text-red-600 dark:text-red-400 font-heading">100%</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Kiểm định chính hãng</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white font-heading">80%</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Hỗ trợ vay trả góp</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl lg:text-3xl font-black text-red-600 dark:text-red-400 font-heading">24/7</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Cứu hộ & Giao xe VIP</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Hero Visual Spotlight -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative rounded-3xl p-2 bg-gradient-to-b from-red-500/20 via-black/5 to-transparent dark:from-red-500/30 dark:via-white/5 shadow-2xl">
+                        <div class="relative rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-gray-200 dark:border-white/10 group shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800" 
+                                alt="Porsche 911 Carrera S" 
+                                class="w-full h-80 sm:h-96 object-cover group-hover:scale-105 transition duration-700">
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/10"></div>
+
+                            <!-- Floating Spec Badges -->
+                            <div class="absolute top-4 left-4 flex gap-2">
+                                <span class="bg-red-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
+                                    ★ Spotlight Mới Về
+                                </span>
+                            </div>
+
+                            <div class="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-black/70 backdrop-blur-md border border-white/15 text-white">
+                                <div class="flex justify-between items-end">
+                                    <div>
+                                        <span class="text-xs text-red-400 font-bold uppercase tracking-wider">Porsche Series</span>
+                                        <h3 class="text-xl font-black text-white">Porsche 911 Carrera S</h3>
+                                        <p class="text-xs text-gray-300">0-100 km/h: 3.5s | 450 HP | Hộp số PDK 8 cấp</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-[10px] text-gray-300 block">Giá niêm yết</span>
+                                        <span class="text-lg font-black text-red-400">8,5 Tỷ VNĐ</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- BRAND LOGO / QUICK FILTER STRIP -->
+    <section class="py-6 bg-gray-100/80 dark:bg-slate-950/90 border-b border-gray-200 dark:border-white/10 overflow-x-auto">
+        <div class="max-w-7xl mx-auto px-4 flex items-center gap-2 sm:gap-3 justify-start md:justify-center min-w-max" id="brandPillContainer">
+            <!-- Brand pills injected via JavaScript -->
+        </div>
+    </section>
+
+    <!-- MAIN CAR SHOWROOM & INVENTORY -->
+    <main id="car-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <span class="text-xs font-bold text-red-600 dark:text-red-500 tracking-widest uppercase flex items-center gap-1.5">
+                    <i class="fa-solid fa-car-side"></i> BỘ SƯU TẬP XE 2026
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-black font-heading mt-1 text-slate-900 dark:text-white">
+                    DANH SÁCH SIÊU XE & XE SANG SẴN GIAO
+                </h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 max-w-xl">
+                    Lựa chọn các siêu phẩm tốc độ, SUV thương gia và xe điện bán chạy nhất hiện nay. Đầy đủ giấy tờ pháp lý, hỗ trợ sang tên trọn gói.
+                </p>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <span id="carCountBadge" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-white/10 shadow-sm">
+                    Đang hiển thị: <strong class="text-red-600 dark:text-red-400">0</strong> xe
+                </span>
+                <button onclick="resetAllFilters()" class="text-xs text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-white underline transition">
+                    <i class="fa-solid fa-rotate-left mr-1"></i>Đặt lại bộ lọc
+                </button>
+            </div>
+        </div>
+
+        <!-- ADVANCED FILTER & SEARCH PANEL -->
+        <div class="glass-panel p-5 rounded-3xl space-y-4 shadow-xl border border-gray-200/80 dark:border-white/10">
+            <!-- Top Search & Main Dropdowns -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                
+                <!-- Keyword Search -->
+                <div class="relative lg:col-span-2">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400 text-sm"></i>
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên xe, hãng xe (VD: VF3, G63, Porsche)..." 
+                        class="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-slate-900/90 border border-gray-300 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-red-500 focus:bg-white dark:focus:bg-slate-900 transition">
+                </div>
+
+                <!-- Brand Select -->
+                <div>
+                    <select id="brandFilter" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-900/90 border border-gray-300 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500 transition">
+                        <option value="">Tất cả thương hiệu</option>
+                    </select>
+                </div>
+
+                <!-- Price Segment Select -->
+                <div>
+                    <select id="priceFilter" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-900/90 border border-gray-300 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500 transition">
+                        <option value="">Tất cả phân khúc giá</option>
+                        <option value="under-1b">Dưới 1 Tỷ VNĐ</option>
+                        <option value="1b-3b">1 Tỷ - 3 Tỷ VNĐ</option>
+                        <option value="3b-8b">3 Tỷ - 8 Tỷ VNĐ</option>
+                        <option value="over-8b">Trên 8 Tỷ VNĐ (Siêu xe)</option>
+                    </select>
+                </div>
+
+                <!-- Fuel Type Select -->
+                <div>
+                    <select id="fuelFilter" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-900/90 border border-gray-300 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500 transition">
+                        <option value="">Tất cả nhiên liệu</option>
+                        <option value="Điện">⚡ Xe thuần điện (EV)</option>
+                        <option value="Xăng">⛽ Xe máy xăng</option>
+                        <option value="Hybrid">🔋 Xe Hybrid</option>
+                        <option value="Dầu">🚜 Xe máy dầu (Diesel)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Quick Category Tabs & Sort -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-gray-200 dark:border-white/10 text-xs">
+                
+                <!-- Quick filter tags -->
+                <div class="flex flex-wrap items-center gap-2" id="quickFilterTabs">
+                    <button onclick="setCategoryFilter('all')" class="cat-pill active px-3 py-1.5 rounded-xl font-bold bg-red-600 text-white transition">
+                        Tất Cả Mẫu Xe
+                    </button>
+                    <button onclick="setCategoryFilter('electric')" class="cat-pill px-3 py-1.5 rounded-xl font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-300 border border-gray-200 dark:border-white/10 transition">
+                        ⚡ Xe Thuần Điện
+                    </button>
+                    <button onclick="setCategoryFilter('supercar')" class="cat-pill px-3 py-1.5 rounded-xl font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-300 border border-gray-200 dark:border-white/10 transition">
+                        🔥 Siêu Xe Tốc Độ
+                    </button>
+                    <button onclick="setCategoryFilter('luxury_suv')" class="cat-pill px-3 py-1.5 rounded-xl font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-300 border border-gray-200 dark:border-white/10 transition">
+                        💎 Xe Sang & SUV
+                    </button>
+                </div>
+
+                <!-- Sort Dropdown -->
+                <div class="flex items-center gap-2">
+                    <span class="text-gray-500 dark:text-gray-400">Sắp xếp:</span>
+                    <select id="sortFilter" onchange="filterCars()" class="px-3 py-1.5 bg-gray-50 dark:bg-slate-900/90 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-gray-900 dark:text-white focus:outline-none focus:border-red-500">
+                        <option value="featured">Nổi bật nhất</option>
+                        <option value="asc">Giá: Thấp đến Cao</option>
+                        <option value="desc">Giá: Cao đến Thấp</option>
+                        <option value="name">Tên: A &rarr; Z</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAR INVENTORY GRID -->
+        <div id="carGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+            <!-- Dynamically populated via JavaScript -->
+        </div>
+
+    </main>
+
+    <!-- INTERACTIVE INSTALLMENT / LOAN CALCULATOR -->
+    <section id="loan-calculator" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="glass-panel p-6 sm:p-10 rounded-3xl border border-gray-200 dark:border-red-500/20 relative overflow-hidden shadow-2xl">
+            <!-- Ambient Glow -->
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="text-xs font-bold text-red-600 dark:text-red-500 tracking-widest uppercase flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-calculator"></i> TÀI CHÍNH THÔNG MINH
+                </span>
+                <h2 class="text-3xl font-black font-heading mt-1 text-slate-900 dark:text-white">DỰ TOÁN TRẢ GÓP XE SHOWROOM 4TL</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    Chủ động tính toán số tiền trả trước và khoản thanh toán hàng tháng với gói hỗ trợ vay ưu đãi liên kết hơn 15 ngân hàng hàng đầu.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-center">
+                <!-- Inputs column -->
+                <div class="lg:col-span-7 space-y-6">
+                    
+                    <!-- Select Car or Custom Price -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase mb-2">Chọn mẫu xe cần tính hoặc nhập giá xe</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <select id="calcCarSelect" onchange="applyCarToCalculator()" class="px-3.5 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500">
+                                <option value="">-- Chọn xe có sẵn --</option>
+                            </select>
+                            <div class="relative">
+                                <input type="number" id="calcPriceInput" value="2000000000" step="50000000" oninput="calculateLoan()" 
+                                    class="w-full px-3.5 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500">
+                                <span class="absolute right-3.5 top-3 text-xs text-gray-400 font-bold">VNĐ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prepayment Percentage Slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span class="text-gray-700 dark:text-gray-300">Tỷ lệ trả trước:</span>
+                            <span class="text-red-600 dark:text-red-400 font-bold" id="calcDownPercentLabel">20% (<span id="calcDownAmountLabel">400.000.000 VNĐ</span>)</span>
+                        </div>
+                        <input type="range" id="calcDownPercent" min="10" max="80" step="5" value="20" oninput="calculateLoan()" class="w-full">
+                        <div class="flex justify-between text-[11px] text-gray-400">
+                            <span>10% (Tối thiểu)</span>
+                            <span>30%</span>
+                            <span>50%</span>
+                            <span>80%</span>
+                        </div>
+                    </div>
+
+                    <!-- Loan Term Slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span class="text-gray-700 dark:text-gray-300">Thời hạn vay:</span>
+                            <span class="text-red-600 dark:text-red-400 font-bold" id="calcMonthsLabel">60 tháng (5 năm)</span>
+                        </div>
+                        <input type="range" id="calcMonths" min="12" max="84" step="12" value="60" oninput="calculateLoan()" class="w-full">
+                        <div class="flex justify-between text-[11px] text-gray-400">
+                            <span>1 năm (12T)</span>
+                            <span>3 năm (36T)</span>
+                            <span>5 năm (60T)</span>
+                            <span>7 năm (84T)</span>
+                        </div>
+                    </div>
+
+                    <!-- Interest Rate Slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span class="text-gray-700 dark:text-gray-300">Lãi suất ước tính:</span>
+                            <span class="text-red-600 dark:text-red-400 font-bold" id="calcInterestLabel">8.5% / năm</span>
+                        </div>
+                        <input type="range" id="calcInterest" min="6.5" max="12.0" step="0.1" value="8.5" oninput="calculateLoan()" class="w-full">
+                    </div>
+
+                </div>
+
+                <!-- Result Dashboard Card -->
+                <div class="lg:col-span-5 bg-gradient-to-b from-red-50 via-white to-gray-50 dark:bg-gradient-to-b dark:from-red-600/20 dark:via-slate-900 dark:to-slate-900 p-6 sm:p-8 rounded-3xl border border-red-200 dark:border-red-500/30 space-y-6 shadow-xl">
+                    <div class="border-b border-gray-200 dark:border-white/10 pb-4">
+                        <span class="text-xs text-gray-500 dark:text-gray-400 uppercase font-bold tracking-wider">Ước tính trả hàng tháng (Gốc + Lãi)</span>
+                        <div class="text-3xl sm:text-4xl font-black text-red-600 dark:text-red-500 font-heading mt-1" id="resMonthlyPayment">
+                            -- VNĐ
+                        </div>
+                        <span class="text-[11px] text-gray-400">*Tính theo phương thức dư nợ giảm dần</span>
+                    </div>
+
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between text-gray-600 dark:text-gray-300">
+                            <span>Số tiền vay ngân hàng:</span>
+                            <strong class="text-slate-900 dark:text-white" id="resLoanAmount">--</strong>
+                        </div>
+                        <div class="flex justify-between text-gray-600 dark:text-gray-300">
+                            <span>Số tiền cần trả trước:</span>
+                            <strong class="text-slate-900 dark:text-white" id="resDownPayment">--</strong>
+                        </div>
+                        <div class="flex justify-between text-gray-600 dark:text-gray-300">
+                            <span>Tiền gốc trả hàng tháng:</span>
+                            <strong class="text-slate-900 dark:text-white" id="resMonthlyPrincipal">--</strong>
+                        </div>
+                        <div class="flex justify-between text-gray-600 dark:text-gray-300">
+                            <span>Tiền lãi tháng đầu tiên:</span>
+                            <strong class="text-slate-900 dark:text-white" id="resMonthlyInterest">--</strong>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button onclick="requestLoanConsult()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-2xl text-sm transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                            <span>Nhận Bảng Tính Chi Tiết Qua Zalo</span>
+                        </button>
+                        <p class="text-[11px] text-center text-gray-400 mt-2">Duyệt hồ sơ nhanh chóng trong 30 phút, cam kết bảo mật thông tin.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5-STAR SERVICES & COMMITMENTS -->
+    <section id="services-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="text-xs font-bold text-red-600 dark:text-red-500 tracking-widest uppercase flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-crown"></i> TIÊU CHUẨN 5 SAO
+            </span>
+            <h2 class="text-3xl font-black font-heading mt-1 text-slate-900 dark:text-white">ĐẶC QUYỀN KHI MUA XE TẠI 4TL</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Dịch vụ chăm sóc khách hàng toàn diện chuẩn thượng lưu mang lại sự an tâm tuyệt đối.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Service 1 -->
+            <div class="glass-card p-6 rounded-3xl space-y-3 bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-white/10 shadow-md">
+                <div class="w-12 h-12 rounded-2xl bg-red-600/10 border border-red-500/20 text-red-600 dark:text-red-500 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Kiểm Định 160 Điểm</h3>
+                <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                    Cam kết văn bản: KHÔNG đâm đụng, KHÔNG ngập nước, máy móc & khung gầm nguyên bản 100%. Cho phép khách hàng check hãng toàn quốc.
+                </p>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="glass-card p-6 rounded-3xl space-y-3 bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-white/10 shadow-md">
+                <div class="w-12 h-12 rounded-2xl bg-red-600/10 border border-red-500/20 text-red-600 dark:text-red-500 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-truck-ramp-box"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Giao Xe Tận Nhà VIP</h3>
+                <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                    Đội ngũ xe lồng kín chuyên dụng sẵn sàng giao xe tại cửa nhà khách hàng trên 63 tỉnh thành, tổ chức lễ bàn giao hoa & rượu vang trang trọng.
+                </p>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="glass-card p-6 rounded-3xl space-y-3 bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-white/10 shadow-md">
+                <div class="w-12 h-12 rounded-2xl bg-red-600/10 border border-red-500/20 text-red-600 dark:text-red-500 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-repeat"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Thu Cũ Đổi Mới (Trade-in)</h3>
+                <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                    Định giá xe cũ minh bạch và sát giá thị trường nhất. Hỗ trợ khách hàng nâng cấp lên đời siêu xe, xe sang với thủ tục chỉ trong 1 ngày.
+                </p>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="glass-card p-6 rounded-3xl space-y-3 bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-white/10 shadow-md">
+                <div class="w-12 h-12 rounded-2xl bg-red-600/10 border border-red-500/20 text-red-600 dark:text-red-500 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Bảo Hành & Spa Chuyên Sâu</h3>
+                <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                    Xưởng dịch vụ đạt chuẩn châu Âu, cung cấp gói bảo hành 3 năm, tặng dịch vụ detailing phủ bóng cao cấp và cứu hộ miễn phí 24/7.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS / KHÁCH HÀNG TIÊU BIỂU -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="text-xs font-bold text-red-600 dark:text-red-500 tracking-widest uppercase flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-star text-yellow-400"></i> KHÁCH HÀNG NÓI GÌ
+            </span>
+            <h2 class="text-3xl font-black font-heading mt-1 text-slate-900 dark:text-white">SỰ HÀI LÒNG CỦA CÁC CHỦ NHÂN SIÊU XE</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Review 1 -->
+            <div class="glass-card p-6 rounded-3xl space-y-4 bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-white/10 shadow-md">
+                <div class="flex text-yellow-400 text-xs gap-1">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="text-xs text-slate-700 dark:text-gray-300 leading-relaxed italic">
+                    "Tôi vừa nhận chiếc Porsche 911 Carrera S tại Showroom 4TL. Dịch vụ bàn giao xe cực kỳ trang trọng và chuyên nghiệp. Thủ tục giấy tờ chỉ mất đúng 2 ngày là có biển số đẹp!"
+                </p>
+                <div class="flex items-center gap-3 pt-2 border-t border-gray-200 dark:border-white/10">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" class="w-10 h-10 rounded-full object-cover border border-red-500">
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white">Anh Hoàng Nam</h4>
+                        <span class="text-[11px] text-gray-500 dark:text-gray-400">Chủ nhân Porsche 911 (Quận 2, TP.HCM)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="glass-card p-6 rounded-3xl space-y-4 bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-white/10 shadow-md">
+                <div class="flex text-yellow-400 text-xs gap-1">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="text-xs text-slate-700 dark:text-gray-300 leading-relaxed italic">
+                    "Mua xe VinFast VF3 giao ngay không cần chờ đợi. Các bạn nhân viên tư vấn rất nhiệt tình, hỗ trợ gói sạc và giao xe tận nhà tại Vũng Tàu. Rất hài lòng với Showroom 4TL!"
+                </p>
+                <div class="flex items-center gap-3 pt-2 border-t border-gray-200 dark:border-white/10">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-10 h-10 rounded-full object-cover border border-red-500">
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white">Chị Mai Phương</h4>
+                        <span class="text-[11px] text-gray-500 dark:text-gray-400">Chủ nhân VinFast VF3 (Bà Rịa - Vũng Tàu)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="glass-card p-6 rounded-3xl space-y-4 bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-white/10 shadow-md">
+                <div class="flex text-yellow-400 text-xs gap-1">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="text-xs text-slate-700 dark:text-gray-300 leading-relaxed italic">
+                    "G63 AMG mua ở đây chất lượng đúng như cam kết. Hồ sơ trả góp ngân hàng duyệt chỉ trong 1 buổi chiều. Xưởng bảo dưỡng chăm sóc xe sạch sẽ và cẩn thận từng chi tiết."
+                </p>
+                <div class="flex items-center gap-3 pt-2 border-t border-gray-200 dark:border-white/10">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100" class="w-10 h-10 rounded-full object-cover border border-red-500">
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white">Anh Quốc Bảo</h4>
+                        <span class="text-[11px] text-gray-500 dark:text-gray-400">Doanh nhân Bất Động Sản (Quận 7)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHOWROOM LOCATION & TEST DRIVE BOOKING -->
+    <section id="map-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="glass-panel p-6 sm:p-10 rounded-3xl border border-gray-200 dark:border-white/10 shadow-2xl">
+            <div class="grid lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Left Details & Booking Form -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="text-xs font-bold text-red-600 dark:text-red-500 tracking-widest uppercase flex items-center gap-1.5">
+                            <i class="fa-solid fa-location-dot"></i> ĐIỂM HẸN ĐẲNG CẤP
+                        </span>
+                        <h3 class="text-2xl sm:text-3xl font-black font-heading mt-1 text-slate-900 dark:text-white">SHOWROOM 4TL SÀI GÒN</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                            Không gian trưng bày đạt tiêu chuẩn đại lý siêu xe quốc tế. Kính mời quý khách đến thưởng thức cà phê thượng hạng và trải nghiệm trực tiếp.
+                        </p>
+                    </div>
+
+                    <!-- Contact Details -->
+                    <div class="space-y-3 text-xs text-slate-700 dark:text-gray-300">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-map-pin text-red-600 dark:text-red-500 mt-1"></i>
+                            <span>99 Nguyễn Lương Bằng, Phường Tân Phú, Quận 7, TP. Hồ Chí Minh</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-clock text-red-600 dark:text-red-500"></i>
+                            <span>Giờ mở cửa: 08:00 - 20:30 (Tất cả các ngày trong tuần)</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-red-600 dark:text-red-500"></i>
+                            <span>Hotline Bán Hàng: <strong class="text-slate-900 dark:text-white">0706.850.014</strong></span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-red-600 dark:text-red-500"></i>
+                            <span>Email: contact@showroom4tl.vn</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Test Drive Form -->
+                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-gray-200 dark:border-white/10 space-y-3">
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Đăng Ký Lái Thử / Đặt Lịch Xem Xe</h4>
+                        <form onsubmit="handleTestDriveSubmit(event)" class="space-y-2">
+                            <input type="text" id="driveName" placeholder="Họ và tên của bạn" required class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-red-500">
+                            <input type="tel" id="drivePhone" placeholder="Số điện thoại liên hệ" required class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-red-500">
+                            <select id="driveCar" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-red-500">
+                                <option value="Chưa chọn xe">Chọn mẫu xe quan tâm</option>
+                            </select>
+                            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl text-xs transition">
+                                Xác Nhận Đặt Lịch Hẹn
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right Google Maps -->
+                <div class="lg:col-span-7 h-96 lg:h-[450px] rounded-2xl overflow-hidden border border-gray-200 dark:border-white/10 shadow-inner">
+                    <iframe class="w-full h-full" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.023447957643!2d106.71694297590856!3d10.732662959223783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f97463f1e9d%3A0x8ad94d210ff4dd89!2zOTkgTmd1eeG7gW4gTMawxqFuZyBC4bqxbmcsIFTDom4gUGjDuiwgIFF14bqtbiA3LCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s" 
+                            allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 dark:bg-slate-950 border-t border-gray-800 dark:border-white/10 pt-16 pb-8 text-gray-400 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <!-- Col 1: Bio -->
+                <div class="lg:col-span-2 space-y-4">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-red-600 flex items-center justify-center text-white font-bold">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <span class="text-xl font-black text-white font-heading tracking-wider">SHOWROOM 4TL</span>
+                    </a>
+                    <p class="text-xs leading-relaxed max-w-sm text-gray-400">
+                        Đại lý độc lập phân phối các dòng siêu xe thể thao, SUV cao cấp và xe điện hàng đầu tại Việt Nam. Cam kết chất lượng chuẩn quốc tế, nâng tầm phong cách sống thượng lưu.
+                    </p>
+                    <div class="flex items-center gap-3 pt-2">
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center hover:text-red-400 hover:border-red-500 transition"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center hover:text-red-400 hover:border-red-500 transition"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center hover:text-red-400 hover:border-red-500 transition"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center hover:text-red-400 hover:border-red-500 transition"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Dòng xe -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-bold uppercase text-xs tracking-wider">Dòng Xe Bán Chạy</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#car-section" onclick="filterByBrandQuick('Porsche')" class="hover:text-red-400 transition">Porsche 911 Series</a></li>
+                        <li><a href="#car-section" onclick="filterByBrandQuick('Mercedes-Benz')" class="hover:text-red-400 transition">Mercedes-AMG G63</a></li>
+                        <li><a href="#car-section" onclick="filterByBrandQuick('VinFast')" class="hover:text-red-400 transition">VinFast VF3 & VF8</a></li>
+                        <li><a href="#car-section" onclick="filterByBrandQuick('Ferrari')" class="hover:text-red-400 transition">Ferrari F8 Tributo</a></li>
+                        <li><a href="#car-section" onclick="filterByBrandQuick('BMW')" class="hover:text-red-400 transition">BMW 7-Series</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Dịch vụ -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-bold uppercase text-xs tracking-wider">Dịch Vụ Khách Hàng</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#loan-calculator" class="hover:text-red-400 transition">Dự toán trả góp ngân hàng</a></li>
+                        <li><a href="#services-section" class="hover:text-red-400 transition">Kiểm định 160 bước chính hãng</a></li>
+                        <li><a href="#map-section" class="hover:text-red-400 transition">Đặt hẹn lái thử tận nơi</a></li>
+                        <li><a href="#" onclick="alert('Hotline cứu hộ khẩn cấp: 1900.8888 (24/7)')" class="hover:text-red-400 transition">Cứu hộ xe 24/7 toàn quốc</a></li>
+                        <li><a href="admin.html" class="hover:text-yellow-400 transition">Cổng quản trị nội bộ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Pháp lý -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-bold uppercase text-xs tracking-wider">Chính Sách & Hỗ Trợ</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-red-400 transition">Chính sách bảo hành 3 năm</a></li>
+                        <li><a href="#" class="hover:text-red-400 transition">Cam kết hoàn tiền 100%</a></li>
+                        <li><a href="#" class="hover:text-red-400 transition">Chính sách bảo mật khách hàng</a></li>
+                        <li><a href="#" class="hover:text-red-400 transition">Quy trình đặt cọc giữ xe</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="pt-8 border-t border-gray-800 dark:border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left text-gray-500">
+                <p>© 2026 SHOWROOM 4TL. Bản quyền phát triển bởi Sinh viên ĐH Văn Lang.</p>
+                <div class="flex gap-4">
+                    <span>Đẳng Cấp • Minh Bạch • Tận Tâm</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- STICKY COMPARISON DOCK (Appears when >= 1 car is selected) -->
+    <div id="comparisonDock" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-red-500/40 px-5 py-3 rounded-2xl shadow-2xl items-center gap-4 hidden transition-all duration-300" style="display: none;">
+        <div class="flex items-center gap-2" id="compareThumbnails">
+            <!-- Selected cars thumbnails -->
+        </div>
+        <div class="h-6 w-px bg-gray-300 dark:bg-white/20"></div>
+        <button onclick="openCompareModal()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md transition flex items-center gap-1.5">
+            <i class="fa-solid fa-code-compare"></i>
+            <span>So Sánh Ngay (<span id="compareCount">0</span>/3)</span>
+        </button>
+        <button onclick="clearComparison()" title="Xóa tất cả" class="text-gray-400 hover:text-red-600 dark:hover:text-white text-xs">
+            ✕
+        </button>
+    </div>
+
+    <!-- MODAL 1: CHI TIẾT XE -->
+    <div id="detailModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4 overflow-y-auto hidden" style="display: none;">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 relative shadow-2xl border border-gray-200 dark:border-white/15 max-h-[90vh] overflow-y-auto space-y-6">
+            <button onclick="closeModal('detailModal')" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center justify-center transition">✕</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: MÃ QR ĐẶT CỌC (VietQR Style) -->
+    <div id="qrModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4 hidden" style="display: none;">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-sm w-full p-6 text-center relative shadow-2xl border border-gray-200 dark:border-red-500/30 space-y-4">
+            <button onclick="closeModal('qrModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center justify-center transition">✕</button>
+            
+            <div class="w-12 h-12 rounded-full bg-red-600/10 dark:bg-red-600/20 text-red-600 dark:text-red-500 mx-auto flex items-center justify-center text-xl">
+                <i class="fa-solid fa-qrcode"></i>
+            </div>
+
+            <h3 class="text-lg font-black uppercase text-slate-900 dark:text-white font-heading">QUÉT MÃ QR ĐẶT CỌC GIỮ XE</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-300" id="qrCarName">Thanh toán cọc giữ xe tại Showroom 4TL</p>
+            
+            <div class="bg-white p-3 rounded-2xl inline-block shadow-lg border border-gray-200">
+                <img id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=SHOWROOM4TL_DATCOC" class="w-48 h-48 mx-auto object-contain">
+            </div>
+
+            <div class="bg-gray-100 dark:bg-slate-800 p-3 rounded-xl text-left text-xs space-y-1 text-slate-700 dark:text-gray-300 border border-gray-200 dark:border-white/10">
+                <div class="flex justify-between">
+                    <span>Ngân hàng:</span>
+                    <strong class="text-slate-900 dark:text-white">MB Bank (Quân Đội)</strong>
+                </div>
+                <div class="flex justify-between">
+                    <span>Số tài khoản:</span>
+                    <strong class="text-red-600 dark:text-red-400 font-mono tracking-wider">0706850014</strong>
+                </div>
+                <div class="flex justify-between">
+                    <span>Chủ TK:</span>
+                    <strong class="text-slate-900 dark:text-white">SHOWROOM 4TL AUTO</strong>
+                </div>
+                <div class="flex justify-between">
+                    <span>Nội dung CK:</span>
+                    <strong class="text-amber-600 dark:text-yellow-400 font-mono" id="qrMemo">COC XE 4TL</strong>
+                </div>
+            </div>
+
+            <button onclick="confirmDepositSuccess()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-xs transition shadow-md shadow-red-600/30">
+                <i class="fa-solid fa-circle-check mr-1.5"></i> Tôi Đã Hoàn Tất Chuyển Khoản
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 3: SO SÁNH XE ĐỐI ĐẦU -->
+    <div id="compareModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-4 overflow-y-auto hidden" style="display: none;">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-5xl w-full p-6 sm:p-8 relative shadow-2xl border border-gray-200 dark:border-white/15 max-h-[90vh] overflow-y-auto space-y-6">
+            <div class="flex justify-between items-center border-b border-gray-200 dark:border-white/10 pb-4">
+                <div>
+                    <h3 class="text-2xl font-black font-heading text-slate-900 dark:text-white">SO SÁNH THÔNG SỐ XE ĐỐI ĐẦU</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Xem trực quan thông số, phân khúc và mức giá giữa các mẫu xe bạn đang phân vân.</p>
+                </div>
+                <button onclick="closeModal('compareModal')" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center justify-center transition">✕</button>
+            </div>
+            
+            <div id="compareTableContainer" class="overflow-x-auto">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: ĐĂNG KÝ LÁI THỬ / XEM XE -->
+    <div id="bookingModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4 hidden" style="display: none;">
+        <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-md w-full p-6 relative shadow-2xl border border-gray-200 dark:border-white/15 space-y-4">
+            <button onclick="closeModal('bookingModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center justify-center transition">✕</button>
+            <h3 class="text-xl font-black font-heading text-slate-900 dark:text-white">ĐĂNG KÝ TRẢI NGHIỆM LÁI THỬ</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Đội ngũ Showroom 4TL sẽ mang xe đến tận nhà quý khách hoặc chuẩn bị xe sẵn tại showroom.</p>
+
+            <form onsubmit="handleModalBooking(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-gray-600 dark:text-gray-400 mb-1">Mẫu xe chọn lái thử</label>
+                    <input type="text" id="modalBookingCar" readonly class="w-full px-3.5 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white font-bold">
+                </div>
+                <div>
+                    <label class="block text-gray-600 dark:text-gray-400 mb-1">Họ và tên của quý khách</label>
+                    <input type="text" id="modalBookingName" required placeholder="Nguyễn Văn A" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-red-500">
+                </div>
+                <div>
+                    <label class="block text-gray-600 dark:text-gray-400 mb-1">Số điện thoại liên hệ</label>
+                    <input type="tel" id="modalBookingPhone" required placeholder="0900.xxx.xxx" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-red-500">
+                </div>
+                <div>
+                    <label class="block text-gray-600 dark:text-gray-400 mb-1">Thời gian dự kiến</label>
+                    <input type="date" id="modalBookingDate" required class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-red-500">
+                </div>
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-xs transition shadow-lg shadow-red-600/30">
+                    Xác Nhận Đăng Ký Lái Thử
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LUXURY FLOATING AI CHATBOT WIDGET -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <!-- Chat Bubble Button -->
+        <button id="chatBubbleBtn" onclick="toggleChat()" type="button" aria-label="Mở Trợ lý AI 4TL" class="relative pulse-ring w-14 h-14 bg-gradient-to-tr from-red-600 to-red-500 text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition duration-300 group cursor-pointer">
+            <i id="chatBubbleIcon" class="fa-solid fa-headset text-2xl group-hover:rotate-12 transition"></i>
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full shadow-sm"></span>
+        </button>
+
+        <!-- Chat Window -->
+        <div id="chatWindow" class="hidden absolute bottom-20 right-0 w-[calc(100vw-3rem)] sm:w-96 max-h-[calc(100vh-120px)] bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-gray-200 dark:border-white/15 rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[520px] transition-all origin-bottom-right" style="display: none;">
+            
+            <!-- Chat Header -->
+            <div class="bg-gradient-to-r from-red-700 to-red-600 p-4 text-white flex justify-between items-center shadow-sm">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-white shadow-inner">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold leading-tight">4TL AI Assistant</h4>
+                        <span class="text-[10px] text-red-200 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Trực tuyến 24/7
+                        </span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <a href="ai_chat.html" target="_blank" title="Mở trang tư vấn AI toàn màn hình" class="w-7 h-7 rounded-full bg-black/20 text-white hover:bg-black/40 flex items-center justify-center text-xs transition">
+                        <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+                    </a>
+                    <button onclick="toggleChat()" type="button" title="Đóng chat" class="w-7 h-7 rounded-full bg-black/20 text-white hover:bg-black/40 flex items-center justify-center text-xs transition">✕</button>
+                </div>
+            </div>
+
+            <!-- Chat Suggestions -->
+            <div class="p-2.5 bg-gray-100/80 dark:bg-slate-950/60 border-b border-gray-200 dark:border-white/10 flex gap-1.5 overflow-x-auto text-[11px] whitespace-nowrap">
+                <button onclick="quickPrompt('Giá xe VinFast VF3?')" class="px-2.5 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-red-600 text-gray-700 dark:text-gray-300 hover:text-white border border-gray-200 dark:border-transparent transition">⚡ Giá VF3</button>
+                <button onclick="quickPrompt('Tư vấn xe dưới 2 tỷ')" class="px-2.5 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-red-600 text-gray-700 dark:text-gray-300 hover:text-white border border-gray-200 dark:border-transparent transition">💰 Dưới 2 tỷ</button>
+                <button onclick="quickPrompt('Tư vấn thủ tục trả góp')" class="px-2.5 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-red-600 text-gray-700 dark:text-gray-300 hover:text-white border border-gray-200 dark:border-transparent transition">💳 Trả góp</button>
+                <button onclick="quickPrompt('Đăng ký lái thử xe')" class="px-2.5 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-red-600 text-gray-700 dark:text-gray-300 hover:text-white border border-gray-200 dark:border-transparent transition">🏎️ Lái thử</button>
+            </div>
+
+            <!-- Chat Messages Box -->
+            <div id="chatBox" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
+                <div class="bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 shadow-sm leading-relaxed">
+                    👋 Xin kính chào quý khách! Em là Trợ lý AI Showroom 4TL. Em có thể hỗ trợ quý khách tra cứu thông số kỹ thuật, bảng giá lăn bánh, chính sách trả góp hay lịch lái thử hôm nay ạ?
+                </div>
+            </div>
+
+            <!-- Chat Input Form -->
+            <div class="p-3 bg-gray-50 dark:bg-slate-950 border-t border-gray-200 dark:border-white/10 flex gap-2">
+                <input type="text" id="chatInput" onkeydown="if(event.key === 'Enter') sendChatMessage()" placeholder="Nhập câu hỏi (VD: giá C300, VF3, G63)..." 
+                       class="flex-1 bg-white dark:bg-slate-900 border border-gray-300 dark:border-white/10 px-3.5 py-2.5 rounded-xl text-xs text-gray-900 dark:text-white focus:outline-none focus:border-red-500">
+                <button onclick="sendChatMessage()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl font-bold text-xs transition">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC & ENGINE -->
+    <script>
+        // Fallback Database Cars (20 siêu phẩm đảm bảo website hiển thị đẹp ngay cả khi không có kết nối MySQL)
+        const fallbackCars = [
+            { id: 1, name: 'Ferrari F8 Tributo', brand: 'Ferrari', price: 19000000000, image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800', engine: '3.9L V8 Twin-Turbo (710 HP)', transmission: 'Tự động 7 cấp ly hợp kép', fuel: 'Xăng', description: 'Siêu xe thể thao động cơ đặt giữa kinh điển của thương hiệu Ngựa chồm Ý. Tăng tốc 0-100 km/h trong 2.9 giây, tốc độ tối đa 340 km/h.' },
+            { id: 2, name: 'Lamborghini Urus S', brand: 'Lamborghini', price: 16500000000, image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800', engine: '4.0L V8 Twin-Turbo (666 HP)', transmission: 'Tự động 8 cấp thể thao', fuel: 'Xăng', description: 'Siêu SUV sở hữu sức mạnh 666 mã lực, tăng tốc 0-100 km/h trong 3.5 giây. Thiết kế góc cạnh đậm chất chiến đấu của hãng xe bò tót Sant\'Agata Bolognese.' },
+            { id: 3, name: 'Mercedes-AMG G63', brand: 'Mercedes-Benz', price: 11750000000, image: 'https://images.unsplash.com/photo-1520050206274-a1ae44613e6d?w=800', engine: '4.0L V8 Bi-Turbo (585 HP)', transmission: 'Tự động 9 cấp AMG Speedshift', fuel: 'Xăng', description: 'Mẫu SUV địa hình hạng sang đẳng cấp biểu tượng hoàng gia. Hệ dẫn động 4 bánh toàn thời gian 4MATIC với 3 khóa vi sai độc lập.' },
+            { id: 4, name: 'Porsche 911 Carrera S', brand: 'Porsche', price: 8500000000, image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800', engine: '3.0L Boxer Twin-Turbo (450 HP)', transmission: 'Tự động 8 cấp PDK', fuel: 'Xăng', description: 'Mẫu xe thể thao huyền thoại mang lại cảm giác lái đỉnh cao, thiết kế timeless vượt thời gian đi cùng gói thể thao Sport Chrono Package.' },
+            { id: 5, name: 'BMW 740i Pure Excellence', brand: 'BMW', price: 4699000000, image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800', engine: '3.0L I6 TwinPower (381 HP)', transmission: 'Tự động 8 cấp Steptronic', fuel: 'Xăng Mild-Hybrid', description: 'Sedan hạng sang cao cấp đầy công nghệ của BMW với màn hình Theatre Screen 31.3 inch chuẩn 8K cùng hệ thống âm thanh vòm Bowers & Wilkins Diamond.' },
+            { id: 6, name: 'Lexus RX350 Luxury', brand: 'Lexus', price: 4330000000, image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800', engine: '2.4L Turbo T24A-FTS (275 HP)', transmission: 'Tự động 8 cấp Direct Shift', fuel: 'Xăng', description: 'Mẫu SUV xe sang Nhật Bản êm ái, cách âm tĩnh lặng đỉnh cao, nội thất da Semi-Aniline cao cấp và hệ thống an toàn Lexus Safety System+ 3.0.' },
+            { id: 7, name: 'Audi Q7 45 TFSI quattro', brand: 'Audi', price: 3700000000, image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800', engine: '2.0L Turbo Mild-Hybrid (252 HP)', transmission: 'Tự động 8 cấp Tiptronic', fuel: 'Xăng Mild-Hybrid', description: 'SUV hạng sang 7 chỗ cỡ lớn dẫn động 4 bánh toàn thời gian quattro danh tiếng, đèn Matrix LED thông minh và buồng lái ảo Audi Virtual Cockpit.' },
+            { id: 8, name: 'Mercedes-Benz C-Class C300 AMG', brand: 'Mercedes-Benz', price: 2099000000, image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800', engine: '2.0L Turbo EQ Boost (258 HP)', transmission: 'Tự động 9 cấp 9G-TRONIC', fuel: 'Xăng Mild-Hybrid', description: 'Tiểu S-Class với thiết kế thể thao AMG Line, màn hình giải trí trung tâm 11.9 inch định dạng dọc, đèn Digital Light tối tân nhất.' },
+            { id: 9, name: 'Kia Carnival 2.2D Signature', brand: 'Kia', price: 1759000000, image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=800', engine: '2.2L Smartstream D2.2 (199 HP)', transmission: 'Tự động 8 cấp', fuel: 'Dầu (Diesel)', description: 'Chuyên cơ mặt đất MPV 7 chỗ thương gia siêu tiện nghi, hàng ghế thứ 2 sưởi/làm mát và chế độ thư giãn không trọng lực VIP.' },
+            { id: 10, name: 'Ford Everest Titanium+ 4x4', brand: 'Ford', price: 1468000000, image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800', engine: '2.0L Bi-Turbo Diesel (210 HP)', transmission: 'Tự động 10 cấp điện tử', fuel: 'Dầu (Diesel)', description: 'SUV 7 chỗ thực thụ đậm chất cơ bắp Mỹ, khả năng lội nước 800mm, camera 360 độ và công nghệ đỗ xe tự động 2.0.' },
+            { id: 11, name: 'Toyota Camry 2.5Q', brand: 'Toyota', price: 1405000000, image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800', engine: '2.5L Dynamic Force (207 HP)', transmission: 'Tự động 8 cấp Direct Shift', fuel: 'Xăng', description: 'Mẫu sedan hạng D chuẩn mực của sự thành đạt, bền bỉ, êm ái bậc nhất phân khúc với gói an toàn Toyota Safety Sense 2.0.' },
+            { id: 12, name: 'Ford Ranger Raptor 3.0 V6', brand: 'Ford', price: 1299000000, image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800', engine: '3.0L V6 EcoBoost Twin-Turbo (392 HP)', transmission: 'Tự động 10 cấp', fuel: 'Xăng', description: 'Vua bán tải hiệu năng cao, trang bị bộ giảm xóc FOX 2.5 inch Live Valve thích ứng theo thời gian thực và chế độ lái sa mạc Baja Mode.' },
+            { id: 13, name: 'VinFast VF8 Plus', brand: 'VinFast', price: 1270000000, image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800', engine: '2 Động cơ điện (402 HP - AWD)', transmission: 'Tự động đơn cấp', fuel: 'Điện', description: 'SUV điện thông minh phân khúc D, thiết kế Pininfarina đỉnh cao, tăng tốc 0-100 km/h trong 5.5 giây và trợ lái thông minh ADAS cấp độ 2.' },
+            { id: 14, name: 'Honda CR-V e:HEV RS', brand: 'Honda', price: 1259000000, image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800', engine: '2.0L Hybrid Xăng + Điện (204 HP)', transmission: 'E-CVT thể thao', fuel: 'Xăng Hybrid', description: 'SUV thể thao thế hệ mới nhập khẩu nguyên chiếc, tiết kiệm nhiên liệu chỉ 3.4L/100km đô thị, gói an toàn Honda SENSING đầy đủ.' },
+            { id: 15, name: 'Hyundai Tucson 2.0 Diesel', brand: 'Hyundai', price: 959000000, image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800', engine: '2.0L Smartstream D2.0 (186 HP)', transmission: 'Tự động 8 cấp số nút bấm', fuel: 'Dầu (Diesel)', description: 'Crossover thiết kế tương lai Parametric Jewel, nội thất mở dạng phi thuyền, máy dầu bốc và tiết kiệm bậc nhất.' },
+            { id: 16, name: 'Toyota Corolla Cross 1.8HEV', brand: 'Toyota', price: 905000000, image: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?w=800', engine: '1.8L Hybrid Xăng + Điện (122 HP)', transmission: 'Vô cấp e-CVT', fuel: 'Xăng Hybrid', description: 'Mẫu Urban SUV tiết kiệm nhiên liệu tối ưu với động cơ Hybrid tiên tiến, khung gầm TNGA vững chắc và vận hành êm ái nhẹ nhàng.' },
+            { id: 17, name: 'Mazda CX-5 2.0 Premium', brand: 'Mazda', price: 829000000, image: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=800', engine: '2.0L SkyActiv-G (154 HP)', transmission: 'Tự động 6 cấp', fuel: 'Xăng', description: 'Mẫu Crossover bán chạy nhất phân khúc nhờ ngôn ngữ thiết kế KODO tinh tế, 10 loa Bose cao cấp và hệ thống an toàn i-Activsense.' },
+            { id: 18, name: 'Hyundai Accent 1.5 AT', brand: 'Hyundai', price: 489000000, image: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=800', engine: '1.5L Smartstream G (115 HP)', transmission: 'Vô cấp thông minh iVT', fuel: 'Xăng', description: 'Sedan hạng B thế hệ hoàn toàn mới, kích thước lớn nhất phân khúc, trang bị gói SmartSense vượt tầm giá.' },
+            { id: 19, name: 'VinFast VF5 Plus', brand: 'VinFast', price: 468000000, image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800', engine: 'Động cơ điện (134 HP - 135 Nm)', transmission: 'Tự động đơn cấp', fuel: 'Điện', description: 'A-SUV thuần điện quốc dân nhỏ gọn, chi phí vận hành siêu rẻ chỉ bằng 1/3 xe xăng, thời trang và linh hoạt trong đô thị.' },
+            { id: 20, name: 'VinFast VF3', brand: 'VinFast', price: 240000000, image: 'https://vinfastquan12.com.vn/wp-content/uploads/2025/02/VinFast_VF3_Mau_trang.webp', engine: 'Động cơ điện đơn (43 HP)', transmission: 'Tự động', fuel: 'Điện', description: 'Cơn sốt xe điện mini tại Việt Nam! Kiểu dáng hình hộp cá tính, gầm cao 191mm vượt địa hình ngập nước, Best Seller tại Showroom 4TL.' }
+        ];
+
+        let allCars = [];
+        let comparedCars = [];
+        let currentCategory = 'all';
+
+        // MODAL MANAGEMENT HELPER (100% immune to CSS class cascade quirks)
+        function openModal(modalId) {
+            const el = document.getElementById(modalId);
+            if (!el) return;
+            el.classList.remove('hidden');
+            el.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            const el = document.getElementById(modalId);
+            if (!el) return;
+            el.classList.add('hidden');
+            el.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        // Close on backdrop click & ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                ['detailModal', 'compareModal', 'qrModal', 'bookingModal'].forEach(closeModal);
+                const chatWin = document.getElementById('chatWindow');
+                if (chatWin && (chatWin.style.display === 'flex' || !chatWin.classList.contains('hidden'))) {
+                    toggleChat();
+                }
+            }
+        });
+
+        ['detailModal', 'compareModal', 'qrModal', 'bookingModal'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('click', function(e) {
+                    if (e.target === el) closeModal(id);
+                });
+            }
+        });
+
+        // DARK / LIGHT THEME CONTROLLER
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        function setTheme(mode) {
+            if (mode === 'light') {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+                localStorage.setItem('theme', 'light');
+                if (themeIcon) {
+                    themeIcon.className = 'fa-solid fa-moon text-slate-700 text-base';
+                }
+                if (themeToggle) {
+                    themeToggle.title = 'Chuyển sang chế độ Tối (Dark Mode)';
+                }
+            } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+                localStorage.setItem('theme', 'dark');
+                if (themeIcon) {
+                    themeIcon.className = 'fa-solid fa-sun text-yellow-400 text-base';
+                }
+                if (themeToggle) {
+                    themeToggle.title = 'Chuyển sang chế độ Sáng (Light Mode)';
+                }
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            setTheme(isDark ? 'light' : 'dark');
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(savedTheme);
+        }
+
+        if (themeToggle) {
+            themeToggle.onclick = toggleTheme;
+        }
+
+        // FETCH CARS DỮ LIỆU TỪ SERVER VỚI FALLBACK AN TOÀN
+        async function fetchCars() {
+            try {
+                const res = await fetch('/php/get_cars.php');
+                const data = await res.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    allCars = data.map(c => ({
+                        ...c,
+                        id: Number(c.id),
+                        price: Number(c.price)
+                    }));
+                } else {
+                    allCars = fallbackCars.map(c => ({
+                        ...c,
+                        id: Number(c.id),
+                        price: Number(c.price)
+                    }));
+                }
+            } catch (e) {
+                console.warn("Sử dụng fallback dữ liệu xe nội bộ:", e);
+                allCars = fallbackCars.map(c => ({
+                    ...c,
+                    id: Number(c.id),
+                    price: Number(c.price)
+                }));
+            }
+
+            renderBrandPills();
+            populateBrandDropdown();
+            populateCalculatorCarSelect();
+            populateDriveSelect();
+            renderCars(allCars);
+            calculateLoan();
+        }
+
+        // BRAND PILLS RENDER
+        function renderBrandPills() {
+            const brands = ['Tất cả', ...new Set(allCars.map(c => c.brand))].sort();
+            const container = document.getElementById('brandPillContainer');
+            container.innerHTML = brands.map((b, idx) => `
+                <button onclick="filterByBrandQuick('${b}')" class="brand-pill px-4 py-1.5 rounded-full text-xs font-bold border border-gray-200 dark:border-white/10 ${idx === 0 ? 'active' : 'bg-white text-slate-700 dark:bg-slate-900 dark:text-gray-300 hover:border-red-500'}">
+                    ${b}
+                </button>
+            `).join('');
+        }
+
+        function populateBrandDropdown() {
+            const brands = [...new Set(allCars.map(c => c.brand))].sort();
+            const select = document.getElementById('brandFilter');
+            select.innerHTML = '<option value="">Tất cả thương hiệu</option>';
+            brands.forEach(b => {
+                const opt = document.createElement('option');
+                opt.value = b;
+                opt.textContent = b;
+                select.appendChild(opt);
+            });
+        }
+
+        function populateCalculatorCarSelect() {
+            const select = document.getElementById('calcCarSelect');
+            select.innerHTML = '<option value="">-- Chọn xe có sẵn --</option>';
+            allCars.forEach(car => {
+                const opt = document.createElement('option');
+                opt.value = car.price;
+                opt.textContent = `${car.name} - ${formatBillion(car.price)}`;
+                select.appendChild(opt);
+            });
+        }
+
+        function populateDriveSelect() {
+            const select = document.getElementById('driveCar');
+            select.innerHTML = '<option value="Chưa chọn xe">Chọn mẫu xe quan tâm</option>';
+            allCars.forEach(car => {
+                const opt = document.createElement('option');
+                opt.value = car.name;
+                opt.textContent = car.name;
+                select.appendChild(opt);
+            });
+        }
+
+        function formatCurrency(num) {
+            return Number(num).toLocaleString('vi-VN') + ' VNĐ';
+        }
+
+        function formatBillion(num) {
+            if (num >= 1000000000) {
+                const b = (num / 1000000000).toFixed(2).replace(/\.00$/, '');
+                return b + ' Tỷ VNĐ';
+            }
+            return (num / 1000000).toFixed(0) + ' Triệu VNĐ';
+        }
+
+        // RENDER DANH SÁCH XE CARD
+        function renderCars(cars) {
+            const grid = document.getElementById('carGrid');
+            const countBadge = document.getElementById('carCountBadge');
+            countBadge.innerHTML = `Đang hiển thị: <strong class="text-red-600 dark:text-red-400">${cars.length}</strong> xe`;
+
+            if (cars.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-16 bg-white dark:bg-slate-900/50 rounded-3xl border border-gray-200 dark:border-white/10 space-y-3 shadow-sm">
+                        <i class="fa-solid fa-car-tunnel text-4xl text-gray-400 dark:text-gray-500"></i>
+                        <h4 class="text-lg font-bold text-slate-800 dark:text-gray-300">Không tìm thấy mẫu xe phù hợp</h4>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Vui lòng thử điều chỉnh lại bộ lọc giá, thương hiệu hoặc từ khóa tìm kiếm.</p>
+                        <button onclick="resetAllFilters()" class="mt-2 px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs transition">
+                            Xem tất cả các xe
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = cars.map(car => {
+                const carId = Number(car.id);
+                const isCompared = comparedCars.some(c => Number(c.id) === carId);
+                const fuelIcon = car.fuel && car.fuel.includes('Điện') ? 'fa-bolt text-yellow-500' : 
+                                 car.fuel && car.fuel.includes('Dầu') ? 'fa-oil-can text-amber-500' : 'fa-gas-pump text-red-500';
+
+                return `
+                    <div class="glass-card rounded-3xl overflow-hidden flex flex-col justify-between group bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-white/10 shadow-md hover:shadow-2xl transition">
+                        
+                        <!-- Card Media -->
+                        <div class="relative overflow-hidden aspect-[16/10] bg-slate-900">
+                            <img src="${car.image}" alt="${car.name}" 
+                                 loading="lazy"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer"
+                                 onclick="openDetailModal(${carId})"
+                                 onerror="this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600'">
+                            
+                            <!-- Badges -->
+                            <div class="absolute top-3.5 left-3.5 flex flex-wrap gap-1.5">
+                                <span class="bg-red-600/90 backdrop-blur-md text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
+                                    ${car.brand}
+                                </span>
+                                ${car.fuel && car.fuel.includes('Điện') ? `
+                                    <span class="bg-emerald-600/90 backdrop-blur-md text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
+                                        ⚡ EV Thuần Điện
+                                    </span>
+                                ` : ''}
+                            </div>
+
+                            <!-- Compare Badge Button on image -->
+                            <button onclick="toggleCompareCar(${carId})" title="${isCompared ? 'Bỏ so sánh' : 'Thêm vào so sánh'}" 
+                                    class="absolute top-3.5 right-3.5 px-2.5 py-1 rounded-full ${isCompared ? 'bg-emerald-600 text-white font-bold' : 'bg-white/80 dark:bg-black/50 text-slate-700 dark:text-gray-300 hover:bg-red-600 hover:text-white'} backdrop-blur-md border border-gray-200 dark:border-white/20 flex items-center gap-1 text-[11px] transition shadow">
+                                <i class="fa-solid ${isCompared ? 'fa-check' : 'fa-code-compare'}"></i>
+                                <span>${isCompared ? 'Đang so sánh' : 'So sánh'}</span>
+                            </button>
+                        </div>
+
+                        <!-- Card Content -->
+                        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                            <div>
+                                <h3 onclick="openDetailModal(${carId})" class="text-xl font-black text-slate-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition leading-snug cursor-pointer">
+                                    ${car.name}
+                                </h3>
+                                
+                                <div class="text-red-600 font-heading text-2xl font-black my-1">
+                                    ${formatCurrency(car.price)}
+                                </div>
+
+                                <!-- Key Specs Chips -->
+                                <div class="grid grid-cols-3 gap-1.5 text-[11px] bg-gray-50 dark:bg-slate-950/70 p-2.5 rounded-2xl border border-gray-100 dark:border-white/5 text-slate-600 dark:text-gray-300 mt-3">
+                                    <div class="text-center truncate" title="${car.engine || 'N/A'}">
+                                        <i class="fa-solid fa-gauge-high text-red-600 dark:text-red-500 block mb-1"></i>
+                                        <span class="text-[10px]">${car.engine ? car.engine.split(' ')[0] : 'Động cơ'}</span>
+                                    </div>
+                                    <div class="text-center truncate" title="${car.transmission || 'Tự động'}">
+                                        <i class="fa-solid fa-sliders text-red-600 dark:text-red-500 block mb-1"></i>
+                                        <span class="text-[10px]">${car.transmission ? (car.transmission.includes('8') ? '8 cấp' : car.transmission.includes('9') ? '9 cấp' : 'Tự động') : 'Tự động'}</span>
+                                    </div>
+                                    <div class="text-center truncate" title="${car.fuel || 'Xăng'}">
+                                        <i class="fa-solid ${fuelIcon} block mb-1"></i>
+                                        <span class="text-[10px]">${car.fuel || 'Xăng'}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="space-y-2 pt-1">
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="openDetailModal(${carId})" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-lg shadow-red-600/25 flex items-center justify-center gap-1.5">
+                                        <i class="fa-solid fa-circle-info"></i> Xem Chi Tiết
+                                    </button>
+                                    <button onclick="toggleCompareCar(${carId})" class="${isCompared ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-gray-200'} font-bold py-2.5 rounded-xl text-xs border border-gray-200 dark:border-white/10 transition flex items-center justify-center gap-1.5 shadow-sm">
+                                        <i class="fa-solid ${isCompared ? 'fa-check' : 'fa-code-compare'}"></i> ${isCompared ? 'Đã Chọn' : '+ So Sánh'}
+                                    </button>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="openBookingModal('${car.name}')" class="bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 font-bold py-2 rounded-xl text-xs border border-gray-200 dark:border-white/10 hover:border-red-500/40 transition flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-steering-wheel text-red-600 dark:text-red-400"></i> Lái Thử
+                                    </button>
+                                    <button onclick="openQRModal('${car.name}', ${car.price})" class="bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 font-bold py-2 rounded-xl text-xs border border-gray-200 dark:border-white/10 hover:border-red-500/40 transition flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-qrcode text-red-600 dark:text-red-400"></i> Đặt Cọc
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // BỘ LỌC ĐA CHIỀU (SEARCH + BRAND + PRICE + FUEL + CATEGORY + SORT)
+        function filterCars() {
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            const brand = document.getElementById('brandFilter').value;
+            const price = document.getElementById('priceFilter').value;
+            const fuel = document.getElementById('fuelFilter').value;
+            const sort = document.getElementById('sortFilter').value;
+
+            let filtered = allCars.filter(c => {
+                const matchSearch = !search || c.name.toLowerCase().includes(search) || c.brand.toLowerCase().includes(search);
+                const matchBrand = !brand || c.brand === brand;
+                
+                let matchPrice = true;
+                if (price === 'under-1b') matchPrice = c.price < 1000000000;
+                else if (price === '1b-3b') matchPrice = c.price >= 1000000000 && c.price <= 3000000000;
+                else if (price === '3b-8b') matchPrice = c.price > 3000000000 && c.price <= 8000000000;
+                else if (price === 'over-8b') matchPrice = c.price > 8000000000;
+
+                let matchFuel = true;
+                if (fuel) {
+                    matchFuel = c.fuel && c.fuel.toLowerCase().includes(fuel.toLowerCase());
+                }
+
+                let matchCategory = true;
+                if (currentCategory === 'electric') {
+                    matchCategory = c.fuel && c.fuel.includes('Điện');
+                } else if (currentCategory === 'supercar') {
+                    matchCategory = c.price >= 8000000000 || ['Ferrari', 'Lamborghini', 'Porsche'].includes(c.brand);
+                } else if (currentCategory === 'luxury_suv') {
+                    matchCategory = c.name.includes('G63') || c.name.includes('Urus') || c.name.includes('RX350') || c.name.includes('Q7') || c.name.includes('Everest') || c.name.includes('Tucson') || c.name.includes('CR-V') || c.name.includes('VF8');
+                }
+
+                return matchSearch && matchBrand && matchPrice && matchFuel && matchCategory;
+            });
+
+            if (sort === 'asc') filtered.sort((a, b) => a.price - b.price);
+            else if (sort === 'desc') filtered.sort((a, b) => b.price - a.price);
+            else if (sort === 'name') filtered.sort((a, b) => a.name.localeCompare(b.name));
+            else if (sort === 'featured') filtered.sort((a, b) => b.id - a.id);
+
+            renderCars(filtered);
+        }
+
+        // Quick Brand Pill Filter Click
+        function filterByBrandQuick(brandName) {
+            const pills = document.querySelectorAll('.brand-pill');
+            pills.forEach(p => {
+                if ((brandName === 'Tất cả' && p.textContent.trim() === 'Tất cả') || p.textContent.trim() === brandName) {
+                    p.classList.add('active');
+                } else {
+                    p.classList.remove('active');
+                }
+            });
+
+            const brandSelect = document.getElementById('brandFilter');
+            brandSelect.value = brandName === 'Tất cả' ? '' : brandName;
+            filterCars();
+
+            // Smooth scroll to car section if on desktop
+            const carSec = document.getElementById('car-section');
+            carSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Category Tab Filter
+        function setCategoryFilter(cat) {
+            currentCategory = cat;
+            const tabs = document.querySelectorAll('.cat-pill');
+            tabs.forEach(t => t.classList.remove('active', 'bg-red-600', 'text-white'));
+            
+            // Set active class
+            event.currentTarget.classList.add('active', 'bg-red-600', 'text-white');
+            filterCars();
+        }
+
+        function resetAllFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('brandFilter').value = '';
+            document.getElementById('priceFilter').value = '';
+            document.getElementById('fuelFilter').value = '';
+            document.getElementById('sortFilter').value = 'featured';
+            currentCategory = 'all';
+
+            document.querySelectorAll('.brand-pill').forEach((p, idx) => {
+                if (idx === 0) p.classList.add('active');
+                else p.classList.remove('active');
+            });
+
+            filterCars();
+        }
+
+        document.getElementById('searchInput').addEventListener('input', filterCars);
+        document.getElementById('brandFilter').addEventListener('change', filterCars);
+        document.getElementById('priceFilter').addEventListener('change', filterCars);
+        document.getElementById('fuelFilter').addEventListener('change', filterCars);
+
+        // INSTALLMENT CALCULATOR LOGIC
+        function applyCarToCalculator() {
+            const val = document.getElementById('calcCarSelect').value;
+            if (val) {
+                document.getElementById('calcPriceInput').value = val;
+                calculateLoan();
+            }
+        }
+
+        function calculateLoan() {
+            const price = parseFloat(document.getElementById('calcPriceInput').value) || 0;
+            const downPercent = parseInt(document.getElementById('calcDownPercent').value) || 20;
+            const months = parseInt(document.getElementById('calcMonths').value) || 60;
+            const rateYear = parseFloat(document.getElementById('calcInterest').value) || 8.5;
+
+            // Labels update
+            const downAmount = price * (downPercent / 100);
+            const loanAmount = price - downAmount;
+            
+            document.getElementById('calcDownPercentLabel').innerHTML = `${downPercent}% (${formatCurrency(downAmount)})`;
+            document.getElementById('calcMonthsLabel').innerText = `${months} tháng (${(months/12).toFixed(1)} năm)`;
+            document.getElementById('calcInterestLabel').innerText = `${rateYear.toFixed(1)}% / năm`;
+
+            // Loan math: monthly principal + monthly interest (first month)
+            const monthlyPrincipal = loanAmount / months;
+            const monthlyRate = (rateYear / 100) / 12;
+            const monthlyInterestFirst = loanAmount * monthlyRate;
+            const totalMonthlyFirst = monthlyPrincipal + monthlyInterestFirst;
+
+            document.getElementById('resLoanAmount').innerText = formatCurrency(loanAmount);
+            document.getElementById('resDownPayment').innerText = formatCurrency(downAmount);
+            document.getElementById('resMonthlyPrincipal').innerText = formatCurrency(monthlyPrincipal);
+            document.getElementById('resMonthlyInterest').innerText = formatCurrency(monthlyInterestFirst);
+            document.getElementById('resMonthlyPayment').innerText = formatCurrency(totalMonthlyFirst);
+        }
+
+        function requestLoanConsult() {
+            const price = formatCurrency(document.getElementById('calcPriceInput').value);
+            const downPercent = document.getElementById('calcDownPercent').value;
+            const months = document.getElementById('calcMonths').value;
+            alert(`Dạ chuyên viên tín dụng Showroom 4TL đã ghi nhận thông số vay xe giá ${price}, trả trước ${downPercent}%, thời hạn ${months} tháng. Quý khách vui lòng để lại số Zalo để nhận file Excel bảng tính chi tiết từng tháng!`);
+        }
+
+        // CAR COMPARISON LOGIC
+        function toggleCompareCar(id) {
+            const targetId = Number(id);
+            const car = allCars.find(c => Number(c.id) === targetId);
+            if (!car) {
+                console.warn("Không tìm thấy xe id:", id);
+                return;
+            }
+
+            const idx = comparedCars.findIndex(c => Number(c.id) === targetId);
+            if (idx > -1) {
+                comparedCars.splice(idx, 1);
+            } else {
+                if (comparedCars.length >= 3) {
+                    alert("Quý khách chỉ có thể so sánh tối đa 3 mẫu xe cùng lúc. Vui lòng bấm bỏ bớt xe để thêm xe khác!");
+                    return;
+                }
+                comparedCars.push(car);
+            }
+
+            updateCompareDock();
+            renderCars(allCars);
+        }
+
+        function updateCompareDock() {
+            const dock = document.getElementById('comparisonDock');
+            const thumbs = document.getElementById('compareThumbnails');
+            const count = document.getElementById('compareCount');
+            const navBadge = document.getElementById('compareNavCount');
+
+            if (count) count.innerText = comparedCars.length;
+            if (navBadge) {
+                navBadge.innerText = comparedCars.length;
+                if (comparedCars.length > 0) {
+                    navBadge.classList.remove('hidden');
+                } else {
+                    navBadge.classList.add('hidden');
+                }
+            }
+
+            if (dock) {
+                if (comparedCars.length > 0) {
+                    dock.classList.remove('hidden');
+                    dock.style.display = 'flex';
+                } else {
+                    dock.classList.add('hidden');
+                    dock.style.display = 'none';
+                }
+            }
+
+            if (thumbs) {
+                thumbs.innerHTML = comparedCars.map(c => `
+                    <div class="relative group" title="${c.name}">
+                        <img src="${c.image}" class="w-10 h-10 object-cover rounded-xl border-2 border-red-500 shadow" onerror="this.src='https://via.placeholder.com/40'">
+                        <button onclick="toggleCompareCar(${c.id})" title="Bỏ xe này" class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-600 hover:bg-red-700 rounded-full text-[9px] text-white flex items-center justify-center shadow">✕</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function clearComparison() {
+            comparedCars = [];
+            updateCompareDock();
+            renderCars(allCars);
+        }
+
+        function toggleCompareModal() {
+            if (comparedCars.length === 0) {
+                // If user clicks compare on navbar without cars selected, auto-suggest the top 2 supercars!
+                if (allCars.length >= 2) {
+                    comparedCars = [allCars[0], allCars[1]];
+                    updateCompareDock();
+                    renderCars(allCars);
+                } else if (allCars.length === 1) {
+                    comparedCars = [allCars[0]];
+                    updateCompareDock();
+                    renderCars(allCars);
+                }
+            }
+            openCompareModal();
+        }
+
+        function openCompareModal() {
+            if (comparedCars.length === 0) {
+                if (allCars.length >= 2) {
+                    comparedCars = [allCars[0], allCars[1]];
+                    updateCompareDock();
+                    renderCars(allCars);
+                }
+            }
+
+            const container = document.getElementById('compareTableContainer');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <div class="mb-4 flex flex-wrap items-center justify-between gap-3 bg-gray-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-gray-200 dark:border-white/10 text-xs">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="font-bold text-slate-700 dark:text-gray-300">Thêm xe vào bảng so sánh:</span>
+                        <select onchange="handleAddCarToCompare(this.value)" class="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-gray-300 dark:border-white/10 text-slate-800 dark:text-white">
+                            <option value="">-- Chọn thêm xe để so sánh --</option>
+                            ${allCars.filter(c => !comparedCars.some(cc => Number(cc.id) === Number(c.id))).map(c => `
+                                <option value="${c.id}">${c.name} (${formatBillion(c.price)})</option>
+                            `).join('')}
+                        </select>
+                    </div>
+                    <button onclick="clearComparison(); closeModal('compareModal');" class="text-red-600 dark:text-red-400 hover:underline font-bold">
+                        <i class="fa-solid fa-trash mr-1"></i>Xóa hết so sánh
+                    </button>
+                </div>
+
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-white/10">
+                            <th class="p-3 text-gray-500 dark:text-gray-400 w-36">Thông Số</th>
+                            ${comparedCars.map(c => `
+                                <th class="p-3 text-slate-900 dark:text-white font-bold text-base min-w-[220px]">
+                                    <div class="relative group mb-2">
+                                        <img src="${c.image}" class="w-full h-36 object-cover rounded-xl border border-gray-200 dark:border-white/10" onerror="this.src='https://via.placeholder.com/300'">
+                                        <button onclick="toggleCompareCar(${c.id}); openCompareModal();" title="Bỏ xe này" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center text-xs shadow hover:scale-110 transition">✕</button>
+                                    </div>
+                                    <div class="leading-tight">${c.name}</div>
+                                    <div class="text-red-600 dark:text-red-500 font-heading text-lg mt-1">${formatCurrency(c.price)}</div>
+                                </th>
+                            `).join('')}
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-white/10 text-slate-700 dark:text-gray-300">
+                        <tr>
+                            <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Hãng Sản Xuất</td>
+                            ${comparedCars.map(c => `<td class="p-3"><span class="px-2 py-0.5 rounded bg-red-600/10 dark:bg-red-600/30 text-red-600 dark:text-red-300 font-bold">${c.brand}</span></td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Động Cơ & Công Suất</td>
+                            ${comparedCars.map(c => `<td class="p-3 font-medium">${c.engine || 'Đang cập nhật'}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Hộp Số</td>
+                            ${comparedCars.map(c => `<td class="p-3 font-medium">${c.transmission || 'Tự động'}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Nhiên Liệu</td>
+                            ${comparedCars.map(c => `<td class="p-3 font-semibold text-slate-900 dark:text-white">${c.fuel || 'Xăng'}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Mô Tả & Điểm Nhấn</td>
+                            ${comparedCars.map(c => `<td class="p-3 leading-relaxed text-[11px] text-gray-600 dark:text-gray-400">${c.description || 'Chưa có thông tin'}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Thao Tác</td>
+                            ${comparedCars.map(c => `
+                                <td class="p-3 space-y-1.5">
+                                    <button onclick="closeModal('compareModal'); openBookingModal('${c.name}')" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-xl text-xs transition shadow">
+                                        Đăng Ký Lái Thử
+                                    </button>
+                                    <button onclick="closeModal('compareModal'); openDetailModal(${c.id})" class="w-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-gray-200 font-bold py-2 rounded-xl text-xs transition border border-gray-300 dark:border-white/10">
+                                        Xem Chi Tiết
+                                    </button>
+                                </td>
+                            `).join('')}
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+
+            openModal('compareModal');
+        }
+
+        function handleAddCarToCompare(carId) {
+            if (!carId) return;
+            toggleCompareCar(carId);
+            openCompareModal();
+        }
+
+        // MODAL HANDLERS
+        function openDetailModal(id) {
+            const targetId = Number(id);
+            const car = allCars.find(c => Number(c.id) === targetId);
+            if (!car) {
+                console.warn("Không tìm thấy xe id:", id);
+                return;
+            }
+
+            const isCompared = comparedCars.some(c => Number(c.id) === targetId);
+
+            document.getElementById('modalContent').innerHTML = `
+                <div class="relative rounded-2xl overflow-hidden mb-5">
+                    <img src="${car.image}" class="w-full h-80 object-cover" onerror="this.src='https://via.placeholder.com/600x350'">
+                    <span class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                        ${car.brand}
+                    </span>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-4">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-black font-heading text-slate-900 dark:text-white">${car.name}</h2>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">Mã SKU: 4TL-00${car.id} | Tình trạng: Xe mới có sẵn giao ngay</span>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-red-600 dark:text-red-500 font-heading">
+                        ${formatCurrency(car.price)}
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3 my-4">
+                    <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
+                        <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Động cơ</span>
+                        <strong class="text-xs text-slate-900 dark:text-white">${car.engine || 'N/A'}</strong>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
+                        <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Hộp số</span>
+                        <strong class="text-xs text-slate-900 dark:text-white">${car.transmission || 'Tự động'}</strong>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
+                        <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Nhiên liệu</span>
+                        <strong class="text-xs text-slate-900 dark:text-white">${car.fuel || 'Xăng'}</strong>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="text-xs font-bold text-red-600 dark:text-red-400 uppercase tracking-wider">Giới thiệu tổng quan & Trang bị nổi bật</h4>
+                    <p class="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed bg-gray-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-gray-200 dark:border-white/5">
+                        ${car.description || 'Mẫu xe sở hữu thiết kế thể thao đột phá, vật liệu nội thất cao cấp cùng hệ thống trợ lái và an toàn tối tân hàng đầu phân khúc.'}
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
+                    <button onclick="closeModal('detailModal'); openQRModal('${car.name}', ${car.price})" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-2xl text-xs transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-qrcode"></i> Đặt Cọc Giữ Xe
+                    </button>
+                    <button onclick="closeModal('detailModal'); openBookingModal('${car.name}')" class="bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-white font-bold py-3 rounded-2xl text-xs border border-gray-300 dark:border-white/10 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-car-side"></i> Lái Thử Tận Nơi
+                    </button>
+                    <button onclick="toggleCompareCar(${car.id}); closeModal('detailModal');" class="${isCompared ? 'bg-emerald-600 text-white' : 'bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-800 dark:text-white'} font-bold py-3 rounded-2xl text-xs border border-gray-300 dark:border-white/10 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-code-compare"></i> ${isCompared ? 'Đang so sánh' : '+ So sánh xe'}
+                    </button>
+                </div>
+            `;
+
+            openModal('detailModal');
+        }
+
+        function openQRModal(carName, price) {
+            document.getElementById('qrCarName').innerText = `Đặt cọc ưu tiên mẫu: ${carName}`;
+            const memo = `COC ${carName.replace(/\s+/g, '').toUpperCase()}`;
+            document.getElementById('qrMemo').innerText = memo;
+            
+            // VietQR Dynamic URL format
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=SHOWROOM4TL_MB_0706850014_${encodeURIComponent(memo)}`;
+            document.getElementById('qrImage').src = qrUrl;
+
+            openModal('qrModal');
+        }
+
+        function openBookingModal(carName) {
+            document.getElementById('modalBookingCar').value = carName;
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('modalBookingDate').value = tomorrow.toISOString().split('T')[0];
+            openModal('bookingModal');
+        }
+
+        function confirmDepositSuccess() {
+            alert('🎉 Showroom 4TL chân thành cảm ơn quý khách! Kế toán đã tiếp nhận thông tin chuyển khoản cọc. Chuyên viên quản lý hợp đồng sẽ liên hệ qua điện thoại để gửi phiếu thu và hợp đồng cọc xe trong 15 phút.');
+            closeModal('qrModal');
+        }
+
+        function handleModalBooking(e) {
+            e.preventDefault();
+            const car = document.getElementById('modalBookingCar').value;
+            const name = document.getElementById('modalBookingName').value;
+            const phone = document.getElementById('modalBookingPhone').value;
+            const date = document.getElementById('modalBookingDate').value;
+
+            alert(`✅ Đã đặt lịch lái thử thành công!\n\nKhách hàng: ${name}\nSố điện thoại: ${phone}\nMẫu xe: ${car}\nNgày hẹn: ${date}\n\nChuyên viên Showroom 4TL sẽ gọi lại xác nhận cung đường lái thử phù hợp nhất với quý khách.`);
+            closeModal('bookingModal');
+        }
+
+        function handleTestDriveSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('driveName').value;
+            const phone = document.getElementById('drivePhone').value;
+            const car = document.getElementById('driveCar').value;
+
+            alert(`✅ Đã tiếp nhận yêu cầu lái thử của quý khách ${name} (${phone}) đối với mẫu xe "${car}". Đội ngũ tiếp đón Showroom 4TL sẽ liên hệ sắp xếp trong chốc lát!`);
+            e.target.reset();
+        }
+
+        // CHATBOT ASSISTANT
+        function toggleChat() {
+            const chatWin = document.getElementById('chatWindow');
+            const chatIcon = document.getElementById('chatBubbleIcon');
+            if (!chatWin) return;
+
+            const isCurrentlyHidden = chatWin.style.display === 'none' || chatWin.classList.contains('hidden');
+
+            if (isCurrentlyHidden) {
+                chatWin.classList.remove('hidden');
+                chatWin.style.display = 'flex';
+                if (chatIcon) {
+                    chatIcon.className = 'fa-solid fa-xmark text-2xl transition';
+                }
+                const chatBox = document.getElementById('chatBox');
+                if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+                setTimeout(() => {
+                    const input = document.getElementById('chatInput');
+                    if (input) input.focus();
+                }, 100);
+            } else {
+                chatWin.classList.add('hidden');
+                chatWin.style.display = 'none';
+                if (chatIcon) {
+                    chatIcon.className = 'fa-solid fa-headset text-2xl group-hover:rotate-12 transition';
+                }
+            }
+        }
+
+        function quickPrompt(text) {
+            document.getElementById('chatInput').value = text;
+            sendChatMessage();
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const chatBox = document.getElementById('chatBox');
+            
+            // Add user message
+            chatBox.innerHTML += `
+                <div class="bg-red-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] ml-auto text-xs shadow-md leading-relaxed">
+                    ${text}
+                </div>
+            `;
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Typing indicator
+            const typingId = 'typing-' + Date.now();
+            chatBox.innerHTML += `
+                <div id="${typingId}" class="bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400 p-2.5 rounded-2xl rounded-tl-none max-w-[50%] self-start text-xs border border-gray-200 dark:border-white/5 flex items-center gap-1">
+                    <span class="animate-bounce">●</span><span class="animate-bounce delay-100">●</span><span class="animate-bounce delay-200">●</span>
+                </div>
+            `;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const res = await fetch('ai_chat.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                const data = await res.json();
+                
+                const typingEl = document.getElementById(typingId);
+                if (typingEl) typingEl.remove();
+
+                chatBox.innerHTML += `
+                    <div class="bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 shadow-sm leading-relaxed">
+                        ${data.reply}
+                    </div>
+                `;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } catch (err) {
+                const typingEl = document.getElementById(typingId);
+                if (typingEl) typingEl.remove();
+
+                chatBox.innerHTML += `
+                    <div class="bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 shadow-sm leading-relaxed">
+                        Dạ quý khách cần tư vấn chi tiết về mẫu xe nào, xin vui lòng gọi trực tiếp Hotline VIP <strong>0706.850.014</strong> để được phục vụ 24/7 ạ!
+                    </div>
+                `;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+
+        // Initialize App
+        initTheme();
+        fetchCars();
+    </script>
+</body>
+</html>

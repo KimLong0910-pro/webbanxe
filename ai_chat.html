@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trợ Lý Tư Vấn Siêu Xe AI - SHOWROOM 4TL</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-gray-100 p-4 sm:p-8 font-sans min-h-screen flex items-center justify-center hero-gradient-mesh transition-colors duration-300">
+    
+    <div class="w-full max-w-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-6 sm:p-8 rounded-3xl border border-gray-200 dark:border-white/10 shadow-2xl space-y-4">
+        
+        <div class="flex justify-between items-center border-b border-gray-200 dark:border-white/10 pb-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center text-white shadow-lg shadow-red-600/30">
+                    <i class="fa-solid fa-headset text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black text-slate-900 dark:text-white font-heading">SUPERCAR AI CONSULTANT</h1>
+                    <span class="text-xs text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-semibold">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Sẵn sàng giải đáp 24/7
+                    </span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <button id="themeToggle" type="button" title="Chuyển chế độ Sáng / Tối" class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 text-amber-500 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-yellow-400 flex items-center justify-center border border-gray-200 dark:border-white/10 transition shadow-sm">
+                    <i id="themeIcon" class="fa-solid fa-sun text-sm"></i>
+                </button>
+                <a href="index.html" class="text-xs text-slate-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-white transition flex items-center gap-1 bg-gray-100 dark:bg-slate-800 px-3 py-2 rounded-xl border border-gray-200 dark:border-white/10">
+                    <i class="fa-solid fa-arrow-left"></i> Trang Chủ
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick chips -->
+        <div class="flex gap-2 overflow-x-auto text-[11px] pb-1 whitespace-nowrap">
+            <button onclick="setPrompt('Giá xe VinFast VF3?')" class="px-3 py-1 rounded-full bg-gray-100 hover:bg-red-600 text-slate-700 hover:text-white dark:bg-white/10 dark:text-gray-300 dark:hover:bg-red-600 dark:hover:text-white border border-gray-200 dark:border-transparent transition">⚡ VF3</button>
+            <button onclick="setPrompt('G63 AMG giá bao nhiêu?')" class="px-3 py-1 rounded-full bg-gray-100 hover:bg-red-600 text-slate-700 hover:text-white dark:bg-white/10 dark:text-gray-300 dark:hover:bg-red-600 dark:hover:text-white border border-gray-200 dark:border-transparent transition">🏎️ G63 AMG</button>
+            <button onclick="setPrompt('Chính sách trả góp 80% thế nào?')" class="px-3 py-1 rounded-full bg-gray-100 hover:bg-red-600 text-slate-700 hover:text-white dark:bg-white/10 dark:text-gray-300 dark:hover:bg-red-600 dark:hover:text-white border border-gray-200 dark:border-transparent transition">💳 Trả góp</button>
+            <button onclick="setPrompt('Địa chỉ showroom ở đâu?')" class="px-3 py-1 rounded-full bg-gray-100 hover:bg-red-600 text-slate-700 hover:text-white dark:bg-white/10 dark:text-gray-300 dark:hover:bg-red-600 dark:hover:text-white border border-gray-200 dark:border-transparent transition">📍 Địa chỉ</button>
+        </div>
+        
+        <!-- Chat History -->
+        <div class="h-96 overflow-y-auto space-y-3 p-4 bg-gray-50 dark:bg-slate-950/60 rounded-2xl border border-gray-200 dark:border-white/5 flex flex-col text-xs" id="chatBox">
+            <div class="bg-white dark:bg-slate-800 text-slate-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 leading-relaxed shadow-sm">
+                👋 Chào quý khách! Em là Trợ lý AI của Showroom 4TL. Em có thể tư vấn mẫu xe, mức giá, chính sách bảo hành hoặc đặt hẹn lái thử. Quý khách đang quan tâm đến dòng xe nào?
+            </div>
+        </div>
+
+        <!-- Input Box -->
+        <div class="flex gap-2 pt-2">
+            <input type="text" id="userInput" placeholder="Nhập câu hỏi (Ví dụ: giá Porsche 911, bảo hành, địa chỉ)..." 
+                   class="flex-1 bg-white dark:bg-slate-800 px-4 py-3 rounded-2xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-red-500 transition">
+            <button id="sendBtn" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-2xl font-bold text-xs transition shadow-lg shadow-red-600/30 flex items-center gap-1.5">
+                <span>Gửi</span>
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // THEME CONTROLLER
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        function setTheme(mode) {
+            if (mode === 'light') {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+                localStorage.setItem('theme', 'light');
+                if (themeIcon) themeIcon.className = 'fa-solid fa-moon text-slate-700 text-sm';
+                if (themeToggle) themeToggle.title = 'Chuyển sang chế độ Tối (Dark Mode)';
+            } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+                localStorage.setItem('theme', 'dark');
+                if (themeIcon) themeIcon.className = 'fa-solid fa-sun text-yellow-400 text-sm';
+                if (themeToggle) themeToggle.title = 'Chuyển sang chế độ Sáng (Light Mode)';
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            setTheme(isDark ? 'light' : 'dark');
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        setTheme(savedTheme);
+        if (themeToggle) themeToggle.onclick = toggleTheme;
+
+        const chatBox = document.getElementById('chatBox');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        function setPrompt(text) {
+            userInput.value = text;
+            sendMsg();
+        }
+
+        async function sendMsg() {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            chatBox.innerHTML += `
+                <div class="bg-red-600 text-white p-3.5 rounded-2xl rounded-tr-none max-w-[85%] ml-auto text-xs shadow-md leading-relaxed">
+                    ${text}
+                </div>
+            `;
+            userInput.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const typingId = 'typing-' + Date.now();
+            chatBox.innerHTML += `
+                <div id="${typingId}" class="bg-white dark:bg-slate-800 text-gray-400 p-2.5 rounded-2xl rounded-tl-none max-w-[40%] self-start text-xs border border-gray-200 dark:border-white/5 flex items-center gap-1 shadow-sm">
+                    <span class="animate-bounce">●</span><span class="animate-bounce delay-100">●</span><span class="animate-bounce delay-200">●</span>
+                </div>
+            `;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const res = await fetch('ai_chat.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                const data = await res.json();
+                
+                const typingEl = document.getElementById(typingId);
+                if (typingEl) typingEl.remove();
+
+                chatBox.innerHTML += `
+                    <div class="bg-white dark:bg-slate-800 text-slate-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 leading-relaxed shadow-sm">
+                        ${data.reply}
+                    </div>
+                `;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } catch (err) {
+                const typingEl = document.getElementById(typingId);
+                if (typingEl) typingEl.remove();
+
+                chatBox.innerHTML += `
+                    <div class="bg-white dark:bg-slate-800 text-slate-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 leading-relaxed shadow-sm">
+                        Dạ em đã ghi nhận câu hỏi. Quý khách có thể liên hệ trực tiếp Hotline VIP <strong>0706.850.014</strong> để chuyên viên tư vấn phục vụ quý khách ngay ạ!
+                    </div>
+                `;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+
+        sendBtn.onclick = sendMsg;
+        userInput.onkeypress = (e) => { if (e.key === 'Enter') sendMsg(); };
+    </script>
+</body>
+</html>
