@@ -361,8 +361,8 @@ while($b = $brands_result->fetch_assoc()) {
                 <div class="bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-gray-800 p-4 rounded-2xl">
                     <h4 class="font-bold text-red-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-headset"></i> Liên Hệ Tư Vấn Trực Tiếp</h4>
                     <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">
-                        - Hotline/Zalo tư vấn 24/7: <strong class="text-white">0765650114</strong><br>
-                        - Email: <strong class="text-white">anh.2574802012312@vanlanguni.vn</strong><br>
+                        - Hotline/Zalo tư vấn 24/7: <strong>0765650114</strong><br>
+                        - Email: <strong>anh.2574802012312@vanlanguni.vn</strong><br>
                         - Địa chỉ: 95 Lê Văn Lương, Tân Hưng, Quận 7, TP. Hồ Chí Minh
                     </p>
                 </div>
@@ -435,7 +435,7 @@ while($b = $brands_result->fetch_assoc()) {
         </div>
     </div>
 
-    <!-- Modal QR Code Đặt Cọc -->
+
     <div id="depositModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl relative p-6 text-center">
             <button onclick="closeDepositModal()" class="absolute top-4 right-4 bg-gray-200 dark:bg-black/60 hover:bg-red-600 hover:text-white w-9 h-9 rounded-full flex items-center justify-center transition">
@@ -560,7 +560,7 @@ while($b = $brands_result->fetch_assoc()) {
             document.body.style.overflow = 'auto';
         }
 
-        // Modal chi tiết xe
+
         function openModal(car) {
             document.getElementById('modalImage').src = car.image;
             document.getElementById('modalBrand').innerText = car.brand;
