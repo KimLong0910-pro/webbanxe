@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tư Vấn AI Chatbot - Showroom 4TL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-6 font-sans min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-2xl bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+            <h1 class="text-xl font-bold text-red-500">Supercar AI Assistant</h1>
+            <a href="index.html" class="text-sm text-gray-400 hover:text-white">&larr; Trang Chủ</a>
+        </div>
+        
+        <div class="h-80 overflow-y-auto space-y-3 p-2 flex flex-col" id="chatBox">
+            <div class="bg-gray-700 text-white p-3 rounded-lg max-w-[80%] self-start text-sm">
+                Xin chào! Tôi có thể tư vấn thông tin gì về các dòng siêu xe cho bạn hôm nay?
+            </div>
+        </div>
+
+        <div class="flex gap-2">
+            <input type="text" id="userInput" placeholder="Nhập câu hỏi (Ví dụ: giá, bảo hành, địa chỉ)..." class="flex-1 bg-gray-700 p-3 rounded border border-gray-600 text-white focus:outline-none">
+            <button id="sendBtn" class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded font-bold transition">Gửi</button>
+        </div>
+    </div>
+
+    <script>
+        const defaultKnowledge = [
+            { keywords: ['gia', 'bao nhieu', 'chi phi'], response: 'Giá các dòng xe tại Showroom dao động từ 500 triệu đến hơn 40 tỷ VNĐ.' },
+            { keywords: ['bao hanh', 'dich vu'], response: 'Tất cả siêu xe bán ra đều bảo hành 3 năm chính hãng hoặc 100,000 km.' }
+        ];
+
+        const chatBox = document.getElementById('chatBox');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        function getBotKnowledge() {
+            const data = localStorage.getItem('bot_knowledge');
+            return data ? JSON.parse(data) : defaultKnowledge;
+        }
+
+        function sendMsg() {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            chatBox.innerHTML += `<div class="bg-red-600 text-white p-3 rounded-lg max-w-[80%] ml-auto text-sm">${text}</div>`;
+            userInput.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const knowledge = getBotKnowledge();
+            const lowerMsg = text.toLowerCase();
+            let reply = "Xin lỗi, tôi chưa hiểu câu hỏi này. Bạn hãy để lại thông tin để tư vấn viên hỗ trợ nhé!";
+
+            for (let item of knowledge) {
+                if (item.keywords.some(k => lowerMsg.includes(k))) {
+                    reply = item.response;
+                    break;
+                }
+            }
+
+            setTimeout(() => {
+                chatBox.innerHTML += `<div class="bg-gray-700 text-white p-3 rounded-lg max-w-[80%] self-start text-sm">${reply}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 300);
+        }
+
+        sendBtn.onclick = sendMsg;
+        userInput.onkeypress = (e) => { if (e.key === 'Enter') sendMsg(); };
+    </script>
+</body>
+</html>

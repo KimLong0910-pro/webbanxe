@@ -3,26 +3,26 @@ require_once 'db.php';
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $brand = $_POST['brand'];
+    $name = trim($_POST['name']);
+    $brand = trim($_POST['brand']);
     $price = $_POST['price'];
-    $image = $_POST['image'];
-    $engine = $_POST['engine'];
-    $transmission = $_POST['transmission'];
-    $fuel = $_POST['fuel'];
-    $description = $_POST['description'];
+    $image = trim($_POST['image']);
+    $engine = trim($_POST['engine']);
+    $transmission = trim($_POST['transmission']);
+    $fuel = trim($_POST['fuel']);
+    $description = trim($_POST['description']);
 
-    $stmt = $conn->prepare("UPDATE cars SET name=?, brand=?, price=?, image=?, engine=?, transmission=?, fuel=?, description=? WHERE id=?");
-    $stmt->bind_param("ssdsssssi", $name, $brand, $price, $image, $engine, $transmission, $fuel, $description, $id);
-    $stmt->execute();
-    header("Location: admin.php");
+    $stmt = $pdo->prepare("UPDATE cars SET name=?, brand=?, price=?, image=?, engine=?, transmission=?, fuel=?, description=? WHERE id=?");
+    $stmt->execute([$name, $brand, $price, $image, $engine, $transmission, $fuel, $description, $id]);
+    
+    header("Location: admin.html");
     exit();
 }
 
-$stmt = $conn->prepare("SELECT * FROM cars WHERE id = ?");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$car = $stmt->get_result()->fetch_assoc();
+$stmt = $pdo->prepare("SELECT * FROM cars WHERE id = ?");
+$stmt->execute([$id]);
+$car = $stmt->fetch();
+
 if (!$car) { die("Không tìm thấy xe!"); }
 ?>
 <!DOCTYPE html>
@@ -48,7 +48,7 @@ if (!$car) { die("Không tìm thấy xe!"); }
             
             <div class="md:col-span-2 flex gap-4 mt-2">
                 <button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 py-3 rounded font-bold transition">Cập Nhật Thay Đổi</button>
-                <a href="admin.php" class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded text-center transition">Hủy</a>
+                <a href="admin.html" class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded text-center transition">Hủy</a>
             </div>
         </form>
     </div>

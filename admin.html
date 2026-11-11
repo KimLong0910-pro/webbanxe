@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bảng Quản Lý Admin - Showroom 4TL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-6 font-sans">
+    <div class="max-w-6xl mx-auto space-y-6">
+        <header class="flex justify-between items-center bg-gray-800 p-4 rounded-xl border border-gray-700">
+            <h1 class="text-xl font-bold text-red-500">BẢNG QUẢN LÝ ADMIN</h1>
+            <div class="flex gap-4">
+                <a href="index.html" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded text-sm transition">Trang Chủ</a>
+                <a href="ai_chat.html" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm font-bold transition">Thử AI Chatbot</a>
+            </div>
+        </header>
+
+        <!-- Form Thêm Xe Mới -->
+        <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+            <h2 class="text-lg font-semibold mb-4 text-red-400">+ Thêm Mẫu Xe Mới</h2>
+            <form id="addCarForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" id="carName" placeholder="Tên xe (VD: Porsche 911 GT3)" required class="bg-gray-700 p-3 rounded border border-gray-600 focus:outline-none">
+                <input type="text" id="carBrand" placeholder="Hãng sản xuất (VD: Porsche)" required class="bg-gray-700 p-3 rounded border border-gray-600 focus:outline-none">
+                <input type="number" id="carPrice" placeholder="Giá tiền (VNĐ)" required class="bg-gray-700 p-3 rounded border border-gray-600 focus:outline-none">
+                <input type="text" id="carImage" placeholder="Link ảnh URL" required class="bg-gray-700 p-3 rounded border border-gray-600 focus:outline-none">
+                <textarea id="carDesc" placeholder="Mô tả ngắn gọn về xe..." class="md:col-span-2 bg-gray-700 p-3 rounded border border-gray-600 focus:outline-none" rows="2"></textarea>
+                <button type="submit" class="md:col-span-2 bg-red-600 hover:bg-red-700 py-2.5 rounded font-bold transition">Lưu Thông Tin Xe</button>
+            </form>
+        </div>
+
+        <!-- Form Train AI Chatbot -->
+        <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+            <h2 class="text-lg font-semibold mb-4 text-yellow-400">Huấn Luyện AI Chatbot (Train Bot)</h2>
+            <form id="trainBotForm" class="space-y-3">
+                <input type="text" id="botKeys" placeholder="Từ khóa nhận biết (phân cách bởi dấu phẩy, VD: gia, dia chi)" required class="w-full bg-gray-700 p-3 rounded border border-gray-600 focus:outline-none">
+                <textarea id="botAns" placeholder="Câu phản hồi tự động tương ứng..." required class="w-full bg-gray-700 p-3 rounded border border-gray-600 focus:outline-none" rows="2"></textarea>
+                <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 px-6 py-2 rounded font-bold text-sm transition">+ Thêm Quy Tắc AI</button>
+            </form>
+        </div>
+
+        <!-- Bảng Danh Sách Xe -->
+        <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 overflow-x-auto">
+            <h2 class="text-lg font-semibold mb-4 text-gray-200">Danh Sách Xe Hiện Có</h2>
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-gray-700 text-gray-400 text-sm">
+                        <th class="p-3">ID</th>
+                        <th class="p-3">Hình Ảnh</th>
+                        <th class="p-3">Tên Xe</th>
+                        <th class="p-3">Hãng</th>
+                        <th class="p-3">Giá</th>
+                        <th class="p-3 text-right">Thao Tác</th>
+                    </tr>
+                </thead>
+                <tbody id="adminCarTable" class="divide-y divide-gray-700/50"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function loadAdminCars() {
+            const cars = JSON.parse(localStorage.getItem('cars_data')) || [];
+            document.getElementById('adminCarTable').innerHTML = cars.map(car => `
+                <tr>
+                    <td class="p-3 text-sm text-gray-400">${car.id}</td>
+                    <td class="p-3"><img src="${car.image}" class="w-16 h-10 object-cover rounded" onerror="this.src='https://via.placeholder.com/60x40'"></td>
+                    <td class="p-3 font-semibold text-white">${car.name}</td>
+                    <td class="p-3 text-gray-400 text-sm">${car.brand}</td>
+                    <td class="p-3 text-red-400 font-bold">${Number(car.price).toLocaleString('vi-VN')}</td>
+                    <td class="p-3 text-right">
+                        <button onclick="deleteCar(${car.id})" class="text-red-400 hover:underline text-sm font-medium">Xóa</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        document.getElementById('addCarForm').onsubmit = function(e) {
+            e.preventDefault();
+            const cars = JSON.parse(localStorage.getItem('cars_data')) || [];
+            const newCar = {
+                id: Date.now(),
+                name: document.getElementById('carName').value,
+                brand: document.getElementById('carBrand').value,
+                price: parseFloat(document.getElementById('carPrice').value),
+                image: document.getElementById('carImage').value,
+                description: document.getElementById('carDesc').value
+            };
+            cars.push(newCar);
+            localStorage.setItem('cars_data', JSON.stringify(cars));
+            this.reset();
+            loadAdminCars();
+        };
+
+        function deleteCar(id) {
+            if (confirm('Bạn có chắc muốn xóa xe này?')) {
+                let cars = JSON.parse(localStorage.getItem('cars_data')) || [];
+                cars = cars.filter(c => c.id !== id);
+                localStorage.setItem('cars_data', JSON.stringify(cars));
+                loadAdminCars();
+            }
+        }
+
+        document.getElementById('trainBotForm').onsubmit = function(e) {
+            e.preventDefault();
+            const botData = JSON.parse(localStorage.getItem('bot_knowledge')) || [];
+            botData.push({
+                keywords: document.getElementById('botKeys').value.toLowerCase().split(',').map(k => k.trim()),
+                response: document.getElementById('botAns').value
+            });
+            localStorage.setItem('bot_knowledge', JSON.stringify(botData));
+            alert('Đã thêm từ khóa huấn luyện AI thành công!');
+            this.reset();
+        };
+
+        loadAdminCars();
+    </script>
+</body>
+</html>
