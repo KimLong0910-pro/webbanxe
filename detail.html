@@ -1,113 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chi Tiết Xe - SHOWROOM 4TL</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        heading: ['Outfit', 'sans-serif']
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+              heading: ["Outfit", "sans-serif"],
+            },
+          },
+        },
+      };
     </script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-gray-100 min-h-screen p-4 sm:p-8 font-sans transition-colors duration-300">
-    
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body
+    class="bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-gray-100 min-h-screen p-4 sm:p-8 font-sans transition-colors duration-300">
     <div class="max-w-5xl mx-auto space-y-6">
-        
-        <!-- Header Nav -->
-        <div class="flex justify-between items-center bg-white/90 dark:bg-slate-900/80 backdrop-blur-md p-4 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg">
-            <a href="index.html" class="text-xs font-bold text-slate-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-white flex items-center gap-2 transition">
-                <i class="fa-solid fa-arrow-left text-red-600 dark:text-red-500"></i> Quay Lại Showroom
-            </a>
-            
-            <span class="text-xs font-bold text-red-600 dark:text-red-400 font-heading tracking-wider uppercase">SHOWROOM 4TL MOTORS</span>
-            
-            <div class="flex items-center gap-2">
-                <!-- Theme Toggle Button -->
-                <button id="themeToggle" type="button" title="Chuyển chế độ Sáng / Tối" class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 text-amber-500 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-yellow-400 flex items-center justify-center border border-gray-200 dark:border-white/10 transition shadow-sm">
-                    <i id="themeIcon" class="fa-solid fa-sun text-sm"></i>
-                </button>
-                <a href="tel:0706850014" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
-                    <i class="fa-solid fa-phone"></i> Hotline VIP
-                </a>
-            </div>
-        </div>
+      <!-- Header Nav -->
+      <div
+        class="flex justify-between items-center bg-white/90 dark:bg-slate-900/80 backdrop-blur-md p-4 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg">
+        <a
+          href="index.html"
+          class="text-xs font-bold text-slate-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-white flex items-center gap-2 transition">
+          <i class="fa-solid fa-arrow-left text-red-600 dark:text-red-500"></i>
+          Quay Lại Showroom
+        </a>
 
-        <!-- Main Detail Card -->
-        <div id="detailContainer" class="glass-panel p-6 sm:p-8 rounded-3xl border border-gray-200 dark:border-white/10 shadow-2xl space-y-8">
-            <div class="text-center py-12 text-gray-400">
-                <i class="fa-solid fa-spinner fa-spin text-2xl text-red-500"></i>
-                <p class="mt-2 text-xs">Đang tải thông tin xe...</p>
-            </div>
-        </div>
+        <span class="text-xs font-bold text-red-600 dark:text-red-400 font-heading tracking-wider uppercase">
+          SHOWROOM 4TL MOTORS
+        </span>
 
+        <div class="flex items-center gap-2">
+          <!-- Theme Toggle Button -->
+          <button
+            id="themeToggle"
+            type="button"
+            title="Chuyển chế độ Sáng / Tối"
+            class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 text-amber-500 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-yellow-400 flex items-center justify-center border border-gray-200 dark:border-white/10 transition shadow-sm">
+            <i id="themeIcon" class="fa-solid fa-sun text-sm"></i>
+          </button>
+          <a
+            href="tel:0706850014"
+            class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
+            <i class="fa-solid fa-phone"></i>
+            Hotline VIP
+          </a>
+        </div>
+      </div>
+
+      <!-- Main Detail Card -->
+      <div
+        id="detailContainer"
+        class="glass-panel p-6 sm:p-8 rounded-3xl border border-gray-200 dark:border-white/10 shadow-2xl space-y-8">
+        <div class="text-center py-12 text-gray-400">
+          <i class="fa-solid fa-spinner fa-spin text-2xl text-red-500"></i>
+          <p class="mt-2 text-xs">Đang tải thông tin xe...</p>
+        </div>
+      </div>
     </div>
 
     <script>
-        // THEME CONTROLLER
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
+      // THEME CONTROLLER
+      const themeToggle = document.getElementById("themeToggle");
+      const themeIcon = document.getElementById("themeIcon");
 
-        function setTheme(mode) {
-            if (mode === 'light') {
-                document.documentElement.classList.remove('dark');
-                document.documentElement.classList.add('light');
-                localStorage.setItem('theme', 'light');
-                if (themeIcon) themeIcon.className = 'fa-solid fa-moon text-slate-700 text-sm';
-                if (themeToggle) themeToggle.title = 'Chuyển sang chế độ Tối (Dark Mode)';
-            } else {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-                localStorage.setItem('theme', 'dark');
-                if (themeIcon) themeIcon.className = 'fa-solid fa-sun text-yellow-400 text-sm';
-                if (themeToggle) themeToggle.title = 'Chuyển sang chế độ Sáng (Light Mode)';
-            }
+      function setTheme(mode) {
+        if (mode === "light") {
+          document.documentElement.classList.remove("dark");
+          document.documentElement.classList.add("light");
+          localStorage.setItem("theme", "light");
+          if (themeIcon) themeIcon.className = "fa-solid fa-moon text-slate-700 text-sm";
+          if (themeToggle) themeToggle.title = "Chuyển sang chế độ Tối (Dark Mode)";
+        } else {
+          document.documentElement.classList.add("dark");
+          document.documentElement.classList.remove("light");
+          localStorage.setItem("theme", "dark");
+          if (themeIcon) themeIcon.className = "fa-solid fa-sun text-yellow-400 text-sm";
+          if (themeToggle) themeToggle.title = "Chuyển sang chế độ Sáng (Light Mode)";
+        }
+      }
+
+      function toggleTheme() {
+        const isDark = document.documentElement.classList.contains("dark");
+        setTheme(isDark ? "light" : "dark");
+      }
+
+      const savedTheme = localStorage.getItem("theme") || "dark";
+      setTheme(savedTheme);
+      if (themeToggle) themeToggle.onclick = toggleTheme;
+
+      const fallbackCars = [
+        {
+          id: 1,
+          name: "VinFast VF3",
+          brand: "VinFast",
+          price: 240000000,
+          image: "https://vinfastquan12.com.vn/wp-content/uploads/2025/02/VinFast_VF3_Mau_trang.webp",
+          engine: "Động cơ điện đơn (43 HP)",
+          transmission: "Tự động",
+          fuel: "Điện",
+          description:
+            "Cơn sốt xe điện mini tại Việt Nam! Kiểu dáng hình hộp cá tính, gầm cao 191mm vượt địa hình ngập nước, Best Seller tại Showroom 4TL.",
+        },
+        {
+          id: 2,
+          name: "Mercedes-Benz C-Class C300 AMG",
+          brand: "Mercedes-Benz",
+          price: 2099000000,
+          image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800",
+          engine: "2.0L Turbo EQ Boost (258 HP)",
+          transmission: "Tự động 9 cấp 9G-TRONIC",
+          fuel: "Xăng Mild-Hybrid",
+          description:
+            "Tiểu S-Class với thiết kế thể thao AMG Line, màn hình giải trí trung tâm 11.9 inch định dạng dọc, đèn Digital Light tối tân nhất.",
+        },
+        {
+          id: 3,
+          name: "Porsche 911 Carrera S",
+          brand: "Porsche",
+          price: 8500000000,
+          image: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800",
+          engine: "3.0L Boxer Twin-Turbo (450 HP)",
+          transmission: "Tự động 8 cấp PDK",
+          fuel: "Xăng",
+          description:
+            "Mẫu xe thể thao huyền thoại mang lại cảm giác lái đỉnh cao, thiết kế timeless vượt thời gian đi cùng gói thể thao Sport Chrono Package.",
+        },
+        {
+          id: 4,
+          name: "Mercedes-AMG G63",
+          brand: "Mercedes-Benz",
+          price: 11750000000,
+          image: "https://images.unsplash.com/photo-1520050206274-a1ae44613e6d?w=800",
+          engine: "4.0L V8 Bi-Turbo (585 HP)",
+          transmission: "Tự động 9 cấp AMG Speedshift",
+          fuel: "Xăng",
+          description:
+            "Mẫu SUV địa hình hạng sang đẳng cấp biểu tượng hoàng gia. Hệ dẫn động 4 bánh toàn thời gian 4MATIC với 3 khóa vi sai độc lập.",
+        },
+        {
+          id: 20,
+          name: "Ferrari F8 Tributo",
+          brand: "Ferrari",
+          price: 19000000000,
+          image: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800",
+          engine: "3.9L V8 Twin-Turbo (710 HP)",
+          transmission: "Tự động 7 cấp ly hợp kép",
+          fuel: "Xăng",
+          description:
+            "Siêu xe thể thao động cơ đặt giữa kinh điển của thương hiệu Ngựa chồm Ý. Tăng tốc 0-100 km/h trong 2.9 giây, tốc độ tối đa 340 km/h.",
+        },
+      ];
+
+      async function loadCarDetail() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = parseInt(urlParams.get("id")) || 1;
+
+        let cars = [];
+        try {
+          const res = await fetch("get_cars.php");
+          cars = await res.json();
+        } catch (e) {
+          cars = fallbackCars;
         }
 
-        function toggleTheme() {
-            const isDark = document.documentElement.classList.contains('dark');
-            setTheme(isDark ? 'light' : 'dark');
-        }
+        const car = (Array.isArray(cars) && cars.find((c) => Number(c.id) === Number(id))) || fallbackCars[0];
 
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        setTheme(savedTheme);
-        if (themeToggle) themeToggle.onclick = toggleTheme;
-
-        const fallbackCars = [
-            { id: 1, name: 'Ferrari F8 Tributo', brand: 'Ferrari', price: 19000000000, image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800', engine: '3.9L V8 Twin-Turbo (710 HP)', transmission: 'Tự động 7 cấp ly hợp kép', fuel: 'Xăng', description: 'Siêu xe thể thao động cơ đặt giữa kinh điển của thương hiệu Ngựa chồm Ý. Tăng tốc 0-100 km/h trong 2.9 giây, tốc độ tối đa 340 km/h.' },
-            { id: 2, name: 'Lamborghini Urus S', brand: 'Lamborghini', price: 16500000000, image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800', engine: '4.0L V8 Twin-Turbo (666 HP)', transmission: 'Tự động 8 cấp thể thao', fuel: 'Xăng', description: 'Siêu SUV sở hữu sức mạnh 666 mã lực, tăng tốc 0-100 km/h trong 3.5 giây. Thiết kế góc cạnh đậm chất chiến đấu của hãng xe bò tót Sant\'Agata Bolognese.' },
-            { id: 3, name: 'Mercedes-AMG G63', brand: 'Mercedes-Benz', price: 11750000000, image: 'https://images.unsplash.com/photo-1520050206274-a1ae44613e6d?w=800', engine: '4.0L V8 Bi-Turbo (585 HP)', transmission: 'Tự động 9 cấp AMG Speedshift', fuel: 'Xăng', description: 'Mẫu SUV địa hình hạng sang đẳng cấp biểu tượng hoàng gia. Hệ dẫn động 4 bánh toàn thời gian 4MATIC với 3 khóa vi sai độc lập.' },
-            { id: 4, name: 'Porsche 911 Carrera S', brand: 'Porsche', price: 8500000000, image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800', engine: '3.0L Boxer Twin-Turbo (450 HP)', transmission: 'Tự động 8 cấp PDK', fuel: 'Xăng', description: 'Mẫu xe thể thao huyền thoại mang lại cảm giác lái đỉnh cao, thiết kế timeless vượt thời gian đi cùng gói thể thao Sport Chrono Package.' }
-        ];
-
-        async function loadCarDetail() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const id = parseInt(urlParams.get('id')) || 1;
-
-            let cars = [];
-            try {
-                const res = await fetch('get_cars.php');
-                cars = await res.json();
-            } catch(e) {
-                cars = fallbackCars;
-            }
-
-            const car = (Array.isArray(cars) && cars.find(c => Number(c.id) === Number(id))) || fallbackCars[0];
-
-            document.getElementById('detailContainer').innerHTML = `
+        document.getElementById("detailContainer").innerHTML = `
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     
                     <!-- Left: Image & Badge -->
@@ -124,17 +195,17 @@
                             <div class="bg-gray-50 dark:bg-slate-900/80 p-3 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
                                 <i class="fa-solid fa-gauge-high text-red-600 dark:text-red-500 mb-1"></i>
                                 <div class="text-[10px] text-gray-500 dark:text-gray-400">Động cơ</div>
-                                <div class="font-bold text-slate-900 dark:text-white truncate">${car.engine || 'N/A'}</div>
+                                <div class="font-bold text-slate-900 dark:text-white truncate">${car.engine || "N/A"}</div>
                             </div>
                             <div class="bg-gray-50 dark:bg-slate-900/80 p-3 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
                                 <i class="fa-solid fa-sliders text-red-600 dark:text-red-500 mb-1"></i>
                                 <div class="text-[10px] text-gray-500 dark:text-gray-400">Hộp số</div>
-                                <div class="font-bold text-slate-900 dark:text-white truncate">${car.transmission || 'Tự động'}</div>
+                                <div class="font-bold text-slate-900 dark:text-white truncate">${car.transmission || "Tự động"}</div>
                             </div>
                             <div class="bg-gray-50 dark:bg-slate-900/80 p-3 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
                                 <i class="fa-solid fa-gas-pump text-red-600 dark:text-red-500 mb-1"></i>
                                 <div class="text-[10px] text-gray-500 dark:text-gray-400">Nhiên liệu</div>
-                                <div class="font-bold text-slate-900 dark:text-white truncate">${car.fuel || 'Xăng'}</div>
+                                <div class="font-bold text-slate-900 dark:text-white truncate">${car.fuel || "Xăng"}</div>
                             </div>
                         </div>
                     </div>
@@ -145,24 +216,24 @@
                             <span class="text-xs text-red-600 dark:text-red-400 font-bold uppercase tracking-widest">${car.brand} Supercar</span>
                             <h1 class="text-3xl font-black font-heading text-slate-900 dark:text-white mt-1">${car.name}</h1>
                             <div class="text-3xl font-black text-red-600 dark:text-red-500 font-heading mt-2">
-                                ${Number(car.price).toLocaleString('vi-VN')} VNĐ
+                                ${Number(car.price).toLocaleString("vi-VN")} VNĐ
                             </div>
                         </div>
 
                         <div class="bg-gray-50 dark:bg-slate-900/80 p-4 rounded-2xl border border-gray-200 dark:border-white/10 space-y-2 text-xs">
                             <div class="text-gray-500 dark:text-gray-400 uppercase font-bold text-[10px]">Giới thiệu mẫu xe</div>
-                            <p class="text-slate-700 dark:text-gray-300 leading-relaxed">${car.description || 'Mẫu xe sở hữu thiết kế tuyệt hảo, trang bị động cơ hiệu năng cao và công nghệ an toàn hàng đầu thế giới.'}</p>
+                            <p class="text-slate-700 dark:text-gray-300 leading-relaxed">${car.description || "Mẫu xe sở hữu thiết kế tuyệt hảo, trang bị động cơ hiệu năng cao và công nghệ an toàn hàng đầu thế giới."}</p>
                         </div>
 
                         <!-- Loan Preview -->
                         <div class="bg-red-50 dark:bg-red-600/10 p-4 rounded-2xl border border-red-200 dark:border-red-500/30 text-xs space-y-1">
                             <div class="flex justify-between text-slate-700 dark:text-gray-300">
                                 <span>Trả trước 20%:</span>
-                                <strong class="text-slate-900 dark:text-white">${Number(car.price * 0.2).toLocaleString('vi-VN')} đ</strong>
+                                <strong class="text-slate-900 dark:text-white">${Number(car.price * 0.2).toLocaleString("vi-VN")} đ</strong>
                             </div>
                             <div class="flex justify-between text-slate-700 dark:text-gray-300">
                                 <span>Ước tính góp tháng (5 năm):</span>
-                                <strong class="text-red-600 dark:text-red-400 font-bold">${Number((car.price * 0.8) / 60 + (car.price * 0.8 * 0.085 / 12)).toLocaleString('vi-VN')} đ</strong>
+                                <strong class="text-red-600 dark:text-red-400 font-bold">${Number((car.price * 0.8) / 60 + (car.price * 0.8 * 0.085) / 12).toLocaleString("vi-VN")} đ</strong>
                             </div>
                         </div>
 
@@ -179,9 +250,9 @@
 
                 </div>
             `;
-        }
+      }
 
-        loadCarDetail();
+      loadCarDetail();
     </script>
-</body>
+  </body>
 </html>
