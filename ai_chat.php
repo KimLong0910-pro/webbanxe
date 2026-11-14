@@ -2,11 +2,7 @@
 require_once 'db.php';
 header("Content-Type: application/json; charset=UTF-8");
 
-// Nhận dữ liệu từ JSON body hoặc POST
 $rawInput = file_get_contents('php://input');
-if (empty($rawInput)) {
-    $rawInput = file_get_contents('php://stdin');
-}
 $input = json_decode($rawInput, true);
 if (!$input && isset($_POST['message'])) {
     $input = $_POST;
@@ -19,112 +15,130 @@ if (empty($message)) {
     exit();
 }
 
+// Hàm chuẩn hóa tiếng Việt bỏ dấu để tìm kiếm mờ (fuzzy match)
+function removeAccents($str) {
+    $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
+    $str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", 'e', $str);
+    $str = preg_replace("/(ì|í|ị|ỉ|ĩ)/", 'i', $str);
+    $str = preg_replace("/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/", 'o', $str);
+    $str = preg_replace("/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/", 'u', $str);
+    $str = preg_replace("/(ỳ|ý|ỵ|ỷ|ỹ)/", 'y', $str);
+    $str = preg_replace("/(đ)/", 'd', $str);
+    return $str;
+}
+
+$msgNoAccent = removeAccents($message);
+$reply = "";
+
+// ƯU TIÊN 1: TRA CỨU TỪ BẢNG TRI THỨC HUẤN LUYỆN (bot_knowledge)
+if (isset($pdo) && $pdo) {
+    try {
+        $stmt = $pdo->query("SELECT keywords, response FROM bot_knowledge ORDER BY id DESC");
+        $knowledges = $stmt->fetchAll();
+
+        $bestScore = 0;
+        $bestResponse = "";
+
+        foreach ($knowledges as $row) {
+            $kwList = explode(',', $row['keywords']);
+            $score = 0;
+            foreach ($kwList as $kw) {
+                $kwClean = mb_strtolower(trim($kw), 'UTF-8');
+                $kwNoAccent = removeAccents($kwClean);
+                if (empty($kwClean)) continue;
+
+                // Khớp chính xác cụm từ khóa (có dấu hoặc không dấu)
+                if (mb_strpos($message, $kwClean) !== false || strpos($msgNoAccent, $kwNoAccent) !== false) {
+                    $score += 3;
+                } else {
+                    // Tìm kiếm mờ bằng độ tương đồng từ (similar_text) cho từng từ trong câu
+                    $msgWords = explode(' ', $msgNoAccent);
+                    foreach ($msgWords as $w) {
+                        if (strlen($w) >= 4 && strlen($kwNoAccent) >= 4) {
+                            similar_text($w, $kwNoAccent, $percent);
+                            if ($percent >= 82) {
+                                $score += 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ($score > $bestScore) {
+                $bestScore = $score;
+                $bestResponse = $row['response'];
+            }
+        }
+
+        if ($bestScore >= 3) {
+            $reply = nl2br(htmlspecialchars($bestResponse));
+        }
+    } catch (Exception $e) {
+        // Bỏ qua nếu bảng chưa tồn tại
+    }
+}
+
+// ƯU TIÊN 2: TRA CỨU THÔNG TIN XE TỪ BẢNG CARS
 $cars = [];
 if (isset($conn) && $conn && !$conn->connect_error) {
-    $sql = "SELECT * FROM cars";
-    $result = @$conn->query($sql);
+    $result = @$conn->query("SELECT * FROM cars");
     if ($result && $result->num_rows > 0) {
-        while($car = $result->fetch_assoc()) {
+        while ($car = $result->fetch_assoc()) {
             $cars[] = $car;
         }
     }
 }
 
-// Fallback danh sách xe nổi bật nếu CSDL chưa kết nối
-if (empty($cars)) {
-    $cars = [
-        ['name' => 'Ferrari F8 Tributo', 'brand' => 'Ferrari', 'price' => 19000000000, 'engine' => '3.9L V8 Twin-Turbo (710 HP)', 'fuel' => 'Xăng'],
-        ['name' => 'Lamborghini Urus S', 'brand' => 'Lamborghini', 'price' => 16500000000, 'engine' => '4.0L V8 Twin-Turbo (666 HP)', 'fuel' => 'Xăng'],
-        ['name' => 'Mercedes-AMG G63', 'brand' => 'Mercedes-Benz', 'price' => 11750000000, 'engine' => '4.0L V8 Bi-Turbo (585 HP)', 'fuel' => 'Xăng'],
-        ['name' => 'Porsche 911 Carrera S', 'brand' => 'Porsche', 'price' => 8500000000, 'engine' => '3.0L Boxer Twin-Turbo (450 HP)', 'fuel' => 'Xăng'],
-        ['name' => 'VinFast VF3', 'brand' => 'VinFast', 'price' => 240000000, 'engine' => 'Động cơ điện đơn (43 HP)', 'fuel' => 'Điện'],
-        ['name' => 'VinFast VF5 Plus', 'brand' => 'VinFast', 'price' => 468000000, 'engine' => 'Động cơ điện (134 HP)', 'fuel' => 'Điện'],
-        ['name' => 'VinFast VF8 Plus', 'brand' => 'VinFast', 'price' => 1270000000, 'engine' => '2 Động cơ điện (402 HP)', 'fuel' => 'Điện'],
-        ['name' => 'Ford Ranger Raptor', 'brand' => 'Ford', 'price' => 1299000000, 'engine' => '3.0L V6 EcoBoost Twin-Turbo (392 HP)', 'fuel' => 'Xăng'],
-        ['name' => 'Mercedes-Benz C300', 'brand' => 'Mercedes-Benz', 'price' => 2099000000, 'engine' => '2.0L Turbo EQ Boost (258 HP)', 'fuel' => 'Xăng'],
-        ['name' => 'Toyota Camry 2.5Q', 'brand' => 'Toyota', 'price' => 1405000000, 'engine' => '2.5L Dynamic Force (207 HP)', 'fuel' => 'Xăng'],
-        ['name' => 'Hyundai Tucson', 'brand' => 'Hyundai', 'price' => 959000000, 'engine' => '2.0L Smartstream D2.0 (186 HP)', 'fuel' => 'Dầu (Diesel)'],
-        ['name' => 'Mazda CX-5', 'brand' => 'Mazda', 'price' => 829000000, 'engine' => '2.0L SkyActiv-G (154 HP)', 'fuel' => 'Xăng']
-    ];
-}
+if (!$reply && !empty($cars)) {
+    foreach ($cars as $car) {
+        $carNameLower = mb_strtolower($car['name'], 'UTF-8');
+        $carNameNoAccent = removeAccents($carNameLower);
+        $words = explode(' ', $carNameNoAccent);
+        $lastWord = end($words);
 
-$reply = "";
-
-// 1. Tìm theo tên xe hoặc model cụ thể
-foreach ($cars as $car) {
-    $carNameLower = mb_strtolower($car['name'], 'UTF-8');
-    $brandLower = mb_strtolower($car['brand'], 'UTF-8');
-    
-    $words = explode(' ', $carNameLower);
-    $lastWord = end($words);
-    
-    if (strpos($message, $carNameLower) !== false || 
-        (strlen($lastWord) >= 3 && strpos($message, $lastWord) !== false) || 
-        ($car['name'] === 'VinFast VF3' && (strpos($message, 'vf3') !== false || strpos($message, 'vf 3') !== false)) ||
-        ($car['name'] === 'Mercedes-AMG G63' && (strpos($message, 'g63') !== false || strpos($message, 'g 63') !== false)) ||
-        ($car['name'] === 'Porsche 911 Carrera S' && strpos($message, '911') !== false) ||
-        ($car['name'] === 'Ferrari F8 Tributo' && (strpos($message, 'f8') !== false || strpos($message, 'ferrari') !== false)) ||
-        ($car['name'] === 'Lamborghini Urus S' && (strpos($message, 'urus') !== false || strpos($message, 'lambo') !== false))
-    ) {
-        $priceFormatted = number_format($car['price'], 0, ',', '.');
-        $reply = "Dạ, mẫu siêu phẩm <strong>{$car['name']}</strong> ({$car['brand']}) hiện có giá niêm yết tại Showroom là <strong>{$priceFormatted} VNĐ</strong>.<br>✨ Động cơ: {$car['engine']} | Nhiên liệu: {$car['fuel']}.<br>Quý khách có thể cọc giữ xe online hoặc bấm nút <strong>Đăng Ký Lái Thử</strong> ngay trên màn hình ạ!";
-        break;
+        if (mb_strpos($message, $carNameLower) !== false ||
+            strpos($msgNoAccent, $carNameNoAccent) !== false ||
+            (strlen($lastWord) >= 3 && strpos($msgNoAccent, $lastWord) !== false) ||
+            ($car['name'] === 'VinFast VF3' && (strpos($msgNoAccent, 'vf3') !== false || strpos($msgNoAccent, 'vf 3') !== false)) ||
+            ($car['name'] === 'Mercedes-AMG G63' && (strpos($msgNoAccent, 'g63') !== false || strpos($msgNoAccent, 'g 63') !== false))
+        ) {
+            $priceFormatted = number_format($car['price'], 0, ',', '.');
+            $reply = "Dạ, mẫu xe <strong>{$car['name']}</strong> ({$car['brand']}) hiện có giá niêm yết là <strong>{$priceFormatted} VNĐ</strong>.<br>✨ Động cơ: {$car['engine']} | Nhiên liệu: {$car['fuel']}.<br>Quý khách có thể bấm <strong>Đặt Cọc</strong> hoặc <strong>Lái Thử</strong> ngay bên dưới thẻ xe ạ!";
+            break;
+        }
     }
 }
 
-// 2. Tư vấn theo khoảng ngân sách (dưới 2 tỷ, dưới 1 tỷ, dưới 500 triệu...)
-if (!$reply && (strpos($message, 'dưới') !== false || strpos($message, 'duoi') !== false || strpos($message, 'tầm') !== false || strpos($message, 'ngân sách') !== false || strpos($message, 'khoảng') !== false || strpos($message, 'tài chính') !== false)) {
+// ƯU TIÊN 3: TƯ VẤN THEO NGÂN SÁCH & CÂU HỎI MẶC ĐỊNH
+if (!$reply && (strpos($msgNoAccent, 'duoi') !== false || strpos($msgNoAccent, 'tam') !== false || strpos($msgNoAccent, 'ngan sach') !== false)) {
     $limitPrice = 0;
     $label = "";
-    if (strpos($message, '500') !== false) {
-        $limitPrice = 500000000;
-        $label = "dưới 500 triệu";
-    } elseif (strpos($message, '1 tỷ') !== false || strpos($message, '1 ty') !== false || strpos($message, '1ty') !== false) {
-        $limitPrice = 1000000000;
-        $label = "dưới 1 tỷ";
-    } elseif (strpos($message, '2 tỷ') !== false || strpos($message, '2 ty') !== false || strpos($message, '2ty') !== false) {
-        $limitPrice = 2000000000;
-        $label = "dưới 2 tỷ";
-    } elseif (strpos($message, '3 tỷ') !== false || strpos($message, '3 ty') !== false || strpos($message, '3ty') !== false) {
-        $limitPrice = 3000000000;
-        $label = "dưới 3 tỷ";
-    } elseif (strpos($message, '5 tỷ') !== false || strpos($message, '5 ty') !== false || strpos($message, '5ty') !== false) {
-        $limitPrice = 5000000000;
-        $label = "dưới 5 tỷ";
-    }
+    if (strpos($msgNoAccent, '500') !== false) { $limitPrice = 500000000; $label = "dưới 500 triệu"; }
+    elseif (strpos($msgNoAccent, '1 ty') !== false || strpos($msgNoAccent, '1ty') !== false) { $limitPrice = 1000000000; $label = "dưới 1 tỷ"; }
+    elseif (strpos($msgNoAccent, '2 ty') !== false || strpos($msgNoAccent, '2ty') !== false) { $limitPrice = 2000000000; $label = "dưới 2 tỷ"; }
+    elseif (strpos($msgNoAccent, '3 ty') !== false || strpos($msgNoAccent, '3ty') !== false) { $limitPrice = 3000000000; $label = "dưới 3 tỷ"; }
 
-    if ($limitPrice > 0) {
-        $matches = array_filter($cars, function($c) use ($limitPrice) {
-            return (float)$c['price'] <= $limitPrice;
-        });
+    if ($limitPrice > 0 && !empty($cars)) {
+        $matches = array_filter($cars, fn($c) => (float)$c['price'] <= $limitPrice);
         if (!empty($matches)) {
-            usort($matches, function($a, $b) { return $b['price'] - $a['price']; });
+            usort($matches, fn($a, $b) => $b['price'] - $a['price']);
             $list = [];
             foreach (array_slice($matches, 0, 4) as $m) {
                 $p = number_format($m['price'], 0, ',', '.');
                 $list[] = "• <strong>{$m['name']}</strong>: {$p} VNĐ";
             }
-            $reply = "Dạ với tầm tài chính <strong>{$label}</strong>, Showroom 4TL trân trọng đề xuất các mẫu xe cực đẹp:<br>" . implode("<br>", $list) . "<br><br>Quý khách muốn xem chi tiết thông số hay đăng ký lái thử mẫu nào không ạ?";
+            $reply = "Dạ với tầm tài chính <strong>{$label}</strong>, Showroom 4TL đề xuất các mẫu xe:<br>" . implode("<br>", $list);
         }
     }
 }
 
-// 3. Tư vấn theo chủ đề thường gặp
 if (!$reply) {
-    if (strpos($message, 'tra gop') !== false || strpos($message, 'trả góp') !== false || strpos($message, 'vay') !== false || strpos($message, 'ngan hang') !== false || strpos($message, 'ngân hàng') !== false) {
-        $reply = "Showroom 4TL hỗ trợ mua xe trả góp lên đến <strong>80% giá trị xe</strong>, thời gian vay linh hoạt từ 1 đến 7 năm (84 tháng), lãi suất ưu đãi chỉ từ 7.5%/năm. Quý khách có thể thử ngay công cụ <strong>Dự Toán Trả Góp</strong> ở trên trang web!";
-    } elseif (strpos($message, 'lai thu') !== false || strpos($message, 'lái thử') !== false || strpos($message, 'test drive') !== false) {
-        $reply = "Showroom 4TL luôn sẵn sàng xe demo để quý khách trải nghiệm cảm giác lái thực tế. Quý khách có thể bấm nút <strong>'Đăng Ký Lái Thử'</strong> trên màn hình hoặc gọi Hotline: <strong>0706.850.014</strong> để chuyên viên sắp xếp xe đón tận nơi!";
-    } elseif (strpos($message, 'dien') !== false || strpos($message, 'điện') !== false || strpos($message, 'ev') !== false) {
-        $reply = "Hiện Showroom có sẵn các dòng xe thuần điện HOT nhất thị trường: <strong>VinFast VF3</strong> (giá từ 240 triệu), <strong>VF5 Plus</strong> (468 triệu) và <strong>VF8 Plus</strong> (1.27 tỷ). Xe giao ngay, tặng kèm bộ sạc tại nhà!";
-    } elseif (strpos($message, 'dia chi') !== false || strpos($message, 'ở đâu') !== false || strpos($message, 'o dau') !== false || strpos($message, 'location') !== false || strpos($message, 'showroom') !== false) {
-        $reply = "Showroom 4TL tọa lạc tại: <strong>99 Nguyễn Lương Bằng, Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</strong>. Mở cửa từ 08:00 đến 20:30 tất cả các ngày trong tuần. Kính mời quý khách ghé thăm trải nghiệm!";
-    } elseif (strpos($message, 'bao hanh') !== false || strpos($message, 'bảo hành') !== false || strpos($message, 'cam ket') !== false || strpos($message, 'cam kết') !== false) {
-        $reply = "Tất cả các dòng xe tại Showroom 4TL đều cam kết: Bảo hành chính hãng từ 3 - 10 năm, kiểm định 160 bước nghiêm ngặt, cam kết KHÔNG đâm đụng, KHÔNG thủy kích ngập nước!";
-    } elseif (strpos($message, 'coc') !== false || strpos($message, 'cọc') !== false || strpos($message, 'dat coc') !== false || strpos($message, 'chuyen khoan') !== false || strpos($message, 'qr') !== false) {
-        $reply = "Để giữ xe, quý khách chỉ cần bấm nút <strong>'Đặt Cọc Giữ Xe'</strong> tại mẫu xe yêu thích. Hệ thống sẽ hiển thị mã QR VietQR chuyển khoản nhanh bảo đảm quyền ưu tiên nhận xe!";
+    if (strpos($msgNoAccent, 'tra gop') !== false || strpos($msgNoAccent, 'vay') !== false) {
+        $reply = "Showroom 4TL hỗ trợ vay trả góp lên đến <strong>80% giá trị xe</strong> trong tối đa 7 năm (84 tháng). Quý khách có thể kéo thử thanh <strong>Dự Toán Trả Góp</strong> ngay trên trang chủ!";
+    } elseif (strpos($msgNoAccent, 'lai thu') !== false) {
+        $reply = "Quý khách hãy bấm nút <strong>'Lái Thử'</strong> trên bất kỳ mẫu xe nào, điền tên và SĐT, hệ thống sẽ lưu lịch hẹn ngay để chuyên viên mang xe tới tận nơi ạ!";
     } else {
-        $reply = "Cảm ơn quý khách đã quan tâm! Showroom 4TL luôn sẵn sàng phục vụ. Quý khách có thể lọc xe theo thương hiệu, mức giá ở danh mục trên hoặc liên hệ Hotline VIP: <strong>0706.850.014</strong> để được phục vụ chu đáo nhất.";
+        $reply = "Cảm ơn quý khách đã nhắn tin! Quý khách có thể hỏi về giá xe cụ thể (VD: <em>giá VF3, G63, Porsche 911</em>), ngân sách (<em>xe dưới 2 tỷ</em>) hoặc gọi Hotline VIP <strong>0706.850.014</strong> ạ!";
     }
 }
 

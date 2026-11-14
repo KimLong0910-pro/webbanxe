@@ -30,6 +30,30 @@ CREATE TABLE IF NOT EXISTS bot_knowledge (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Bảng lưu lịch đăng ký lái thử & yêu cầu tư vấn
+CREATE TABLE IF NOT EXISTS bookings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_name VARCHAR(150) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    car_name VARCHAR(255) NOT NULL,
+    booking_date VARCHAR(50) DEFAULT NULL,
+    note TEXT DEFAULT NULL,
+    status ENUM('pending', 'confirmed', 'cancelled') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Bảng lưu đơn đặt cọc giữ xe qua VietQR
+CREATE TABLE IF NOT EXISTS deposits (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    car_name VARCHAR(255) NOT NULL,
+    car_price DECIMAL(15,2) NOT NULL,
+    memo VARCHAR(100) NOT NULL,
+    customer_name VARCHAR(150) DEFAULT 'Khách đặt online',
+    customer_phone VARCHAR(20) DEFAULT '',
+    status ENUM('pending', 'verified', 'cancelled') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 INSERT INTO users (username, password) VALUES
 ('admin', 'admin123')
 ON DUPLICATE KEY UPDATE username=username;
