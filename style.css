@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SHOWROOM 4TL - LUXURY & SUPERCAR AUTOMOTIVE DESIGN SYSTEM
+   SHOWROOM 4TL - GALAXY & DEEP INDIGO AUTOMOTIVE DESIGN SYSTEM
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
@@ -18,26 +18,36 @@ html {
     font-family: var(--font-sans);
 }
 
+/* Nền website chính: Chuyển sang Tím đậm xanh / Galaxy */
 body {
     overflow-x: hidden;
     font-family: var(--font-sans);
+    background: linear-gradient(135deg, #090618 0%, #110c2e 40%, #1a103f 100%) !important;
+    background-attachment: fixed !important;
+    color: #f3f4f6 !important;
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Khi chuyển sang Light Mode (nếu có toggle) */
+.light body {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+    color: #0f172a !important;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
     font-family: var(--font-heading);
 }
 
-/* Custom Scrollbar - Dark Mode */
+/* Custom Scrollbar - Dark Mode (Galaxy Theme) */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: #0f172a;
+    background: #0b0819;
 }
 ::-webkit-scrollbar-thumb {
-    background: #334155;
+    background: #4c1d95;
     border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -55,12 +65,12 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     background: #ef4444;
 }
 
-/* Glassmorphism Classes */
+/* Glassmorphism Classes cho nền Tím Galaxy */
 .glass-panel {
-    background: rgba(15, 23, 42, 0.75);
+    background: rgba(20, 15, 45, 0.75);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.15);
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -73,10 +83,10 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 .glass-card {
-    background: rgba(30, 41, 59, 0.6);
+    background: rgba(30, 20, 65, 0.6);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(139, 92, 246, 0.15);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -90,8 +100,8 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 .glass-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(239, 68, 68, 0.4);
-    box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px 2px rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.5);
+    box-shadow: 0 20px 30px -10px rgba(15, 5, 35, 0.8), 0 0 25px 2px rgba(139, 92, 246, 0.25);
 }
 
 .light .glass-card:hover {
@@ -127,12 +137,12 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     -webkit-text-fill-color: transparent;
 }
 
-/* Background Gradients */
+/* Background Gradients (Hiệu ứng không gian Galaxy Mesh) */
 .hero-gradient-mesh {
     background-image: 
-        radial-gradient(at 0% 0%, rgba(220, 38, 38, 0.18) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(185, 28, 28, 0.12) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(15, 23, 42, 0.95) 0px, transparent 80%);
+        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.25) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(220, 38, 38, 0.2) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(15, 10, 35, 0.95) 0px, transparent 80%);
 }
 
 .light .hero-gradient-mesh {
@@ -180,11 +190,11 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     left: 140%;
 }
 
-/* Range input styling for Installment Calculator */
+/* Range input styling */
 input[type=range] {
     -webkit-appearance: none;
     appearance: none;
-    background: #334155;
+    background: #3b82f6;
     height: 6px;
     border-radius: 9999px;
     outline: none;
@@ -224,10 +234,6 @@ input[type=range]::-webkit-slider-thumb:hover {
     color: #334155;
     border-color: #e2e8f0;
 }
-.light .brand-pill:not(.active):hover {
-    border-color: #ef4444;
-    color: #dc2626;
-}
 
 /* Category Filter Pills */
 .cat-pill {
@@ -237,15 +243,6 @@ input[type=range]::-webkit-slider-thumb:hover {
     background: #ef4444 !important;
     color: #ffffff !important;
     border-color: #ef4444 !important;
-}
-.light .cat-pill:not(.active) {
-    background: #ffffff;
-    color: #334155;
-    border-color: #e2e8f0;
-}
-.light .cat-pill:not(.active):hover {
-    background: #f8fafc;
-    color: #dc2626;
 }
 
 /* Custom Dropdown Animation */
