@@ -1,3 +1,4 @@
+
 /* ==========================================================================
    SHOWROOM 4TL - GALAXY & DEEP INDIGO AUTOMOTIVE DESIGN SYSTEM
    ========================================================================== */
@@ -18,7 +19,8 @@ html {
     font-family: var(--font-sans);
 }
 
-/* Nền website chính: Chuyển sang Tím đậm xanh / Galaxy */
+/* Nền website chính: Tím đậm xanh / Galaxy */
+
 body {
     overflow-x: hidden;
     font-family: var(--font-sans);
@@ -26,9 +28,11 @@ body {
     background-attachment: fixed !important;
     color: #f3f4f6 !important;
     transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
 }
 
-/* Khi chuyển sang Light Mode (nếu có toggle) */
+/* Khi chuyển sang Light Mode */
+
 .light body {
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
     color: #0f172a !important;
@@ -38,34 +42,28 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     font-family: var(--font-heading);
 }
 
-/* Custom Scrollbar - Dark Mode (Galaxy Theme) */
+/* Custom Scrollbar - Dark Mode */
+
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
+
 ::-webkit-scrollbar-track {
     background: #0b0819;
 }
+
 ::-webkit-scrollbar-thumb {
     background: #4c1d95;
     border-radius: 9999px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
     background: #ef4444;
 }
 
-/* Custom Scrollbar - Light Mode */
-.light ::-webkit-scrollbar-track {
-    background: #f1f5f9;
-}
-.light ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-}
-.light ::-webkit-scrollbar-thumb:hover {
-    background: #ef4444;
-}
+/* Glassmorphism Classes */
 
-/* Glassmorphism Classes cho nền Tím Galaxy */
 .glass-panel {
     background: rgba(20, 15, 45, 0.75);
     backdrop-filter: blur(16px);
@@ -104,19 +102,10 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     box-shadow: 0 20px 30px -10px rgba(15, 5, 35, 0.8), 0 0 25px 2px rgba(139, 92, 246, 0.25);
 }
 
-.light .glass-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(239, 68, 68, 0.4);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-}
-
 /* Luxury Glow & Gradients */
+
 .glow-red {
     box-shadow: 0 0 25px rgba(239, 68, 68, 0.45);
-}
-
-.glow-red-sm {
-    box-shadow: 0 0 12px rgba(239, 68, 68, 0.3);
 }
 
 .text-gradient-red {
@@ -125,147 +114,17 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     -webkit-text-fill-color: transparent;
 }
 
-.light .text-gradient-red {
-    background: linear-gradient(135deg, #0f172a 20%, #b91c1c 70%, #ef4444 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-gold {
-    background: linear-gradient(135deg, #fef08a 0%, #f59e0b 60%, #b45309 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-/* Background Gradients (Hiệu ứng không gian Galaxy Mesh) */
 .hero-gradient-mesh {
-    background-image: 
+    background-image:
         radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.25) 0px, transparent 50%),
         radial-gradient(at 100% 100%, rgba(220, 38, 38, 0.2) 0px, transparent 50%),
         radial-gradient(at 50% 50%, rgba(15, 10, 35, 0.95) 0px, transparent 80%);
 }
 
-.light .hero-gradient-mesh {
-    background-image: 
-        radial-gradient(at 0% 0%, rgba(254, 226, 226, 0.9) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(254, 202, 202, 0.5) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, #f8fafc 0px, transparent 80%);
-}
-
-/* Pulse Glow Animation */
-@keyframes pulse-ring {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-}
-
-.pulse-ring {
-    animation: pulse-ring 2.5s infinite cubic-bezier(0.4, 0, 0.6, 1);
-}
-
-/* Shimmer Loading / Luxury Shine */
-.shine-hover {
-    position: relative;
-    overflow: hidden;
-}
-
-.shine-hover::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -60%;
-    width: 20%;
-    height: 200%;
-    background: linear-gradient(
-        60deg,
-        rgba(255, 255, 255, 0) 20%,
-        rgba(255, 255, 255, 0.25) 50%,
-        rgba(255, 255, 255, 0) 80%
-    );
-    transform: rotate(25deg);
-    transition: all 0.75s ease;
-}
-
-.shine-hover:hover::after {
-    left: 140%;
-}
-
-/* Range input styling */
-input[type=range] {
-    -webkit-appearance: none;
-    appearance: none;
-    background: #3b82f6;
-    height: 6px;
-    border-radius: 9999px;
-    outline: none;
-}
-.light input[type=range] {
-    background: #cbd5e1;
-    cursor: pointer;
-}
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #ef4444;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
-    transition: transform 0.15s ease;
-}
-input[type=range]::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-}
-
-/* Brand Filter Pills */
-.brand-pill {
-    transition: all 0.2s ease;
-    user-select: none;
-}
-.brand-pill.active {
-    background: #ef4444 !important;
-    color: #ffffff !important;
-    border-color: #ef4444 !important;
-    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-}
-.light .brand-pill:not(.active) {
-    background: #ffffff;
-    color: #334155;
-    border-color: #e2e8f0;
-}
-
-/* Category Filter Pills */
-.cat-pill {
-    transition: all 0.2s ease;
-}
-.cat-pill.active {
-    background: #ef4444 !important;
-    color: #ffffff !important;
-    border-color: #ef4444 !important;
-}
-
-/* Custom Dropdown Animation */
-.nav-group:hover .dropdown-menu {
-    display: block;
-    animation: fadeInSlide 0.25s ease forwards;
-}
-
-@keyframes fadeInSlide {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 /* ==========================================================================
-   HIỆU ỨNG ÁNH SAO LẤP LÁNH (GALAXY STARS)
+   HIỆU ỨNG NGÂN HÀ (GALAXY) LẤP LÁNH CHO DARK MODE
    ========================================================================== */
 
-/* Tạo lớp phủ chứa các hạt sao */
 body::before {
     content: "";
     position: fixed;
@@ -274,36 +133,44 @@ body::before {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 0;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 90px 40px, #fbcfe8, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(1.5px 1.5px at 230px 200px, #c7d2fe, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 320px 80px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 450px 300px, #fbcfe8, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 550px 150px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(1.5px 1.5px at 680px 250px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 800px 70px, #c7d2fe, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 920px 350px, #ffffff, rgba(0,0,0,0));
+    z-index: 1;
+
+    background-image:
+        radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 90px 160px, #e879f9, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 150px 80px, #38bdf8, rgba(0,0,0,0)),
+        radial-gradient(2.5px 2.5px at 250px 220px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 380px 120px, #c084fc, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 450px 350px, #ffffff, rgba(0,0,0,0));
+
     background-repeat: repeat;
     background-size: 500px 500px;
-    opacity: 0.6;
-    animation: twinkleStars 8s linear infinite;
+    opacity: 0.75;
+
+    animation: twinkleGalaxy 10s linear infinite;
 }
 
-/* Hiệu ứng nhấp nháy (chíu chíu) cho các ngôi sao */
-@keyframes twinkleStars {
+@keyframes twinkleGalaxy {
     0% {
-        transform: translateY(0);
-        opacity: 0.4;
+        transform: translateY(0) scale(1);
+        opacity: 0.5;
     }
+
     50% {
         opacity: 0.9;
     }
+
     100% {
-        transform: translateY(-200px);
-        opacity: 0.4;
+        transform: translateY(-200px) scale(1);
+        opacity: 0.5;
     }
+}
+
+/* ==========================================================================
+   LIGHT MODE: ẨN HIỆU ỨNG SAO LẤP LÁNH
+   ========================================================================== */
+
+.light body::before,
+html:not(.dark) body::before {
+    display: none !important;
 }
