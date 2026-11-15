@@ -6,23 +6,11 @@
     <title>Bảng Quản Lý Admin - SHOWROOM 4TL</title>
     <!-- Google Fonts -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap"
       rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ["Plus Jakarta Sans", "sans-serif"],
-              heading: ["Outfit", "sans-serif"],
-            },
-          },
-        },
-      };
-    </script>
+    <script src="theme.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
 
@@ -34,7 +22,7 @@
         class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-6 rounded-3xl border border-gray-200 dark:border-white/10 shadow-xl">
         <div class="flex items-center gap-3">
           <div
-            class="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center text-white shadow-lg shadow-red-600/30">
+            class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-600/30">
             <i class="fa-solid fa-gauge text-lg"></i>
           </div>
           <div>
@@ -71,7 +59,7 @@
           </a>
           <a
             href="logout.php"
-            class="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white dark:bg-red-600/20 dark:hover:bg-red-600 dark:text-red-400 px-4 py-2.5 rounded-xl text-xs font-bold border border-red-200 dark:border-red-500/30 transition flex items-center gap-1.5 shadow-sm">
+            class="bg-indigo-600/10 hover:bg-indigo-600 text-indigo-600 hover:text-white dark:bg-indigo-600/20 dark:hover:bg-indigo-600 dark:text-indigo-400 px-4 py-2.5 rounded-xl text-xs font-bold border border-indigo-200 dark:border-indigo-500/30 transition flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-right-from-bracket"></i>
             Đăng Xuất
           </a>
@@ -93,7 +81,7 @@
           class="bg-white dark:bg-slate-900/80 p-5 rounded-2xl border border-gray-200 dark:border-white/10 shadow-md">
           <span class="text-xs text-gray-500 dark:text-gray-400 uppercase font-bold">Tổng Giá Trị Kho</span>
           <div
-            class="text-xl sm:text-2xl font-black text-red-600 dark:text-red-400 font-heading mt-1"
+            class="text-xl sm:text-2xl font-black text-indigo-600 dark:text-indigo-400 font-heading mt-1"
             id="statTotalValue">
             --
           </div>
@@ -117,10 +105,10 @@
         class="bg-white dark:bg-slate-900/80 p-6 sm:p-8 rounded-3xl border border-gray-200 dark:border-white/10 shadow-xl space-y-4">
         <div class="flex items-center justify-between">
           <h2 class="text-lg font-bold text-slate-900 dark:text-white font-heading flex items-center gap-2">
-            <i class="fa-solid fa-qrcode text-red-600"></i>
+            <i class="fa-solid fa-qrcode text-indigo-600"></i>
             Đơn Đặt Cọc Giữ Xe Online
           </h2>
-          <span id="depositBadge" class="text-xs font-bold px-3 py-1 rounded-full bg-red-600/10 text-red-600">
+          <span id="depositBadge" class="text-xs font-bold px-3 py-1 rounded-full bg-indigo-600/10 text-indigo-600">
             0 đơn
           </span>
         </div>
@@ -179,7 +167,8 @@
       <!-- Form Thêm Xe Mới -->
       <div
         class="bg-white dark:bg-slate-900/80 p-6 sm:p-8 rounded-3xl border border-gray-200 dark:border-white/10 shadow-xl space-y-4">
-        <div class="flex items-center gap-2 text-red-600 dark:text-red-500 font-bold text-sm uppercase tracking-wider">
+        <div
+          class="flex items-center gap-2 text-indigo-600 dark:text-indigo-500 font-bold text-sm uppercase tracking-wider">
           <i class="fa-solid fa-square-plus"></i>
           <h2>Thêm Mẫu Xe Mới Vào Showroom</h2>
         </div>
@@ -192,7 +181,7 @@
               id="name"
               placeholder="VD: Porsche Taycan Turbo S"
               required
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-semibold">Hãng sản xuất</label>
@@ -201,7 +190,7 @@
               id="brand"
               placeholder="VD: Porsche"
               required
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-semibold">Giá bán (VNĐ)</label>
@@ -210,7 +199,7 @@
               id="price"
               placeholder="VD: 9500000000"
               required
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-semibold">Động cơ & Mã lực</label>
@@ -218,7 +207,7 @@
               type="text"
               id="engine"
               placeholder="VD: Động cơ điện đôi (750 HP)"
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-semibold">Hộp số</label>
@@ -226,7 +215,7 @@
               type="text"
               id="transmission"
               placeholder="VD: Tự động 2 cấp"
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-semibold">Loại nhiên liệu</label>
@@ -234,7 +223,7 @@
               type="text"
               id="fuel"
               placeholder="VD: Điện / Xăng / Hybrid"
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
           </div>
 
           <div class="md:col-span-3">
@@ -246,7 +235,7 @@
               id="image"
               placeholder="https://..."
               required
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
           </div>
 
           <div class="md:col-span-3">
@@ -257,13 +246,13 @@
               id="description"
               placeholder="Mô tả các trang bị an toàn, cảm giác lái, bảo hành..."
               rows="3"
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-red-500"></textarea>
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"></textarea>
           </div>
 
           <div class="md:col-span-3">
             <button
               type="submit"
-              class="w-full bg-red-600 hover:bg-red-700 text-white py-3.5 rounded-xl font-bold transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2">
+              class="w-full bg-indigo-600 hover:bg-violet-700 text-white py-3.5 rounded-xl font-bold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
               <i class="fa-solid fa-cloud-arrow-up"></i>
               Lưu Mẫu Xe Mới
             </button>
@@ -283,7 +272,7 @@
             id="adminSearch"
             oninput="filterAdminCars()"
             placeholder="Tìm nhanh theo tên hoặc hãng..."
-            class="px-3.5 py-2 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-red-500 w-full sm:w-64" />
+            class="px-3.5 py-2 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 w-full sm:w-64" />
         </div>
 
         <div class="overflow-x-auto">
@@ -380,17 +369,17 @@
                 <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50">
                     <td class="p-3 font-mono text-gray-400">#${d.id}</td>
                     <td class="p-3 font-bold">${d.customer_name}</td>
-                    <td class="p-3 font-mono text-red-500 font-bold">${d.customer_phone}</td>
+                    <td class="p-3 font-mono text-indigo-500 font-bold">${d.customer_phone}</td>
                     <td class="p-3 font-semibold">${d.car_name}</td>
                     <td class="p-3 font-mono text-amber-500">${d.memo}</td>
                     <td class="p-3">
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${d.status === "verified" ? "bg-emerald-500/20 text-emerald-400" : d.status === "cancelled" ? "bg-red-500/20 text-red-400" : "bg-amber-500/20 text-amber-400"}">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${d.status === "verified" ? "bg-emerald-500/20 text-emerald-400" : d.status === "cancelled" ? "bg-indigo-500/20 text-indigo-400" : "bg-amber-500/20 text-amber-400"}">
                             ${d.status === "verified" ? "Đã nhận tiền" : d.status === "cancelled" ? "Đã hủy" : "Chờ đối soát"}
                         </span>
                     </td>
                     <td class="p-3 text-right space-x-2">
                         <button onclick="updateOrder('deposits', ${d.id}, 'verified')" class="text-emerald-500 hover:underline font-bold">Xác nhận</button>
-                        <button onclick="deleteOrder('deposits', ${d.id})" class="text-red-500 hover:underline font-bold">Xóa</button>
+                        <button onclick="deleteOrder('deposits', ${d.id})" class="text-indigo-500 hover:underline font-bold">Xóa</button>
                     </td>
                 </tr>
             `,
@@ -413,13 +402,13 @@
                     <td class="p-3 font-semibold">${b.car_name}</td>
                     <td class="p-3 text-gray-400">${b.booking_date} — <span class="italic">${b.note || ""}</span></td>
                     <td class="p-3">
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${b.status === "confirmed" ? "bg-emerald-500/20 text-emerald-400" : b.status === "cancelled" ? "bg-red-500/20 text-red-400" : "bg-amber-500/20 text-amber-400"}">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${b.status === "confirmed" ? "bg-emerald-500/20 text-emerald-400" : b.status === "cancelled" ? "bg-indigo-500/20 text-indigo-400" : "bg-amber-500/20 text-amber-400"}">
                             ${b.status === "confirmed" ? "Đã chốt lịch" : b.status === "cancelled" ? "Đã hủy" : "Chờ gọi xác nhận"}
                         </span>
                     </td>
                     <td class="p-3 text-right space-x-2">
                         <button onclick="updateOrder('bookings', ${b.id}, 'confirmed')" class="text-emerald-500 hover:underline font-bold">Duyệt</button>
-                        <button onclick="deleteOrder('bookings', ${b.id})" class="text-red-500 hover:underline font-bold">Xóa</button>
+                        <button onclick="deleteOrder('bookings', ${b.id})" class="text-indigo-500 hover:underline font-bold">Xóa</button>
                     </td>
                 </tr>
             `,
@@ -475,14 +464,14 @@
                         <img src="${car.image}" class="w-14 h-9 object-cover rounded-lg border border-gray-200 dark:border-white/10" onerror="this.src='https://via.placeholder.com/60x40'">
                     </td>
                     <td class="p-3 font-bold text-slate-900 dark:text-white">${car.name}</td>
-                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-red-600/10 dark:bg-red-600/20 text-red-600 dark:text-red-400 font-bold">${car.brand}</span></td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-indigo-600/10 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 font-bold">${car.brand}</span></td>
                     <td class="p-3 text-gray-500 dark:text-gray-400">${car.fuel || "Xăng"}</td>
-                    <td class="p-3 text-red-600 dark:text-red-400 font-bold font-mono">${Number(car.price).toLocaleString("vi-VN")} đ</td>
+                    <td class="p-3 text-indigo-600 dark:text-indigo-400 font-bold font-mono">${Number(car.price).toLocaleString("vi-VN")} đ</td>
                     <td class="p-3 text-right space-x-2">
                         <button onclick="openEditModal(${car.id})" class="text-blue-600 dark:text-blue-400 hover:underline font-bold inline-flex items-center gap-1">
                         <i class="fa-solid fa-pen-to-square"></i> Sửa
                         </button> 
-                        <button onclick="deleteCar(${car.id})" class="text-red-600 dark:text-red-400 hover:underline font-bold inline-flex items-center gap-1 ml-2">
+                        <button onclick="deleteCar(${car.id})" class="text-indigo-600 dark:text-indigo-400 hover:underline font-bold inline-flex items-center gap-1 ml-2">
                             <i class="fa-solid fa-trash"></i> Xóa
                         </button>
                     </td>
@@ -629,7 +618,7 @@
               type="text"
               id="edit_name"
               required
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-bold">Hãng sản xuất</label>
@@ -637,7 +626,7 @@
               type="text"
               id="edit_brand"
               required
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-bold">Giá bán (VNĐ)</label>
@@ -646,28 +635,28 @@
               step="100000"
               id="edit_price"
               required
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-bold">Loại nhiên liệu</label>
             <input
               type="text"
               id="edit_fuel"
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-bold">Động cơ & Công suất</label>
             <input
               type="text"
               id="edit_engine"
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-bold">Hộp số</label>
             <input
               type="text"
               id="edit_transmission"
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500" />
           </div>
           <div class="md:col-span-2">
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-bold">URL Hình ảnh</label>
@@ -675,20 +664,20 @@
               type="text"
               id="edit_image"
               required
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-red-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500" />
           </div>
           <div class="md:col-span-2">
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-bold">Mô tả chi tiết</label>
             <textarea
               id="edit_description"
               rows="3"
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-red-500"></textarea>
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500"></textarea>
           </div>
 
           <div class="md:col-span-2 flex gap-3 pt-2">
             <button
               type="submit"
-              class="flex-1 bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-bold transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2">
+              class="flex-1 bg-indigo-600 hover:bg-violet-700 text-white py-3 rounded-xl font-bold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
               <i class="fa-solid fa-check"></i>
               Lưu Cập Nhật
             </button>
