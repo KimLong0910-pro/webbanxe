@@ -21,6 +21,12 @@ $transmission = trim($input['transmission'] ?? '');
 $fuel = trim($input['fuel'] ?? '');
 $description = trim($input['description'] ?? '');
 
+// Thêm giới hạn 500 ký tự cho mô tả khi chỉnh sửa
+if (mb_strlen($description, 'UTF-8') > 500) {
+    echo json_encode(["status" => "error", "message" => "Mô tả chi tiết không được vượt quá 500 ký tự!"], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
 if ($id <= 0 || empty($name) || empty($brand)) {
     echo json_encode(["status" => "error", "message" => "Dữ liệu cập nhật không hợp lệ"], JSON_UNESCAPED_UNICODE);
     exit();

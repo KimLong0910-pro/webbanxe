@@ -16,6 +16,12 @@
 
   <body
     class="hidden bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-gray-100 min-h-screen p-4 sm:p-8 font-sans transition-colors duration-300">
+    
+    <!-- KHUNG CHỨA THÔNG BÁO TOAST (NẰM GIỮA PHÍA TRÊN) -->
+    <div id="toastContainer" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto space-y-6">
+    class="hidden bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-gray-100 min-h-screen p-4 sm:p-8 font-sans transition-colors duration-300">
     <div class="max-w-6xl mx-auto space-y-6">
       <!-- Top Admin Header -->
       <header
@@ -239,12 +245,18 @@
           </div>
 
           <div class="md:col-span-3">
-            <label class="block text-gray-700 dark:text-gray-400 mb-1 font-semibold">
-              Mô tả chi tiết & Điểm nhấn công nghệ
-            </label>
+            <div class="flex justify-between items-center mb-1">
+              <label class="block text-gray-700 dark:text-gray-400 font-semibold">
+                Mô tả chi tiết & Điểm nhấn công nghệ
+              </label>
+              <!-- Hiển thị đếm số ký tự -->
+              <span id="charCount" class="text-[10px] text-gray-400">0 / 500 ký tự</span>
+            </div>
             <textarea
               id="description"
-              placeholder="Mô tả các trang bị an toàn, cảm giác lái, bảo hành..."
+              maxlength="500"
+              oninput="document.getElementById('charCount').innerText = this.value.length + ' / 500 ký tự';"
+              placeholder="Mô tả các trang bị an toàn, cảm giác lái, bảo hành (Tối đa 500 ký tự)..."
               rows="3"
               class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"></textarea>
           </div>
@@ -297,6 +309,34 @@
     </div>
 
     <script>
+      function showToast(message, type = 'success') {
+          const container = document.getElementById('toastContainer');
+          if (!container) return;
+
+          const toast = document.createElement('div');
+          toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl text-xs font-bold transition-all duration-300 transform translate-y-[-20px] opacity-0 border backdrop-blur-xl ${
+              type === 'success' 
+                  ? 'bg-emerald-950/90 border-emerald-500/40 text-emerald-300' 
+                  : 'bg-rose-950/90 border-rose-500/40 text-rose-300'
+          }`;
+
+          toast.innerHTML = `
+              <i class="fa-solid ${type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-triangle-exclamation text-rose-400'} text-base"></i>
+              <span>${escapeHtml(message)}</span>
+          `;
+
+          container.appendChild(toast);
+
+          setTimeout(() => {
+              toast.classList.remove('translate-y-[-20px]', 'opacity-0');
+          }, 10);
+
+          setTimeout(() => {
+              toast.classList.add('translate-y-[-20px]', 'opacity-0');
+              setTimeout(() => toast.remove(), 300);
+          }, 3000);
+      }
+
       (async function checkAdminSession() {
         try {
           const res = await fetch("../php/auth_check.php");
@@ -478,14 +518,16 @@
           });
           const data = await res.json();
           if (data.status === "success") {
-            alert("✅ Đã lưu thông tin xe thành công!");
+            // THAY THẾ ALERT BẰNG TOAST THÀNH CÔNG
+            showToast("Đã lưu thông tin xe thành công!", "success");
             this.reset();
             loadAdminCars();
           } else {
-            alert("❌ " + (data.message || "Thêm xe thất bại!"));
+            // THAY THẾ ALERT BẰNG TOAST LỖI
+            showToast(data.message || "Thêm xe thất bại!", "error");
           }
         } catch (err) {
-          alert("Lỗi kết nối máy chủ khi thêm xe: " + err);
+          showToast("Lỗi kết nối máy chủ khi thêm xe: " + err, "error");
         }
       };
 
@@ -520,6 +562,10 @@
         document.getElementById("edit_transmission").value = car.transmission || "";
         document.getElementById("edit_image").value = car.image || "";
         document.getElementById("edit_description").value = car.description || "";
+
+        document.getElementById("edit_description").value = car.description || "";
+        // Thêm dòng này để cập nhật bộ đếm khi mở modal sửa
+        document.getElementById("editCharCount").innerText = (car.description ? car.description.length : 0) + " / 500 ký tự";
 
         const modal = document.getElementById("editCarModal");
         modal.classList.remove("hidden");
@@ -648,9 +694,14 @@
               class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500" />
           </div>
           <div class="md:col-span-2">
-            <label class="block text-gray-700 dark:text-gray-400 mb-1 font-bold">Mô tả chi tiết</label>
+            <div class="flex justify-between items-center mb-1">
+              <label class="block text-gray-700 dark:text-gray-400 font-bold">Mô tả chi tiết</label>
+              <span id="editCharCount" class="text-[10px] text-gray-400">0 / 500 ký tự</span>
+            </div>
             <textarea
               id="edit_description"
+              maxlength="500"
+              oninput="document.getElementById('editCharCount').innerText = this.value.length + ' / 500 ký tự';"
               rows="3"
               class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500"></textarea>
           </div>

@@ -20,6 +20,12 @@ $fuel = trim($_POST['fuel'] ?? '');
 $image = trim($_POST['image'] ?? '');
 $description = trim($_POST['description'] ?? '');
 
+// Thêm kiểm tra giới hạn 500 ký tự cho mô tả
+if (mb_strlen($description, 'UTF-8') > 500) {
+    echo json_encode(["status" => "error", "message" => "Mô tả chi tiết không được vượt quá 500 ký tự!"], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
 if (empty($image)) {
     $image = 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800';
 }
