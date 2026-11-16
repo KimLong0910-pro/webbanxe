@@ -4,15 +4,16 @@ header("Content-Type: application/json; charset=UTF-8");
 
 $cars = [];
 
-if (isset($conn) && $conn && !$conn->connect_error) {
-    $sql = "SELECT * FROM cars ORDER BY id DESC";
-    $result = @$conn->query($sql);
-    if ($result && $result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
+if (isset($pdo) && $pdo) {
+    try {
+        $stmt = $pdo->query("SELECT * FROM cars ORDER BY id DESC");
+        while ($row = $stmt->fetch()) {
             $row['id'] = (int)$row['id'];
             $row['price'] = (float)$row['price'];
             $cars[] = $row;
         }
+    } catch (Exception $e) {
+        $cars = [];
     }
 }
 

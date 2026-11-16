@@ -9,8 +9,8 @@
       rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="theme.js"></script>
-    <link rel="stylesheet" href="style.css" />
+    <script src="../js/theme.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body
     class="hidden bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-white p-6 font-sans min-h-screen transition-colors duration-300">
@@ -47,8 +47,7 @@
       </div>
 
       <!-- Form Thêm Tri Thức Mới -->
-      <div
-        class="bg-white dark:bg-slate-900/80 p-6 rounded-3xl border border-gray-200 dark:border-white/10 shadow-xl">
+      <div class="bg-white dark:bg-slate-900/80 p-6 rounded-3xl border border-gray-200 dark:border-white/10 shadow-xl">
         <h2 class="text-base font-bold mb-4 text-slate-900 dark:text-gray-200 font-heading">
           Thêm Dữ Liệu Phản Hồi Mới
         </h2>
@@ -111,7 +110,7 @@
       // Bảo vệ trang: chưa đăng nhập đẩy về login.html
       (async function checkAdminSession() {
         try {
-          const res = await fetch("auth_check.php");
+          const res = await fetch("../php/auth_check.php");
           const data = await res.json();
           if (!data.logged_in) {
             window.location.replace("login.html");
@@ -127,7 +126,7 @@
       async function loadKnowledge() {
         const table = document.getElementById("knowledgeTable");
         try {
-          const res = await fetch("train_bot.php?action=list");
+          const res = await fetch("../php/train_bot.php?action=list");
           const result = await res.json();
           const list = result.data || [];
 
@@ -158,7 +157,7 @@
       document.getElementById("trainForm").onsubmit = async function (e) {
         e.preventDefault();
         const msgEl = document.getElementById("statusMsg");
-        const res = await fetch("train_bot.php", {
+        const res = await fetch("../php/train_bot.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -183,18 +182,22 @@
 
       async function deleteKnowledge(id) {
         if (!confirm("Bạn có muốn xóa từ khóa này?")) return;
-        await fetch(`train_bot.php?action=delete&id=${id}`);
+        await fetch(`../php/train_bot.php?action=delete&id=${id}`);
         loadKnowledge();
       }
 
       function escapeHtml(str) {
-        return String(str).replace(/[&<>"']/g, (m) => ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#39;",
-        }[m]));
+        return String(str).replace(
+          /[&<>"']/g,
+          (m) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[m],
+        );
       }
     </script>
   </body>

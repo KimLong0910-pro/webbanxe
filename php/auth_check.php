@@ -3,14 +3,16 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-function requireAdminPage() {
+function requireAdminPage()
+{
     if (empty($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-        header('Location: login.html');
+        header('Location: ../html/login.html');
         exit();
     }
 }
 
-function requireAdminApi() {
+function requireAdminApi()
+{
     if (empty($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
         http_response_code(401);
         header("Content-Type: application/json; charset=UTF-8");
@@ -31,4 +33,3 @@ if (basename($_SERVER['SCRIPT_FILENAME']) === 'auth_check.php') {
     ], JSON_UNESCAPED_UNICODE);
     exit();
 }
-?>

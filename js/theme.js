@@ -1,5 +1,3 @@
-// SHOWROOM 4TL - GLOBAL THEME & FONT CONTROLLER (theme.js)
-
 // 1. Cấu hình Tailwind CSS dùng chung cho toàn bộ các trang HTML
 if (typeof tailwind !== "undefined") {
   tailwind.config = {
@@ -77,3 +75,33 @@ window.addEventListener("storage", (e) => {
     applyGlobalTheme(e.newValue);
   }
 });
+
+// 7. Hàm chuẩn hóa đường dẫn ảnh xe (Hỗ trợ cả link online lẫn ảnh trong thư mục images/)
+const FALLBACK_CAR_IMG = "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800";
+
+function getCarImage(img) {
+  if (!img || String(img).trim() === "" || img === "default.jpg") {
+    return FALLBACK_CAR_IMG;
+  }
+  const cleanImg = String(img).trim();
+  if (cleanImg.startsWith("http://") || cleanImg.startsWith("https://")) {
+    return cleanImg;
+  }
+  const prefix = window.location.pathname.includes("/html/") ? "../" : "";
+  if (cleanImg.startsWith("images/")) {
+    return prefix + cleanImg;
+  }
+  return prefix + "images/" + cleanImg.replace(/^\/+/, "");
+}
+
+// 8. Hàm chống XSS dùng chung cho toàn bộ website
+function escapeHtml(str) {
+  if (str === null || str === undefined) return "";
+  return String(str).replace(/[&<>"']/g, (m) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  }[m]));
+}

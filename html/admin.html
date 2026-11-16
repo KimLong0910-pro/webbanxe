@@ -10,8 +10,8 @@
       rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="theme.js"></script>
-    <link rel="stylesheet" href="style.css" />
+    <script src="../js/theme.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
   </head>
 
   <body
@@ -46,7 +46,7 @@
           </button>
 
           <a
-            href="index.html"
+            href="../index.html"
             class="bg-gray-100 hover:bg-gray-200 text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-gray-200 px-4 py-2.5 rounded-xl text-xs font-bold border border-gray-200 dark:border-white/10 transition flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-arrow-left"></i>
             Xem Trang Chủ
@@ -58,7 +58,7 @@
             Huấn Luyện AI Bot
           </a>
           <a
-            href="logout.php"
+            href="../php/logout.php"
             class="bg-indigo-600/10 hover:bg-indigo-600 text-indigo-600 hover:text-white dark:bg-indigo-600/20 dark:hover:bg-indigo-600 dark:text-indigo-400 px-4 py-2.5 rounded-xl text-xs font-bold border border-indigo-200 dark:border-indigo-500/30 transition flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-right-from-bracket"></i>
             Đăng Xuất
@@ -299,7 +299,7 @@
     <script>
       (async function checkAdminSession() {
         try {
-          const res = await fetch("auth_check.php");
+          const res = await fetch("../php/auth_check.php");
           const data = await res.json();
           if (!data.logged_in) {
             window.location.replace("login.html");
@@ -310,40 +310,12 @@
           window.location.replace("login.html");
         }
       })();
-      // THEME CONTROLLER
-      const themeToggle = document.getElementById("themeToggle");
-      const themeIcon = document.getElementById("themeIcon");
-
-      function setTheme(mode) {
-        if (mode === "light") {
-          document.documentElement.classList.remove("dark");
-          document.documentElement.classList.add("light");
-          localStorage.setItem("theme", "light");
-          if (themeIcon) themeIcon.className = "fa-solid fa-moon text-slate-700 text-base";
-          if (themeToggle) themeToggle.title = "Chuyển sang chế độ Tối (Dark Mode)";
-        } else {
-          document.documentElement.classList.add("dark");
-          document.documentElement.classList.remove("light");
-          localStorage.setItem("theme", "dark");
-          if (themeIcon) themeIcon.className = "fa-solid fa-sun text-yellow-400 text-base";
-          if (themeToggle) themeToggle.title = "Chuyển sang chế độ Sáng (Light Mode)";
-        }
-      }
-
-      function toggleTheme() {
-        const isDark = document.documentElement.classList.contains("dark");
-        setTheme(isDark ? "light" : "dark");
-      }
-
-      const savedTheme = localStorage.getItem("theme") || "dark";
-      setTheme(savedTheme);
-      if (themeToggle) themeToggle.onclick = toggleTheme;
 
       let adminCars = [];
 
       async function loadAdminCars() {
         try {
-          const res = await fetch("get_cars.php");
+          const res = await fetch("../php/get_cars.php");
           adminCars = await res.json();
           updateStats();
           renderAdminTable(adminCars);
@@ -354,7 +326,7 @@
 
       async function loadCRMOrders() {
         try {
-          const res = await fetch("manage_orders.php?action=list");
+          const res = await fetch("../php/manage_orders.php?action=list");
           const data = await res.json();
 
           // 1. Render bảng Đặt Cọc
@@ -367,11 +339,11 @@
                   .map(
                     (d) => `
                 <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50">
-                    <td class="p-3 font-mono text-gray-400">#${d.id}</td>
-                    <td class="p-3 font-bold">${d.customer_name}</td>
-                    <td class="p-3 font-mono text-indigo-500 font-bold">${d.customer_phone}</td>
-                    <td class="p-3 font-semibold">${d.car_name}</td>
-                    <td class="p-3 font-mono text-amber-500">${d.memo}</td>
+                    <td class="p-3 font-mono text-gray-400">#${Number(d.id)}</td>
+                    <td class="p-3 font-bold">${escapeHtml(d.customer_name)}</td>
+                    <td class="p-3 font-mono text-indigo-500 font-bold">${escapeHtml(d.customer_phone)}</td>
+                    <td class="p-3 font-semibold">${escapeHtml(d.car_name)}</td>
+                    <td class="p-3 font-mono text-amber-500">${escapeHtml(d.memo)}</td>
                     <td class="p-3">
                         <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${d.status === "verified" ? "bg-emerald-500/20 text-emerald-400" : d.status === "cancelled" ? "bg-indigo-500/20 text-indigo-400" : "bg-amber-500/20 text-amber-400"}">
                             ${d.status === "verified" ? "Đã nhận tiền" : d.status === "cancelled" ? "Đã hủy" : "Chờ đối soát"}
@@ -396,11 +368,11 @@
                   .map(
                     (b) => `
                 <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50">
-                    <td class="p-3 font-mono text-gray-400">#${b.id}</td>
-                    <td class="p-3 font-bold">${b.customer_name}</td>
-                    <td class="p-3 font-mono text-blue-400 font-bold">${b.phone}</td>
-                    <td class="p-3 font-semibold">${b.car_name}</td>
-                    <td class="p-3 text-gray-400">${b.booking_date} — <span class="italic">${b.note || ""}</span></td>
+                    <td class="p-3 font-mono text-gray-400">#${Number(b.id)}</td>
+                    <td class="p-3 font-bold">${escapeHtml(b.customer_name)}</td>
+                    <td class="p-3 font-mono text-blue-400 font-bold">${escapeHtml(b.phone)}</td>
+                    <td class="p-3 font-semibold">${escapeHtml(b.car_name)}</td>
+                    <td class="p-3 text-gray-400">${escapeHtml(b.booking_date)} — <span class="italic">${escapeHtml(b.note || "")}</span></td>
                     <td class="p-3">
                         <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${b.status === "confirmed" ? "bg-emerald-500/20 text-emerald-400" : b.status === "cancelled" ? "bg-indigo-500/20 text-indigo-400" : "bg-amber-500/20 text-amber-400"}">
                             ${b.status === "confirmed" ? "Đã chốt lịch" : b.status === "cancelled" ? "Đã hủy" : "Chờ gọi xác nhận"}
@@ -420,13 +392,13 @@
       }
 
       async function updateOrder(table, id, status) {
-        await fetch(`manage_orders.php?action=update_status&table=${table}&id=${id}&status=${status}`);
+        await fetch(`../php/manage_orders.php?action=update_status&table=${table}&id=${id}&status=${status}`);
         loadCRMOrders();
       }
 
       async function deleteOrder(table, id) {
         if (confirm("Xóa bản ghi này?")) {
-          await fetch(`manage_orders.php?action=delete&table=${table}&id=${id}`);
+          await fetch(`../php/manage_orders.php?action=delete&table=${table}&id=${id}`);
           loadCRMOrders();
         }
       }
@@ -459,13 +431,13 @@
           .map(
             (car) => `
                 <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50 transition">
-                    <td class="p-3 text-gray-400 font-mono">#${car.id}</td>
+                    <td class="p-3 text-gray-400 font-mono">#${Number(car.id)}</td>
                     <td class="p-3">
-                        <img src="${car.image}" class="w-14 h-9 object-cover rounded-lg border border-gray-200 dark:border-white/10" onerror="this.src='https://via.placeholder.com/60x40'">
+                        <img src="${getCarImage(car.image)}" class="w-14 h-9 object-cover rounded-lg border border-gray-200 dark:border-white/10" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
                     </td>
-                    <td class="p-3 font-bold text-slate-900 dark:text-white">${car.name}</td>
-                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-indigo-600/10 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 font-bold">${car.brand}</span></td>
-                    <td class="p-3 text-gray-500 dark:text-gray-400">${car.fuel || "Xăng"}</td>
+                    <td class="p-3 font-bold text-slate-900 dark:text-white">${escapeHtml(car.name)}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-indigo-600/10 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 font-bold">${escapeHtml(car.brand)}</span></td>
+                    <td class="p-3 text-gray-500 dark:text-gray-400">${escapeHtml(car.fuel || "Xăng")}</td>
                     <td class="p-3 text-indigo-600 dark:text-indigo-400 font-bold font-mono">${Number(car.price).toLocaleString("vi-VN")} đ</td>
                     <td class="p-3 text-right space-x-2">
                         <button onclick="openEditModal(${car.id})" class="text-blue-600 dark:text-blue-400 hover:underline font-bold inline-flex items-center gap-1">
@@ -500,26 +472,35 @@
         formData.append("description", document.getElementById("description").value);
 
         try {
-          await fetch("add_car.php", {
+          const res = await fetch("../php/add_car.php", {
             method: "POST",
             body: formData,
           });
-          alert("Đã lưu thông tin xe thành công!");
-          this.reset();
-          loadAdminCars();
+          const data = await res.json();
+          if (data.status === "success") {
+            alert("✅ Đã lưu thông tin xe thành công!");
+            this.reset();
+            loadAdminCars();
+          } else {
+            alert("❌ " + (data.message || "Thêm xe thất bại!"));
+          }
         } catch (err) {
-          alert("Lỗi khi thêm xe: " + err);
+          alert("Lỗi kết nối máy chủ khi thêm xe: " + err);
         }
       };
 
       async function deleteCar(id) {
-        if (confirm("Bạn có chắc muốn xóa mẫu xe này khỏi cơ sở dữ liệu?")) {
-          try {
-            await fetch(`delete_car.php?id=${id}`);
+        if (!confirm("Bạn có chắc muốn xóa mẫu xe này khỏi cơ sở dữ liệu?")) return;
+        try {
+          const res = await fetch(`../php/delete_car.php?id=${id}`);
+          const data = await res.json();
+          if (data.status === "success") {
             loadAdminCars();
-          } catch (err) {
-            alert("Lỗi xóa xe: " + err);
+          } else {
+            alert("❌ " + (data.message || "Không thể xóa xe!"));
           }
+        } catch (err) {
+          alert("Lỗi kết nối khi xóa xe: " + err);
         }
       }
 
@@ -554,7 +535,7 @@
       document.getElementById("editCarForm").onsubmit = async function (e) {
         e.preventDefault();
         try {
-          const res = await fetch("edit_car.php", {
+          const res = await fetch("../php/edit_car.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

@@ -34,13 +34,17 @@ try {
         $stmt->execute([$name, $phone, $car, $date, $note]);
 
         echo json_encode(["status" => "success", "message" => "Đã lưu lịch hẹn lái thử vào hệ thống!"], JSON_UNESCAPED_UNICODE);
-
     } elseif ($type === 'deposit') {
         $carName = trim($data['car_name'] ?? '');
         $carPrice = floatval($data['car_price'] ?? 0);
         $memo = trim($data['memo'] ?? 'COC XE 4TL');
         $cusName = trim($data['customer_name'] ?? 'Khách quét QR');
         $cusPhone = trim($data['customer_phone'] ?? '');
+
+        if (empty($carName) || empty($cusPhone)) {
+            echo json_encode(["status" => "error", "message" => "Thiếu tên xe hoặc số điện thoại xác nhận đặt cọc!"], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
 
         $stmt = $pdo->prepare("INSERT INTO deposits (car_name, car_price, memo, customer_name, customer_phone) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([$carName, $carPrice, $memo, $cusName, $cusPhone]);
@@ -50,4 +54,3 @@ try {
 } catch (Exception $e) {
     echo json_encode(["status" => "error", "message" => "Lỗi hệ thống: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
 }
-?>

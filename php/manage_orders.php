@@ -23,6 +23,12 @@ try {
         $id = intval($_GET['id'] ?? 0);
         $status = $_GET['status'] ?? 'pending';
 
+        $allowedStatuses = ['pending', 'confirmed', 'verified', 'cancelled'];
+        if ($id <= 0 || !in_array($status, $allowedStatuses, true)) {
+            echo json_encode(["status" => "error", "message" => "Tham số ID hoặc trạng thái không hợp lệ!"], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
         $stmt = $pdo->prepare("UPDATE {$table} SET status = ? WHERE id = ?");
         $stmt->execute([$status, $id]);
         echo json_encode(["status" => "success"], JSON_UNESCAPED_UNICODE);

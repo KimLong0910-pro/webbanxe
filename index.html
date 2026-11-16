@@ -12,8 +12,8 @@
       rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="theme.js"></script>
-    <link rel="stylesheet" href="style.css" />
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body
     class="bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-gray-100 transition-colors duration-300 min-h-screen selection:bg-indigo-600 selection:text-white">
@@ -87,7 +87,7 @@
             Showroom
           </a>
           <a
-            href="admin.html"
+            href="html/admin.html"
             class="text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-yellow-400 transition flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10">
             <i class="fa-solid fa-lock text-[10px]"></i>
             Admin
@@ -906,7 +906,7 @@
                   Cứu hộ xe 24/7 toàn quốc
                 </a>
               </li>
-              <li><a href="admin.html" class="hover:text-yellow-400 transition">Cổng quản trị nội bộ</a></li>
+              <li><a href="html/admin.html" class="hover:text-yellow-400 transition">Cổng quản trị nội bộ</a></li>
             </ul>
           </div>
 
@@ -1173,7 +1173,7 @@
           </div>
           <div class="flex items-center gap-1.5">
             <a
-              href="ai_chat.html"
+              href="html/bot_train.html"
               target="_blank"
               title="Mở trang tư vấn AI toàn màn hình"
               class="w-7 h-7 rounded-full bg-black/20 text-white hover:bg-black/40 flex items-center justify-center text-xs transition">
@@ -1490,6 +1490,19 @@
       let comparedCars = [];
       let currentCategory = "all";
 
+      // 2. Hàm mở Modal Lái thử bằng ID xe (tránh truyền chuỗi car.name vào onclick)
+      function openBookingModalById(id) {
+        const car = allCars.find((c) => Number(c.id) === Number(id));
+        openBookingModal(car ? car.name : "Tất cả mẫu xe");
+      }
+
+      // 3. Hàm mở Modal Đặt cọc QR bằng ID xe
+      function openQRModalById(id) {
+        const car = allCars.find((c) => Number(c.id) === Number(id));
+        if (!car) return;
+        openQRModal(car.name, car.price);
+      }
+
       // MODAL MANAGEMENT HELPER (100% immune to CSS class cascade quirks)
       function openModal(modalId) {
         const el = document.getElementById(modalId);
@@ -1527,52 +1540,10 @@
         }
       });
 
-      // DARK / LIGHT THEME CONTROLLER
-      const themeToggle = document.getElementById("themeToggle");
-      const themeIcon = document.getElementById("themeIcon");
-
-      function setTheme(mode) {
-        if (mode === "light") {
-          document.documentElement.classList.remove("dark");
-          document.documentElement.classList.add("light");
-          localStorage.setItem("theme", "light");
-          if (themeIcon) {
-            themeIcon.className = "fa-solid fa-moon text-slate-700 text-base";
-          }
-          if (themeToggle) {
-            themeToggle.title = "Chuyển sang chế độ Tối (Dark Mode)";
-          }
-        } else {
-          document.documentElement.classList.add("dark");
-          document.documentElement.classList.remove("light");
-          localStorage.setItem("theme", "dark");
-          if (themeIcon) {
-            themeIcon.className = "fa-solid fa-sun text-yellow-400 text-base";
-          }
-          if (themeToggle) {
-            themeToggle.title = "Chuyển sang chế độ Sáng (Light Mode)";
-          }
-        }
-      }
-
-      function toggleTheme() {
-        const isDark = document.documentElement.classList.contains("dark");
-        setTheme(isDark ? "light" : "dark");
-      }
-
-      function initTheme() {
-        const savedTheme = localStorage.getItem("theme") || "dark";
-        setTheme(savedTheme);
-      }
-
-      if (themeToggle) {
-        themeToggle.onclick = toggleTheme;
-      }
-
       // FETCH CARS DỮ LIỆU TỪ SERVER VỚI FALLBACK AN TOÀN
       async function fetchCars() {
         try {
-          const res = await fetch("get_cars.php");
+          const res = await fetch("php/get_cars.php");
           const data = await res.json();
           if (Array.isArray(data) && data.length > 0) {
             allCars = data.map((c) => ({
@@ -1612,10 +1583,10 @@
         container.innerHTML = brands
           .map(
             (b, idx) => `
-                <button onclick="filterByBrandQuick('${b}')" class="brand-pill px-4 py-1.5 rounded-full text-xs font-bold border border-gray-200 dark:border-white/10 ${idx === 0 ? "active" : "bg-white text-slate-700 dark:bg-slate-900 dark:text-gray-300 hover:border-indigo-500"}">
-                    ${b}
-                </button>
-            `,
+        <button data-brand="${escapeHtml(b)}" onclick="filterByBrandQuick(this.dataset.brand)" class="brand-pill px-4 py-1.5 rounded-full text-xs font-bold border border-gray-200 dark:border-white/10 ${idx === 0 ? "active" : "bg-white text-slate-700 dark:bg-slate-900 dark:text-gray-300 hover:border-indigo-500"}">
+            ${escapeHtml(b)}
+        </button>
+      `,
           )
           .join("");
       }
@@ -1703,16 +1674,16 @@
                         
                         <!-- Card Media -->
                         <div class="relative overflow-hidden aspect-[16/10] bg-slate-900">
-                            <img src="${car.image}" alt="${car.name}" 
-                                 loading="lazy"
-                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer"
-                                 onclick="openDetailModal(${carId})"
-                                 onerror="this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600'">
+                            <img src="${getCarImage(car.image)}" alt="${escapeHtml(car.name)}" 
+                              loading="lazy"
+                              class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer"
+                              onclick="openDetailModal(${carId})"
+                              onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
                             
                             <!-- Badges -->
                             <div class="absolute top-3.5 left-3.5 flex flex-wrap gap-1.5">
                                 <span class="bg-indigo-600/90 backdrop-blur-md text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
-                                    ${car.brand}
+                                    ${escapeHtml(car.brand)}
                                 </span>
                                 ${
                                   car.fuel && car.fuel.includes("Điện")
@@ -1737,7 +1708,7 @@
                         <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
                             <div>
                                 <h3 onclick="openDetailModal(${carId})" class="text-xl font-black text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition leading-snug cursor-pointer">
-                                    ${car.name}
+                                    ${escapeHtml(car.name)}
                                 </h3>
                                 
                                 <div class="text-indigo-600 font-heading text-2xl font-black my-1">
@@ -1746,17 +1717,17 @@
 
                                 <!-- Key Specs Chips -->
                                 <div class="grid grid-cols-3 gap-1.5 text-[11px] bg-gray-50 dark:bg-slate-950/70 p-2.5 rounded-2xl border border-gray-100 dark:border-white/5 text-slate-600 dark:text-gray-300 mt-3">
-                                    <div class="text-center truncate" title="${car.engine || "N/A"}">
+                                    <div class="text-center truncate" title="${escapeHtml(car.engine || "N/A")}">
                                         <i class="fa-solid fa-gauge-high text-indigo-600 dark:text-indigo-500 block mb-1"></i>
-                                        <span class="text-[10px]">${car.engine ? car.engine.split(" ")[0] : "Động cơ"}</span>
+                                        <span class="text-[10px]">${escapeHtml(car.engine ? car.engine.split(" ")[0] : "Động cơ")}</span>
                                     </div>
-                                    <div class="text-center truncate" title="${car.transmission || "Tự động"}">
+                                    <div class="text-center truncate" title="${escapeHtml(car.transmission || "Tự động")}">
                                         <i class="fa-solid fa-sliders text-indigo-600 dark:text-indigo-500 block mb-1"></i>
-                                        <span class="text-[10px]">${car.transmission ? (car.transmission.includes("8") ? "8 cấp" : car.transmission.includes("9") ? "9 cấp" : "Tự động") : "Tự động"}</span>
+                                        <span class="text-[10px]">${escapeHtml(car.transmission ? (car.transmission.includes("8") ? "8 cấp" : car.transmission.includes("9") ? "9 cấp" : "Tự động") : "Tự động")}</span>
                                     </div>
-                                    <div class="text-center truncate" title="${car.fuel || "Xăng"}">
+                                    <div class="text-center truncate" title="${escapeHtml(car.fuel || "Xăng")}">
                                         <i class="fa-solid ${fuelIcon} block mb-1"></i>
-                                        <span class="text-[10px]">${car.fuel || "Xăng"}</span>
+                                        <span class="text-[10px]">${escapeHtml(car.fuel || "Xăng")}</span>
                                     </div>
                                 </div>
                             </div>
@@ -1773,10 +1744,10 @@
                                 </div>
                                 
                                 <div class="grid grid-cols-2 gap-2">
-                                    <button onclick="openBookingModal('${car.name}')" class="bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 font-bold py-2 rounded-xl text-xs border border-gray-200 dark:border-white/10 hover:border-indigo-500/40 transition flex items-center justify-center gap-1">
+                                    <button onclick="openBookingModalById(${carId})" class="bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 font-bold py-2 rounded-xl text-xs border border-gray-200 dark:border-white/10 hover:border-indigo-500/40 transition flex items-center justify-center gap-1">
                                         <i class="fa-solid fa-steering-wheel text-indigo-600 dark:text-indigo-400"></i> Lái Thử
                                     </button>
-                                    <button onclick="openQRModal('${car.name}', ${car.price})" class="bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 font-bold py-2 rounded-xl text-xs border border-gray-200 dark:border-white/10 hover:border-indigo-500/40 transition flex items-center justify-center gap-1">
+                                    <button onclick="openQRModalById(${carId})" class="bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 font-bold py-2 rounded-xl text-xs border border-gray-200 dark:border-white/10 hover:border-indigo-500/40 transition flex items-center justify-center gap-1">
                                         <i class="fa-solid fa-qrcode text-indigo-600 dark:text-indigo-400"></i> Đặt Cọc
                                     </button>
                                 </div>
@@ -1861,7 +1832,6 @@
         carSec.scrollIntoView({ behavior: "smooth", block: "start" });
       }
 
-      // Category Tab Filter
       // Category Tab Filter
       function setCategoryFilter(cat, el) {
         currentCategory = cat;
@@ -1971,15 +1941,6 @@
         attributeFilter: ["class"],
       });
 
-      // function requestLoanConsult() {
-      //   const price = formatCurrency(document.getElementById("calcPriceInput").value);
-      //   const downPercent = document.getElementById("calcDownPercent").value;
-      //   const months = document.getElementById("calcMonths").value;
-      //   alert(
-      //     `Dạ chuyên viên tín dụng Showroom 4TL đã ghi nhận thông số vay xe giá ${price}, trả trước ${downPercent}%, thời hạn ${months} tháng. Quý khách vui lòng để lại số Zalo để nhận file Excel bảng tính chi tiết từng tháng!`,
-      //   );
-      // }
-
       // CAR COMPARISON LOGIC
       function toggleCompareCar(id) {
         const targetId = Number(id);
@@ -2001,7 +1962,7 @@
         }
 
         updateCompareDock();
-        renderCars(allCars);
+        filterCars();
       }
 
       function updateCompareDock() {
@@ -2034,11 +1995,11 @@
           thumbs.innerHTML = comparedCars
             .map(
               (c) => `
-                    <div class="relative group" title="${c.name}">
-                        <img src="${c.image}" class="w-10 h-10 object-cover rounded-xl border-2 border-indigo-500 shadow" onerror="this.src='https://via.placeholder.com/40'">
-                        <button onclick="toggleCompareCar(${c.id})" title="Bỏ xe này" class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-indigo-600 hover:bg-violet-700 rounded-full text-[9px] text-white flex items-center justify-center shadow">✕</button>
-                    </div>
-                `,
+              <div class="relative group" title="${escapeHtml(c.name)}">
+                  <img src="${getCarImage(c.image)}" class="w-10 h-10 object-cover rounded-xl border-2 border-indigo-500 shadow" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
+                  <button onclick="toggleCompareCar(${Number(c.id)})" title="Bỏ xe này" class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-indigo-600 hover:bg-violet-700 rounded-full text-[9px] text-white flex items-center justify-center shadow">✕</button>
+              </div>
+          `,
             )
             .join("");
         }
@@ -2047,20 +2008,19 @@
       function clearComparison() {
         comparedCars = [];
         updateCompareDock();
-        renderCars(allCars);
+        filterCars();
       }
 
       function toggleCompareModal() {
         if (comparedCars.length === 0) {
-          // If user clicks compare on navbar without cars selected, auto-suggest the top 2 supercars!
           if (allCars.length >= 2) {
             comparedCars = [allCars[0], allCars[1]];
             updateCompareDock();
-            renderCars(allCars);
+            filterCars();
           } else if (allCars.length === 1) {
             comparedCars = [allCars[0]];
             updateCompareDock();
-            renderCars(allCars);
+            filterCars();
           }
         }
         openCompareModal();
@@ -2071,7 +2031,7 @@
           if (allCars.length >= 2) {
             comparedCars = [allCars[0], allCars[1]];
             updateCompareDock();
-            renderCars(allCars);
+            filterCars();
           }
         }
 
@@ -2088,7 +2048,7 @@
                               .filter((c) => !comparedCars.some((cc) => Number(cc.id) === Number(c.id)))
                               .map(
                                 (c) => `
-                                <option value="${c.id}">${c.name} (${formatBillion(c.price)})</option>
+                                <option value="${c.id}">${escapeHtml(c.name)} (${formatBillion(c.price)})</option>
                             `,
                               )
                               .join("")}
@@ -2108,10 +2068,10 @@
                                 (c) => `
                                 <th class="p-3 text-slate-900 dark:text-white font-bold text-base min-w-[220px]">
                                     <div class="relative group mb-2">
-                                        <img src="${c.image}" class="w-full h-36 object-cover rounded-xl border border-gray-200 dark:border-white/10" onerror="this.src='https://via.placeholder.com/300'">
+                                        <img src="${getCarImage(c.image)}" class="w-full h-36 object-cover rounded-xl border border-gray-200 dark:border-white/10" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
                                         <button onclick="toggleCompareCar(${c.id}); openCompareModal();" title="Bỏ xe này" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-indigo-600 hover:bg-violet-700 text-white flex items-center justify-center text-xs shadow hover:scale-110 transition">✕</button>
                                     </div>
-                                    <div class="leading-tight">${c.name}</div>
+                                    <div class="leading-tight">${escapeHtml(c.name)}</div>
                                     <div class="text-indigo-600 dark:text-indigo-500 font-heading text-lg mt-1">${formatCurrency(c.price)}</div>
                                 </th>
                             `,
@@ -2122,23 +2082,23 @@
                     <tbody class="divide-y divide-gray-200 dark:divide-white/10 text-slate-700 dark:text-gray-300">
                         <tr>
                             <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Hãng Sản Xuất</td>
-                            ${comparedCars.map((c) => `<td class="p-3"><span class="px-2 py-0.5 rounded bg-indigo-600/10 dark:bg-indigo-600/30 text-indigo-600 dark:text-red-300 font-bold">${c.brand}</span></td>`).join("")}
+                            ${comparedCars.map((c) => `<td class="p-3"><span class="px-2 py-0.5 rounded bg-indigo-600/10 dark:bg-indigo-600/30 text-indigo-600 dark:text-red-300 font-bold">${escapeHtml(c.brand)}</span></td>`).join("")}
                         </tr>
                         <tr>
                             <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Động Cơ & Công Suất</td>
-                            ${comparedCars.map((c) => `<td class="p-3 font-medium">${c.engine || "Đang cập nhật"}</td>`).join("")}
+                            ${comparedCars.map((c) => `<td class="p-3 font-medium">${escapeHtml(c.engine || "Đang cập nhật")}</td>`).join("")}
                         </tr>
                         <tr>
                             <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Hộp Số</td>
-                            ${comparedCars.map((c) => `<td class="p-3 font-medium">${c.transmission || "Tự động"}</td>`).join("")}
+                            ${comparedCars.map((c) => `<td class="p-3 font-medium">${escapeHtml(c.transmission || "Tự động")}</td>`).join("")}
                         </tr>
                         <tr>
                             <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Nhiên Liệu</td>
-                            ${comparedCars.map((c) => `<td class="p-3 font-semibold text-slate-900 dark:text-white">${c.fuel || "Xăng"}</td>`).join("")}
+                            ${comparedCars.map((c) => `<td class="p-3 font-semibold text-slate-900 dark:text-white">${escapeHtml(c.fuel || "Xăng")}</td>`).join("")}
                         </tr>
                         <tr>
                             <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Mô Tả & Điểm Nhấn</td>
-                            ${comparedCars.map((c) => `<td class="p-3 leading-relaxed text-[11px] text-gray-600 dark:text-gray-400">${c.description || "Chưa có thông tin"}</td>`).join("")}
+                            ${comparedCars.map((c) => `<td class="p-3 leading-relaxed text-[11px] text-gray-600 dark:text-gray-400">${escapeHtml(c.description || "Chưa có thông tin")}</td>`).join("")}
                         </tr>
                         <tr>
                             <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Thao Tác</td>
@@ -2146,7 +2106,7 @@
                               .map(
                                 (c) => `
                                 <td class="p-3 space-y-1.5">
-                                    <button onclick="closeModal('compareModal'); openBookingModal('${c.name}')" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-2 rounded-xl text-xs transition shadow">
+                                    <button onclick="closeModal('compareModal'); openBookingModalById(${c.id})" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-2 rounded-xl text-xs transition shadow">
                                         Đăng Ký Lái Thử
                                     </button>
                                     <button onclick="closeModal('compareModal'); openDetailModal(${c.id})" class="w-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-gray-200 font-bold py-2 rounded-xl text-xs transition border border-gray-300 dark:border-white/10">
@@ -2183,15 +2143,15 @@
 
         document.getElementById("modalContent").innerHTML = `
                 <div class="relative rounded-2xl overflow-hidden mb-5">
-                    <img src="${car.image}" class="w-full h-80 object-cover" onerror="this.src='https://via.placeholder.com/600x350'">
+                    <img src="${getCarImage(car.image)}" class="w-full h-80 object-cover" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
                     <span class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                        ${car.brand}
+                        ${escapeHtml(car.brand)}
                     </span>
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-4">
                     <div>
-                        <h2 class="text-2xl sm:text-3xl font-black font-heading text-slate-900 dark:text-white">${car.name}</h2>
+                        <h2 class="text-2xl sm:text-3xl font-black font-heading text-slate-900 dark:text-white">${escapeHtml(car.name)}</h2>
                         <span class="text-xs text-gray-500 dark:text-gray-400">Mã SKU: 4TL-00${car.id} | Tình trạng: Xe mới có sẵn giao ngay</span>
                     </div>
                     <div class="text-2xl sm:text-3xl font-black text-indigo-600 dark:text-indigo-500 font-heading">
@@ -2202,30 +2162,30 @@
                 <div class="grid grid-cols-3 gap-3 my-4">
                     <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
                         <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Động cơ</span>
-                        <strong class="text-xs text-slate-900 dark:text-white">${car.engine || "N/A"}</strong>
+                        <strong class="text-xs text-slate-900 dark:text-white">${escapeHtml(car.engine || "N/A")}</strong>
                     </div>
                     <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
                         <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Hộp số</span>
-                        <strong class="text-xs text-slate-900 dark:text-white">${car.transmission || "Tự động"}</strong>
+                        <strong class="text-xs text-slate-900 dark:text-white">${escapeHtml(car.transmission || "Tự động")}</strong>
                     </div>
                     <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
                         <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Nhiên liệu</span>
-                        <strong class="text-xs text-slate-900 dark:text-white">${car.fuel || "Xăng"}</strong>
+                        <strong class="text-xs text-slate-900 dark:text-white">${escapeHtml(car.fuel || "Xăng")}</strong>
                     </div>
                 </div>
 
                 <div class="space-y-2">
                     <h4 class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Giới thiệu tổng quan & Trang bị nổi bật</h4>
                     <p class="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed bg-gray-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-gray-200 dark:border-white/5">
-                        ${car.description || "Mẫu xe sở hữu thiết kế thể thao đột phá, vật liệu nội thất cao cấp cùng hệ thống trợ lái và an toàn tối tân hàng đầu phân khúc."}
+                        ${escapeHtml(car.description || "Mẫu xe sở hữu thiết kế thể thao đột phá, vật liệu nội thất cao cấp cùng hệ thống trợ lái và an toàn tối tân hàng đầu phân khúc.")}
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
-                    <button onclick="closeModal('detailModal'); openQRModal('${car.name}', ${car.price})" class="bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3 rounded-2xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
+                    <button onclick="closeModal('detailModal'); openQRModalById(${car.id})" class="bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3 rounded-2xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
                         <i class="fa-solid fa-qrcode"></i> Đặt Cọc Giữ Xe
                     </button>
-                    <button onclick="closeModal('detailModal'); openBookingModal('${car.name}')" class="bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-white font-bold py-3 rounded-2xl text-xs border border-gray-300 dark:border-white/10 transition flex items-center justify-center gap-2">
+                    <button onclick="closeModal('detailModal'); openBookingModalById(${car.id})" class="bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-white font-bold py-3 rounded-2xl text-xs border border-gray-300 dark:border-white/10 transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-car-side"></i> Lái Thử Tận Nơi
                     </button>
                     <button onclick="toggleCompareCar(${car.id}); closeModal('detailModal');" class="${isCompared ? "bg-emerald-600 text-white" : "bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-800 dark:text-white"} font-bold py-3 rounded-2xl text-xs border border-gray-300 dark:border-white/10 transition flex items-center justify-center gap-2">
@@ -2234,7 +2194,7 @@
                 </div>
                 
                 <div class="pt-1 text-center">
-                    <a href="detail.html?id=${car.id}" class="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 underline underline-offset-4 transition">
+                    <a href="html/detail.html?id=${car.id}" class="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 underline underline-offset-4 transition">
                         <i class="fa-solid fa-up-right-from-square"></i> Mở trang chi tiết đầy đủ (Chia sẻ link)
                     </a>
                 </div>
@@ -2246,13 +2206,12 @@
       function openQRModal(carName, price) {
         window.currentDepositCar = { name: carName, price: price };
         document.getElementById("qrCarName").innerText = `Đặt cọc ưu tiên mẫu: ${carName}`;
-        const memo = `COC ${carName.replace(/\s+/g, "").toUpperCase()}`;
+        const memo = `COC ${carName.replace(/[^a-zA-Z0-9]/g, "").toUpperCase()}`;
         document.getElementById("qrMemo").innerText = memo;
 
         const qrImg = document.getElementById("qrImage");
         qrImg.src = "images/qrcode.jpg";
 
-        // Dự phòng tự động nếu file images/qrcode.jpg bị thiếu hoặc sai tên trên server
         qrImg.onerror = function () {
           this.onerror = null;
           // Thay MÃ_NGÂN_HÀNG (vd: VCB, TCB, MB, ACB, BIDV...) và SỐ_TÀI_KHOẢN_THẬT của bạn vào dưới đây
@@ -2284,25 +2243,37 @@
           return;
         }
 
-        await fetch("save_order.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            type: "deposit",
-            car_name: window.currentDepositCar?.name || "Xe Showroom 4TL",
-            car_price: window.currentDepositCar?.price || 0,
-            memo: memo,
-            customer_name: cusName,
-            customer_phone: cusPhone,
-          }),
-        });
+        try {
+          const res = await fetch("php/save_order.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              type: "deposit",
+              car_name: window.currentDepositCar?.name || "Xe Showroom 4TL",
+              car_price: window.currentDepositCar?.price || 0,
+              memo: memo,
+              customer_name: cusName,
+              customer_phone: cusPhone,
+            }),
+          });
 
-        alert(
-          "🎉 Showroom 4TL đã lưu thông tin giao dịch cọc! Kế toán sẽ gọi xác nhận qua SĐT " +
-            cusPhone +
-            " trong 15 phút.",
-        );
-        closeModal("qrModal");
+          const result = await res.json();
+          if (result.status !== "success") {
+            alert("❌ " + (result.message || "Lỗi lưu giao dịch đặt cọc!"));
+            return;
+          }
+
+          alert(
+            "🎉 Showroom 4TL đã lưu thông tin giao dịch cọc! Kế toán sẽ gọi xác nhận qua SĐT " +
+              cusPhone +
+              " trong 15 phút.",
+          );
+          document.getElementById("qrCustomerName").value = "";
+          document.getElementById("qrCustomerPhone").value = "";
+          closeModal("qrModal");
+        } catch (err) {
+          alert("❌ Lỗi kết nối máy chủ: Không thể lưu giao dịch lúc này.");
+        }
       }
 
       async function handleModalBooking(e) {
@@ -2312,15 +2283,25 @@
         const phone = document.getElementById("modalBookingPhone").value;
         const date = document.getElementById("modalBookingDate").value;
 
-        await fetch("save_order.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ type: "booking", name, phone, car, date, note: "Đặt từ Modal Lái thử" }),
-        });
+        try {
+          const res = await fetch("php/save_order.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "booking", name, phone, car, date, note: "Đặt từ Modal Lái thử" }),
+          });
 
-        alert(`✅ Đã lưu lịch lái thử vào hệ thống!\nKhách hàng: ${name} (${phone})\nMẫu xe: ${car} - Ngày: ${date}`);
-        e.target.reset();
-        closeModal("bookingModal");
+          const result = await res.json();
+          if (result.status !== "success") {
+            alert("❌ " + (result.message || "Không thể lưu lịch lái thử!"));
+            return;
+          }
+
+          alert(`✅ Đã lưu lịch lái thử vào hệ thống!\nKhách hàng: ${name} (${phone})\nMẫu xe: ${car} - Ngày: ${date}`);
+          e.target.reset();
+          closeModal("bookingModal");
+        } catch (err) {
+          alert("❌ Lỗi kết nối máy chủ: Không thể gửi đăng ký lái thử.");
+        }
       }
 
       async function handleTestDriveSubmit(e) {
@@ -2329,43 +2310,69 @@
         const phone = document.getElementById("drivePhone").value;
         const car = document.getElementById("driveCar").value;
 
-        await fetch("save_order.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            type: "booking",
-            name,
-            phone,
-            car,
-            date: new Date().toISOString().split("T")[0],
-            note: "Đặt từ Form chân trang",
-          }),
-        });
+        try {
+          const res = await fetch("php/save_order.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              type: "booking",
+              name,
+              phone,
+              car,
+              date: new Date().toISOString().split("T")[0],
+              note: "Đặt từ Form chân trang",
+            }),
+          });
 
-        alert(`✅ Đã tiếp nhận & lưu lịch hẹn của quý khách ${name} (${phone}) đối với mẫu xe "${car}"!`);
-        e.target.reset();
+          const result = await res.json();
+          if (result.status !== "success") {
+            alert("❌ " + (result.message || "Không thể lưu lịch hẹn!"));
+            return;
+          }
+
+          alert(`✅ Đã tiếp nhận & lưu lịch hẹn của quý khách ${name} (${phone}) đối với mẫu xe "${car}"!`);
+          e.target.reset();
+        } catch (err) {
+          alert("❌ Lỗi kết nối máy chủ: Không thể gửi lịch hẹn.");
+        }
       }
 
       async function requestLoanConsult() {
         const phone = prompt("Quý khách vui lòng nhập Số điện thoại / Zalo để nhận bảng tính trả góp chi tiết:");
-        if (!phone) return;
+        if (!phone || !phone.trim()) return;
+
         const price = formatCurrency(document.getElementById("calcPriceInput").value);
         const downPercent = document.getElementById("calcDownPercent").value;
         const months = document.getElementById("calcMonths").value;
 
-        await fetch("save_order.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            type: "booking",
-            name: "Khách tư vấn trả góp",
-            phone: phone,
-            car: `Gói vay xe ${price}`,
-            date: new Date().toISOString().split("T")[0],
-            note: `Trả trước ${downPercent}%, kỳ hạn ${months} tháng`,
-          }),
-        });
-        alert("✅ Đã gửi yêu cầu thành công! Chuyên viên tín dụng 4TL sẽ gửi bảng tính qua Zalo " + phone + " ngay.");
+        try {
+          const res = await fetch("php/save_order.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              type: "booking",
+              name: "Khách tư vấn trả góp",
+              phone: phone.trim(),
+              car: `Gói vay xe ${price}`,
+              date: new Date().toISOString().split("T")[0],
+              note: `Trả trước ${downPercent}%, kỳ hạn ${months} tháng`,
+            }),
+          });
+
+          const result = await res.json();
+          if (result.status !== "success") {
+            alert("❌ " + (result.message || "Không thể gửi yêu cầu tư vấn!"));
+            return;
+          }
+
+          alert(
+            "✅ Đã gửi yêu cầu thành công! Chuyên viên tín dụng 4TL sẽ gửi bảng tính qua Zalo " +
+              phone.trim() +
+              " ngay.",
+          );
+        } catch (err) {
+          alert("❌ Lỗi kết nối máy chủ: Không thể gửi yêu cầu tư vấn.");
+        }
       }
 
       // CHATBOT ASSISTANT
@@ -2411,10 +2418,10 @@
 
         // Add user message
         chatBox.innerHTML += `
-                <div class="bg-indigo-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] ml-auto text-xs shadow-md leading-relaxed">
-                    ${text}
-                </div>
-            `;
+              <div class="bg-indigo-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] ml-auto text-xs shadow-md leading-relaxed">
+                  ${escapeHtml(text)}
+              </div>
+          `;
         input.value = "";
         chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -2428,7 +2435,7 @@
         chatBox.scrollTop = chatBox.scrollHeight;
 
         try {
-          const res = await fetch("ai_chat.php", {
+          const res = await fetch("php/bot_train.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: text }),
@@ -2458,7 +2465,6 @@
       }
 
       // Initialize App
-      initTheme();
       fetchCars();
     </script>
   </body>

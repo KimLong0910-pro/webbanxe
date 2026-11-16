@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS web_ban_xe DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE web_ban_xe;
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
+-- 1. Bảng danh sách xe
 DROP TABLE IF EXISTS cars;
-
 CREATE TABLE cars (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -14,24 +14,29 @@ CREATE TABLE cars (
     fuel VARCHAR(50),
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS users (
+-- 2. Bảng tài khoản quản trị
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS bot_knowledge (
+-- 3. Bảng dữ liệu huấn luyện Chatbot
+DROP TABLE IF EXISTS bot_knowledge;
+CREATE TABLE bot_knowledge (
     id INT AUTO_INCREMENT PRIMARY KEY,
     keywords VARCHAR(255) NOT NULL,
     response TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Bảng lưu lịch đăng ký lái thử & yêu cầu tư vấn
-CREATE TABLE IF NOT EXISTS bookings (
+-- 4. Bảng đặt lịch lái thử / tư vấn
+DROP TABLE IF EXISTS bookings;
+CREATE TABLE bookings (
     id INT AUTO_INCREMENT PRIMARY KEY,
     customer_name VARCHAR(150) NOT NULL,
     phone VARCHAR(20) NOT NULL,
@@ -40,10 +45,11 @@ CREATE TABLE IF NOT EXISTS bookings (
     note TEXT DEFAULT NULL,
     status ENUM('pending', 'confirmed', 'cancelled') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Bảng lưu đơn đặt cọc giữ xe qua VietQR
-CREATE TABLE IF NOT EXISTS deposits (
+-- 5. Bảng quản lý đặt cọc xe
+DROP TABLE IF EXISTS deposits;
+CREATE TABLE deposits (
     id INT AUTO_INCREMENT PRIMARY KEY,
     car_name VARCHAR(255) NOT NULL,
     car_price DECIMAL(15,2) NOT NULL,
@@ -52,11 +58,9 @@ CREATE TABLE IF NOT EXISTS deposits (
     customer_phone VARCHAR(20) DEFAULT '',
     status ENUM('pending', 'verified', 'cancelled') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO users (username, password) VALUES
-('admin', 'admin123')
-ON DUPLICATE KEY UPDATE username=username;
+SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO bot_knowledge (keywords, response) VALUES
 ('gia, bao nhieu, chi phi', 'Giá các dòng xe tại Showroom 4TL dao động từ 240 triệu (VinFast VF3) đến hơn 19 tỷ VNĐ (Ferrari F8 Tributo).'),

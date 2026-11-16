@@ -18,32 +18,36 @@ if (empty($username) || empty($password)) {
     exit();
 }
 
-// Tài khoản dự phòng khi chưa bật MySQL
-if ($username === 'admin' && ($password === 'admin123' || $password === 'admin')) {
-    session_regenerate_id(true);
-    $_SESSION['admin_logged_in'] = true;
-    $_SESSION['admin_user'] = $username;
-    echo json_encode(["status" => "success", "message" => "Đăng nhập thành công!"], JSON_UNESCAPED_UNICODE);
-    exit();
-}
-
+// 1. Xác thực chính qua bảng users trong MySQL
 if ($pdo) {
     try {
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+        $stmt = $pdo->prepare("SELECT id, username, password FROM users WHERE username = ?");
         $stmt->execute([$username]);
         $user = $stmt->fetch();
 
-        if ($user && (password_verify($password, $user['password']) || $password === $user['password'])) {
+        if ($user && password_verify($password, $user['password'])) {
             session_regenerate_id(true);
             $_SESSION['admin_logged_in'] = true;
             $_SESSION['admin_user'] = $user['username'];
             echo json_encode(["status" => "success", "message" => "Đăng nhập thành công!"], JSON_UNESCAPED_UNICODE);
             exit();
         }
+
+        echo json_encode(["status" => "error", "message" => "Tài khoản hoặc mật khẩu không chính xác!"], JSON_UNESCAPED_UNICODE);
+        exit();
     } catch (Exception $e) {
         echo json_encode(["status" => "error", "message" => "Lỗi truy vấn: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
         exit();
     }
+}
+
+// 2. Chế độ dự phòng khi chưa bật MySQL
+if ($username === 'admin' && $password === 'admin123') {
+    session_regenerate_id(true);
+    $_SESSION['admin_logged_in'] = true;
+    $_SESSION['admin_user'] = 'admin';
+    echo json_encode(["status" => "success", "message" => "Đăng nhập thành công!"], JSON_UNESCAPED_UNICODE);
+    exit();
 }
 
 echo json_encode(["status" => "error", "message" => "Tài khoản hoặc mật khẩu không chính xác!"], JSON_UNESCAPED_UNICODE);
