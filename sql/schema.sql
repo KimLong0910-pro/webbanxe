@@ -8,7 +8,7 @@ CREATE TABLE cars (
     name VARCHAR(255) NOT NULL,
     brand VARCHAR(100) NOT NULL,
     price DECIMAL(15,2) NOT NULL,
-    image VARCHAR(255) DEFAULT 'default.jpg',
+    image TEXT,
     engine VARCHAR(100),
     transmission VARCHAR(100),
     fuel VARCHAR(50),

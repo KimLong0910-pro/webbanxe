@@ -90,7 +90,7 @@
           name: "Porsche 911 Carrera S",
           brand: "Porsche",
           price: 8500000000,
-          image: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800",
+          image: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800, https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800, https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800",
           engine: "3.0L Boxer Twin-Turbo (450 HP)",
           transmission: "Tự động 8 cấp PDK",
           fuel: "Xăng",
@@ -123,6 +123,47 @@
         },
       ];
 
+      let currentSlideImages = [];
+      let currentSlideIndex = 0;
+
+      function updateSliderUI() {
+        const mainImg = document.getElementById("mainCarImage");
+        const counter = document.getElementById("slideCounter");
+        if (!mainImg || currentSlideImages.length === 0) return;
+
+        mainImg.src = currentSlideImages[currentSlideIndex];
+        if (counter) {
+          counter.innerText = `${currentSlideIndex + 1} / ${currentSlideImages.length}`;
+        }
+
+        document.querySelectorAll(".car-thumb-btn").forEach((btn, idx) => {
+          if (idx === currentSlideIndex) {
+            btn.classList.add("ring-2", "ring-indigo-500", "opacity-100");
+            btn.classList.remove("opacity-60");
+          } else {
+            btn.classList.remove("ring-2", "ring-indigo-500", "opacity-100");
+            btn.classList.add("opacity-60");
+          }
+        });
+      }
+
+      function changeCarSlide(step) {
+        if (currentSlideImages.length <= 1) return;
+        currentSlideIndex = (currentSlideIndex + step + currentSlideImages.length) % currentSlideImages.length;
+        updateSliderUI();
+      }
+
+      function goToCarSlide(index) {
+        if (index < 0 || index >= currentSlideImages.length) return;
+        currentSlideIndex = index;
+        updateSliderUI();
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") changeCarSlide(-1);
+        if (e.key === "ArrowRight") changeCarSlide(1);
+      });
+
       async function loadCarDetail() {
         const urlParams = new URLSearchParams(window.location.search);
         const id = parseInt(urlParams.get("id")) || 1;
@@ -136,21 +177,56 @@
         }
 
         const car = (Array.isArray(cars) && cars.find((c) => Number(c.id) === Number(id))) || fallbackCars[0];
+        currentSlideImages = getCarImages(car.image);
+        currentSlideIndex = 0;
+        const hasMultiple = currentSlideImages.length > 1;
 
         document.getElementById("detailContainer").innerHTML = `
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     
-                    <!-- Left: Image & Badge -->
-                    <div class="lg:col-span-7 space-y-4">
-                        <div class="relative rounded-2xl overflow-hidden aspect-[16/10] bg-slate-900 border border-gray-200 dark:border-white/10 shadow-2xl">
-                            <img src="${getCarImage(car.image)}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
-                            <span class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                    <!-- Left: Image Slider & Badge -->
+                    <div class="lg:col-span-7 space-y-3">
+                        <div class="relative rounded-2xl overflow-hidden aspect-[16/10] bg-slate-900 border border-gray-200 dark:border-white/10 shadow-2xl group">
+                            <img id="mainCarImage" src="${currentSlideImages[0]}" class="w-full h-full object-cover transition-all duration-300" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
+                            
+                            <span class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                                 ${escapeHtml(car.brand)}
                             </span>
+
+                            ${hasMultiple ? `
+                              <!-- Bộ đếm số ảnh -->
+                              <span id="slideCounter" class="absolute top-4 right-4 bg-black/65 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full border border-white/15">
+                                1 / ${currentSlideImages.length}
+                              </span>
+
+                              <!-- Nút mũi tên Trái -->
+                              <button type="button" onclick="changeCarSlide(-1)" title="Ảnh trước (Mũi tên trái)"
+                                class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/55 hover:bg-indigo-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition shadow-lg">
+                                <i class="fa-solid fa-chevron-left"></i>
+                              </button>
+
+                              <!-- Nút mũi tên Phải -->
+                              <button type="button" onclick="changeCarSlide(1)" title="Ảnh tiếp theo (Mũi tên phải)"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/55 hover:bg-indigo-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition shadow-lg">
+                                <i class="fa-solid fa-chevron-right"></i>
+                              </button>
+                            ` : ""}
                         </div>
 
+                        <!-- Dải ảnh thu nhỏ (Thumbnails) -->
+                        ${hasMultiple ? `
+                          <div class="flex gap-2.5 overflow-x-auto py-1">
+                            ${currentSlideImages.map((imgUrl, idx) => `
+                              <button type="button" onclick="goToCarSlide(${idx})"
+                                class="car-thumb-btn relative flex-shrink-0 w-20 h-14 rounded-xl overflow-hidden border border-gray-300 dark:border-white/15 transition ${idx === 0 ? "ring-2 ring-indigo-500 opacity-100" : "opacity-60 hover:opacity-100"}">
+                                <img src="${imgUrl}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
+                              </button>
+                            `).join("")}
+                          </div>
+                        ` : ""}
+
                         <!-- 3 Mini Specs -->
-                        <div class="grid grid-cols-3 gap-3 text-xs">
+                        <div class="grid grid-cols-3 gap-3 text-xs pt-1">
                             <div class="bg-gray-50 dark:bg-slate-900/80 p-3 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
                                 <i class="fa-solid fa-gauge-high text-indigo-600 dark:text-indigo-500 mb-1"></i>
                                 <div class="text-[10px] text-gray-500 dark:text-gray-400">Động cơ</div>
@@ -172,7 +248,7 @@
                     <!-- Right: Info & Pricing -->
                     <div class="lg:col-span-5 space-y-6">
                         <div>
-                            <span class="text-xs text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-widest">${car.brand} Supercar</span>
+                            <span class="text-xs text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-widest">${escapeHtml(car.brand)} Supercar</span>
                             <h1 class="text-3xl font-black font-heading text-slate-900 dark:text-white mt-1">${escapeHtml(car.name)}</h1>
                             <div class="text-3xl font-black text-indigo-600 dark:text-indigo-500 font-heading mt-2">
                                 ${Number(car.price).toLocaleString("vi-VN")} VNĐ
@@ -201,7 +277,7 @@
                             <a href="tel:0706850014" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3.5 rounded-2xl text-xs flex items-center justify-center gap-2 transition shadow-lg shadow-indigo-600/30">
                                 <i class="fa-solid fa-phone"></i> Gọi Hotline Tư Vấn Ngay: 0706.850.014
                             </a>
-                            <a href="../index.html#car-section" class="w-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-gray-300 font-bold py-3 rounded-2xl text-xs flex items-center justify-center gap-2 border border-gray-200 dark:border-white/10 transition">
+                            <a href="bo_suu_tap_xe.html" class="w-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-gray-300 font-bold py-3 rounded-2xl text-xs flex items-center justify-center gap-2 border border-gray-200 dark:border-white/10 transition">
                                 <i class="fa-solid fa-car"></i> Xem Các Mẫu Xe Khác
                             </a>
                         </div>

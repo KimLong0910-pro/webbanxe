@@ -76,14 +76,14 @@ window.addEventListener("storage", (e) => {
   }
 });
 
-// 7. Hàm chuẩn hóa đường dẫn ảnh xe (Hỗ trợ cả link online lẫn ảnh trong thư mục images/)
+// 7. Hàm chuẩn hóa danh sách ảnh xe (Hỗ trợ nhiều link/file ngăn cách bằng dấu phẩy)
 const FALLBACK_CAR_IMG = "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800";
 
-function getCarImage(img) {
-  if (!img || String(img).trim() === "" || img === "default.jpg") {
+function normalizeSingleImage(singleImg) {
+  if (!singleImg || String(singleImg).trim() === "" || singleImg === "default.jpg") {
     return FALLBACK_CAR_IMG;
   }
-  const cleanImg = String(img).trim();
+  const cleanImg = String(singleImg).trim();
   if (cleanImg.startsWith("http://") || cleanImg.startsWith("https://")) {
     return cleanImg;
   }
@@ -92,6 +92,21 @@ function getCarImage(img) {
     return prefix + cleanImg;
   }
   return prefix + "images/" + cleanImg.replace(/^\/+/, "");
+}
+
+function getCarImages(imgString) {
+  if (!imgString || String(imgString).trim() === "" || imgString === "default.jpg") {
+    return [FALLBACK_CAR_IMG];
+  }
+  const list = String(imgString)
+    .split(/[\n,]+/)
+    .map((item) => item.trim())
+    .filter((item) => item !== "");
+  return list.length > 0 ? list.map(normalizeSingleImage) : [FALLBACK_CAR_IMG];
+}
+
+function getCarImage(img) {
+  return getCarImages(img)[0];
 }
 
 // 8. Hàm chống XSS dùng chung cho toàn bộ website

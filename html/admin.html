@@ -233,14 +233,14 @@
 
           <div class="md:col-span-3">
             <label class="block text-gray-700 dark:text-gray-400 mb-1 font-semibold">
-              URL Hình ảnh xe (link ảnh online)
+              Danh sách URL Hình ảnh xe (ngăn cách bằng dấu phẩy hoặc xuống dòng)
             </label>
-            <input
-              type="text"
+            <textarea
               id="image"
-              placeholder="https://..."
+              rows="2"
+              placeholder="https://link-anh-1.jpg, https://link-anh-2.jpg, https://link-anh-3.jpg"
               required
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"></textarea>
           </div>
 
           <div class="md:col-span-3">
@@ -483,7 +483,12 @@
                 <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50 transition">
                     <td class="p-3 text-gray-400 font-mono">#${Number(car.id)}</td>
                     <td class="p-3">
-                        <img src="${getCarImage(car.image)}" class="w-14 h-9 object-cover rounded-lg border border-gray-200 dark:border-white/10" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
+                        <div class="relative inline-block">
+                            <img src="${getCarImage(car.image)}" class="w-14 h-9 object-cover rounded-lg border border-gray-200 dark:border-white/10" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
+                            <span class="absolute -top-1.5 -right-1.5 bg-indigo-600 text-white text-[9px] font-bold px-1.5 rounded-full shadow">
+                                ${getCarImages(car.image).length} ảnh
+                            </span>
+                        </div>
                     </td>
                     <td class="p-3 font-bold text-slate-900 dark:text-white">${escapeHtml(car.name)}</td>
                     <td class="p-3"><span class="px-2 py-0.5 rounded bg-indigo-600/10 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 font-bold">${escapeHtml(car.brand)}</span></td>
@@ -744,12 +749,14 @@
               class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500" />
           </div>
           <div class="md:col-span-2">
-            <label class="block text-gray-700 dark:text-gray-400 mb-1 font-bold">URL Hình ảnh</label>
-            <input
-              type="text"
+            <label class="block text-gray-700 dark:text-gray-400 mb-1 font-bold">
+              Danh sách URL Hình ảnh (ngăn cách bằng dấu phẩy hoặc xuống dòng)
+            </label>
+            <textarea
               id="edit_image"
+              rows="3"
               required
-              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500" />
+              class="w-full bg-gray-50 dark:bg-slate-800 p-3 rounded-xl border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500"></textarea>
           </div>
           <div class="md:col-span-2">
             <div class="flex justify-between items-center mb-1">

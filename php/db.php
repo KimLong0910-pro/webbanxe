@@ -43,7 +43,7 @@ try {
             name VARCHAR(255) NOT NULL,
             brand VARCHAR(100) NOT NULL,
             price DECIMAL(15,2) NOT NULL,
-            image VARCHAR(255) DEFAULT 'default.jpg',
+            image TEXT,
             engine VARCHAR(100),
             transmission VARCHAR(100),
             fuel VARCHAR(50),
@@ -87,7 +87,9 @@ try {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ");
-
+    // Tự động nâng cấp cột image lên TEXT để chứa được nhiều link ảnh
+    $pdo->exec("ALTER TABLE cars MODIFY COLUMN image TEXT");
+    
     // 5. Nạp tài khoản Admin mặc định (đã mã hóa mật khẩu) nếu bảng users trống
     if ((int)$pdo->query("SELECT COUNT(*) FROM users")->fetchColumn() === 0) {
         $stmtUser = $pdo->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
