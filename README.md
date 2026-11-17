@@ -2,31 +2,42 @@
 ## Hiện tại đây là code tôi có. 
 **Tôi sẽ tổng hợp các file code ở đây cho bạn nắm thông tin dự án của tôi:**
 
-***Tôi đã tạo ra các folder để lọc các file cho gọn***
-***các folder (css, html, images, js, php, sql) riêng index.html ở folder mẹ***
-
-- một folder chứa các hình ảnh tên là "images". chứa ![alt text](/images/qrcode.jpg)
-- một file index.html
-- một file admin.html
-- một file bot_train.html
-- một file detail.html
-- một file login.html
-- một file login.php
-- một file logout.php
-- một file bot_train.php
-- một file db.php
-- một file delete_car.php
-- một file edit_car.php
-- một file add_car.php
-- một file get_cars.php
-- một file train_bot.html
-- một file train_bot.php
-- một file save_order.php
-- một file manage_orders.php
-- một file style.css
-- một file schema.sql
-- một file auth_check.php
-- một file theme.js
+```bash
+webbanxe/
+├── .gitignore                          # Quy tắc bỏ qua tệp khi dùng Git
+├── README.md                            # Giới thiệu và ghi chú dự án
+├── css/
+│   └── style.css                        # Kiểu dáng dùng chung cho website
+├── html/
+│   ├── admin.html                       # Trang quản trị xe và đơn hàng
+│   ├── bo_suu_tap_xe.html               # Trang danh sách, lọc và so sánh xe
+│   ├── bot_train.html                   # Giao diện chatbot tư vấn xe
+│   ├── detail.html                      # Trang thông tin chi tiết xe
+│   ├── login.html                       # Trang đăng nhập quản trị
+│   └── train_bot.html                   # Trang quản lý dữ liệu huấn luyện chatbot
+├── images/
+│   └── qrcode.jpg                       # Mã QR đặt cọc
+├── images.zip                           # Tệp nén hình ảnh
+├── index.html                           # Trang chủ showroom
+├── js/
+│   └── theme.js                         # Cấu hình giao diện và tiện ích dùng chung
+├── php/
+│   ├── add_car.php                      # Thêm xe vào cơ sở dữ liệu
+│   ├── auth_check.php                   # Kiểm tra phiên đăng nhập quản trị
+│   ├── bot_train.php                    # Xử lý câu hỏi và phản hồi chatbot
+│   ├── db.php                           # Kết nối và khởi tạo cơ sở dữ liệu
+│   ├── delete_car.php                   # Xóa xe khỏi cơ sở dữ liệu
+│   ├── edit_car.php                     # Cập nhật thông tin xe
+│   ├── get_cars.php                     # Lấy danh sách xe
+│   ├── login.php                        # Xác thực tài khoản quản trị
+│   ├── logout.php                       # Đăng xuất quản trị
+│   ├── manage_orders.php                # Quản lý lịch hẹn và đơn đặt cọc
+│   ├── save_order.php                   # Lưu lịch hẹn và thông tin đặt cọc
+│   └── train_bot.php                    # Quản lý dữ liệu huấn luyện chatbot
+├── sql/
+│   └── schema.sql                       # Tạo bảng và nạp dữ liệu mẫu
+└── thongtinxe.md                        # Thông số và mô tả các mẫu xe
+```
 
 ### file index.html: 
 ```html
