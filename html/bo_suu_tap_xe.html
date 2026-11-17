@@ -13,9 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- ✅ 1. Thẻ gọi JS ở thư mục gốc (thêm ../ ở đầu) -->
+    <!-- Thẻ gọi JS & CSS từ thư mục gốc -->
     <script src="../js/theme.js"></script>
-    <!-- ✅ 2. Thẻ gọi CSS ở thư mục gốc (thêm ../ ở đầu) -->
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body class="bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-gray-100 transition-colors duration-300 min-h-screen selection:bg-indigo-600 selection:text-white">
@@ -39,9 +38,11 @@
         </a>
 
         <div class="flex items-center gap-3">
-          <!-- ✅ 3. Nút quay lại trang chủ (thêm ../ vào href) -->
+          <button onclick="openCompareModal()" class="relative bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 px-4 py-2 rounded-xl text-xs font-bold border border-indigo-500/30 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-code-compare"></i> So Sánh Xe (<span id="compareCount">0</span>)
+          </button>
           <a href="../index.html" class="bg-gray-100 hover:bg-gray-200 text-slate-700 dark:bg-slate-800 dark:text-gray-200 px-4 py-2 rounded-xl text-xs font-bold border border-gray-200 dark:border-white/10 transition flex items-center gap-1.5">
-            <i class="fa-solid fa-arrow-left"></i> Quay Lại Trang Chủ
+            <i class="fa-solid fa-arrow-left"></i> Trang Chủ
           </a>
           <button id="themeToggle" type="button" class="w-10 h-10 rounded-xl bg-gray-100 text-amber-500 dark:bg-slate-800 dark:text-yellow-400 flex items-center justify-center border border-gray-200 dark:border-white/10 transition shadow-sm">
             <i id="themeIcon" class="fa-solid fa-sun text-base"></i>
@@ -91,10 +92,9 @@
           <div>
             <select id="priceFilter" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-900/90 border border-gray-300 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500">
               <option value="">Tất cả phân khúc giá</option>
-              <option value="under-1b">Dưới 1 Tỷ VNĐ</option>
-              <option value="1b-3b">1 Tỷ - 3 Tỷ VNĐ</option>
-              <option value="3b-8b">3 Tỷ - 8 Tỷ VNĐ</option>
-              <option value="over-8b">Trên 8 Tỷ VNĐ (Siêu xe)</option>
+              <option value="under-3b">Dưới 3 Tỷ VNĐ</option>
+              <option value="3b-10b">3 Tỷ - 10 Tỷ VNĐ</option>
+              <option value="over-10b">Trên 10 Tỷ VNĐ (Siêu xe)</option>
             </select>
           </div>
           <div>
@@ -103,7 +103,6 @@
               <option value="Điện">⚡ Xe thuần điện (EV)</option>
               <option value="Xăng">⛽ Xe máy xăng</option>
               <option value="Hybrid">🔋 Xe Hybrid</option>
-              <option value="Dầu">🚜 Xe máy dầu (Diesel)</option>
             </select>
           </div>
         </div>
@@ -113,12 +112,123 @@
       <div id="carGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2"></div>
     </main>
 
+    <!-- MODAL 1: CHI TIẾT XE -->
+    <div id="detailModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4 overflow-y-auto hidden" style="display: none">
+      <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 relative shadow-2xl border border-gray-200 dark:border-white/15 max-h-[90vh] overflow-y-auto space-y-6">
+        <button onclick="closeModal('detailModal')" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center justify-center transition">✕</button>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+
+    <!-- MODAL 2: MÃ QR ĐẶT CỌC -->
+    <div id="qrModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4 hidden" style="display: none">
+      <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-sm w-full p-6 text-center relative shadow-2xl border border-gray-200 dark:border-indigo-500/30 space-y-4">
+        <button onclick="closeModal('qrModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center justify-center transition">✕</button>
+        <div class="w-12 h-12 rounded-full bg-indigo-600/10 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-500 mx-auto flex items-center justify-center text-xl">
+          <i class="fa-solid fa-qrcode"></i>
+        </div>
+        <h3 class="text-lg font-black uppercase text-slate-900 dark:text-white font-heading">QUÉT MÃ QR ĐẶT CỌC GIỮ XE</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-300" id="qrCarName">Thanh toán cọc giữ xe tại Showroom 4TL</p>
+        <div class="bg-white p-3 rounded-2xl inline-block shadow-lg border border-gray-200">
+          <img id="qrImage" src="../images/qrcode.jpg" alt="Mã QR Đặt Cọc" class="w-48 h-48 mx-auto object-contain" onerror="this.src=FALLBACK_CAR_IMG" />
+        </div>
+        <div class="bg-gray-100 dark:bg-slate-800 p-3 rounded-xl text-left text-xs space-y-1 text-slate-700 dark:text-gray-300 border border-gray-200 dark:border-white/10">
+          <div class="flex justify-between"><span>Ngân hàng:</span><strong class="text-slate-900 dark:text-white">MB Bank</strong></div>
+          <div class="flex justify-between"><span>Số tài khoản:</span><strong class="text-indigo-600 dark:text-indigo-400 font-mono">0706850014</strong></div>
+          <div class="flex justify-between"><span>Nội dung CK:</span><strong class="text-amber-600 dark:text-yellow-400 font-mono" id="qrMemo">COC XE 4TL</strong></div>
+        </div>
+        <div class="space-y-2 text-left">
+          <input type="text" id="qrCustomerName" placeholder="Họ tên người chuyển khoản *" class="w-full px-3 py-2 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+          <input type="tel" id="qrCustomerPhone" placeholder="Số điện thoại xác nhận *" class="w-full px-3 py-2 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+        </div>
+        <button onclick="confirmDepositSuccess()" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3 rounded-xl text-xs transition shadow-md shadow-indigo-600/30">
+          <i class="fa-solid fa-circle-check mr-1.5"></i> Tôi Đã Hoàn Tất Chuyển Khoản
+        </button>
+      </div>
+    </div>
+
+    <!-- MODAL 3: SO SÁNH XE ĐỐI ĐẦU -->
+    <div id="compareModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-4 overflow-y-auto hidden" style="display: none">
+      <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-5xl w-full p-6 sm:p-8 relative shadow-2xl border border-gray-200 dark:border-white/15 max-h-[90vh] overflow-y-auto space-y-6">
+        <div class="flex justify-between items-center border-b border-gray-200 dark:border-white/10 pb-4">
+          <div>
+            <h3 class="text-2xl font-black font-heading text-slate-900 dark:text-white">SO SÁNH THÔNG SỐ XE ĐỐI ĐẦU</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Xem trực quan thông số, phân khúc và mức giá giữa các mẫu xe.</p>
+          </div>
+          <button onclick="closeModal('compareModal')" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 flex items-center justify-center transition">✕</button>
+        </div>
+        <div id="compareTableContainer" class="overflow-x-auto"></div>
+      </div>
+    </div>
+
+    <!-- MODAL 4: ĐĂNG KÝ LÁI THỬ -->
+    <div id="bookingModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4 hidden" style="display: none">
+      <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-md w-full p-6 relative shadow-2xl border border-gray-200 dark:border-white/15 space-y-4">
+        <button onclick="closeModal('bookingModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 flex items-center justify-center transition">✕</button>
+        <h3 class="text-xl font-black font-heading text-slate-900 dark:text-white">ĐĂNG KÝ TRẢI NGHIỆM LÁI THỬ</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400">Đội ngũ Showroom 4TL sẽ chuẩn bị xe sẵn sàng đón tiếp quý khách.</p>
+        <form onsubmit="handleModalBooking(event)" class="space-y-3 text-xs">
+          <div>
+            <label class="block text-gray-600 dark:text-gray-400 mb-1">Mẫu xe chọn lái thử</label>
+            <input type="text" id="modalBookingCar" readonly class="w-full px-3.5 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white font-bold" />
+          </div>
+          <div>
+            <label class="block text-gray-600 dark:text-gray-400 mb-1">Họ và tên của quý khách</label>
+            <input type="text" id="modalBookingName" required placeholder="Nguyễn Văn A" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-gray-600 dark:text-gray-400 mb-1">Số điện thoại liên hệ</label>
+            <input type="tel" id="modalBookingPhone" required placeholder="0900.xxx.xxx" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-gray-600 dark:text-gray-400 mb-1">Thời gian dự kiến</label>
+            <input type="date" id="modalBookingDate" required class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+          </div>
+          <button type="submit" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30">
+            Xác Nhận Đăng Ký Lái Thử
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
     <script>
       let allCars = [];
+      let comparedCars = [];
+      let currentBrandFilter = "Tất cả";
+
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toastContainer");
+        if (!container) return;
+        const toast = document.createElement("div");
+        toast.className = `px-4 py-3 rounded-2xl text-xs font-bold shadow-xl border backdrop-blur-md transition-all duration-300 flex items-center gap-2 ${
+          type === "success" 
+            ? "bg-emerald-500/90 text-white border-emerald-400" 
+            : "bg-rose-500/90 text-white border-rose-400"
+        }`;
+        toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'} text-sm"></i> ${escapeHtml(message)}`;
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.style.opacity = "0";
+          setTimeout(() => toast.remove(), 300);
+        }, 3500);
+      }
+
+      function formatCurrency(amount) {
+        if (!amount) return "Liên hệ";
+        return Number(amount).toLocaleString("vi-VN") + " VNĐ";
+      }
+
+      function formatBillion(amount) {
+        const val = Number(amount);
+        if (val >= 1e9) {
+          return (val / 1e9).toFixed(1) + " Tỷ";
+        }
+        return val.toLocaleString("vi-VN") + " VNĐ";
+      }
 
       async function fetchCars() {
         try {
-          // ✅ 4. Lệnh fetch dữ liệu (thêm ../ ở đầu đường dẫn php)
           const res = await fetch("../php/get_cars.php");
           const data = await res.json();
           allCars = Array.isArray(data) ? data : [];
@@ -127,19 +237,36 @@
         }
         renderBrandPills();
         populateBrandDropdown();
-        renderCars(allCars);
+        filterCars();
       }
 
       function renderBrandPills() {
         const brands = ["Tất cả", ...[...new Set(allCars.map(c => c.brand))].sort()];
-        document.getElementById("brandPillContainer").innerHTML = brands.map((b, idx) => `
-          <button data-brand="${b}" onclick="filterByBrandQuick(this.dataset.brand)" class="brand-pill px-4 py-1.5 rounded-full text-xs font-bold border border-gray-200 dark:border-white/10 ${idx === 0 ? "active bg-indigo-600 text-white" : "bg-white text-slate-700 dark:bg-slate-900 dark:text-gray-300"}">${b}</button>
+        document.getElementById("brandPillContainer").innerHTML = brands.map(b => `
+          <button data-brand="${b}" onclick="filterByBrandQuick('${b}')" class="brand-pill px-4 py-1.5 rounded-full text-xs font-bold border border-gray-200 dark:border-white/10 ${currentBrandFilter === b ? "active bg-indigo-600 text-white" : "bg-white text-slate-700 dark:bg-slate-900 dark:text-gray-300"}">${b}</button>
         `).join("");
+      }
+
+      function filterByBrandQuick(brand) {
+        currentBrandFilter = brand;
+        document.querySelectorAll(".brand-pill").forEach(btn => {
+          if (btn.dataset.brand === brand) {
+            btn.classList.add("active", "bg-indigo-600", "text-white");
+            btn.classList.remove("bg-white", "text-slate-700", "dark:bg-slate-900", "dark:text-gray-300");
+          } else {
+            btn.classList.remove("active", "bg-indigo-600", "text-white");
+            btn.classList.add("bg-white", "text-slate-700", "dark:bg-slate-900", "dark:text-gray-300");
+          }
+        });
+        const select = document.getElementById("brandFilter");
+        if (select) select.value = brand === "Tất cả" ? "" : brand;
+        filterCars();
       }
 
       function populateBrandDropdown() {
         const brands = [...new Set(allCars.map(c => c.brand))].sort();
         const select = document.getElementById("brandFilter");
+        if (!select) return;
         select.innerHTML = '<option value="">Tất cả thương hiệu</option>';
         brands.forEach(b => {
           const opt = document.createElement("option");
@@ -153,32 +280,322 @@
         const grid = document.getElementById("carGrid");
         document.getElementById("carCountBadge").innerHTML = `Đang hiển thị: <strong class="text-indigo-600">${cars.length}</strong> xe`;
         
-        grid.innerHTML = cars.map(car => `
-          <div class="glass-card rounded-3xl overflow-hidden flex flex-col justify-between group bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-white/10 shadow-md">
-            <div class="relative overflow-hidden aspect-[16/10] bg-slate-900">
-              <img src="${getCarImage(car.image)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="window.location.href='detail.html?id=${car.id}'">
+        if (cars.length === 0) {
+          grid.innerHTML = `
+            <div class="col-span-full py-16 text-center space-y-3">
+              <i class="fa-solid fa-car-tunnel text-4xl text-gray-400"></i>
+              <p class="text-sm text-gray-500 font-medium">Không tìm thấy siêu xe phù hợp với bộ lọc.</p>
+              <button onclick="resetAllFilters()" class="text-xs text-indigo-600 font-bold underline">Xóa bộ lọc tìm kiếm</button>
             </div>
-            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-              <div>
-                <h3 onclick="window.location.href='detail.html?id=${car.id}'" class="text-xl font-black text-slate-900 dark:text-white cursor-pointer hover:text-indigo-500">${escapeHtml(car.name)}</h3>
-                <div class="text-indigo-600 font-heading text-2xl font-black my-1">${Number(car.price).toLocaleString("vi-VN")} VNĐ</div>
+          `;
+          return;
+        }
+
+        grid.innerHTML = cars.map(car => {
+          const isCompared = comparedCars.some(c => Number(c.id) === Number(car.id));
+          return `
+            <div class="glass-card rounded-3xl overflow-hidden flex flex-col justify-between group bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-white/10 shadow-md">
+              <div class="relative overflow-hidden aspect-[16/10] bg-slate-900">
+                <img src="${getCarImage(car.image)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openDetailModal(${car.id})" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
+                <span class="absolute top-3 left-3 bg-indigo-600/90 backdrop-blur text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                  ${escapeHtml(car.brand)}
+                </span>
+                <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur text-amber-400 text-[10px] font-bold px-2.5 py-1 rounded-full">
+                  <i class="fa-solid fa-bolt mr-1"></i>${escapeHtml(car.fuel || 'Xăng')}
+                </span>
               </div>
-              <button onclick="window.location.href='detail.html?id=${car.id}'" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-2.5 rounded-xl text-xs transition">Xem Chi Tiết</button>
+              <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                <div>
+                  <h3 onclick="openDetailModal(${car.id})" class="text-xl font-black text-slate-900 dark:text-white cursor-pointer hover:text-indigo-500 line-clamp-1">${escapeHtml(car.name)}</h3>
+                  <div class="text-indigo-600 dark:text-indigo-400 font-heading text-2xl font-black my-1">${formatCurrency(car.price)}</div>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">${escapeHtml(car.description || 'Động cơ hiệu năng cao, thiết kế sang trọng và trang bị công nghệ đỉnh cao.')}</p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-2 pt-2 border-t border-gray-100 dark:border-white/10">
+                  <button onclick="openQRModalById(${car.id})" class="bg-indigo-600 hover:bg-violet-700 text-white font-bold py-2.5 px-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-qrcode"></i> Đặt Cọc
+                  </button>
+                  <button onclick="openBookingModalById(${car.id})" class="bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-gray-200 font-bold py-2.5 px-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5 border border-gray-200 dark:border-white/10">
+                    <i class="fa-solid fa-calendar-days"></i> Lái Thử
+                  </button>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                  <button onclick="openDetailModal(${car.id})" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                    Xem chi tiết thông số <i class="fa-solid fa-arrow-right ml-0.5"></i>
+                  </button>
+                  <button onclick="toggleCompareCar(${car.id})" class="text-xs font-semibold px-2.5 py-1 rounded-lg ${isCompared ? 'bg-indigo-600 text-white' : 'bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300'} transition">
+                    <i class="fa-solid fa-code-compare mr-1"></i> ${isCompared ? 'Đang so sánh' : '+ So sánh'}
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        `).join("");
+          `;
+        }).join("");
       }
 
       function filterCars() {
         const search = document.getElementById("searchInput").value.toLowerCase().trim();
         const brand = document.getElementById("brandFilter").value;
+        const priceRange = document.getElementById("priceFilter").value;
+        const fuel = document.getElementById("fuelFilter").value;
         
         let filtered = allCars.filter(c => {
           const matchSearch = !search || c.name.toLowerCase().includes(search) || c.brand.toLowerCase().includes(search);
           const matchBrand = !brand || c.brand === brand;
-          return matchSearch && matchBrand;
+          const matchFuel = !fuel || (c.fuel && c.fuel.toLowerCase().includes(fuel.toLowerCase()));
+          
+          let matchPrice = true;
+          const price = Number(c.price);
+          if (priceRange === "under-3b") matchPrice = price < 3e9;
+          else if (priceRange === "3b-10b") matchPrice = price >= 3e9 && price <= 10e9;
+          else if (priceRange === "over-10b") matchPrice = price > 10e9;
+
+          return matchSearch && matchBrand && matchPrice && matchFuel;
         });
         renderCars(filtered);
+      }
+
+      function resetAllFilters() {
+        document.getElementById("searchInput").value = "";
+        document.getElementById("brandFilter").value = "";
+        document.getElementById("priceFilter").value = "";
+        document.getElementById("fuelFilter").value = "";
+        currentBrandFilter = "Tất cả";
+        renderBrandPills();
+        renderCars(allCars);
+      }
+
+      // Modal Handlers
+      function openModal(id) {
+        const el = document.getElementById(id);
+        if (el) {
+          el.style.display = "flex";
+          el.classList.remove("hidden");
+        }
+      }
+
+      function closeModal(id) {
+        const el = document.getElementById(id);
+        if (el) {
+          el.style.display = "none";
+          el.classList.add("hidden");
+        }
+      }
+
+      ["detailModal", "compareModal", "qrModal", "bookingModal"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener("click", (e) => {
+            if (e.target === el) closeModal(id);
+          });
+        }
+      });
+
+      function openDetailModal(id) {
+        const car = allCars.find(c => Number(c.id) === Number(id));
+        if (!car) return;
+        const isCompared = comparedCars.some(c => Number(c.id) === Number(id));
+
+        document.getElementById("modalContent").innerHTML = `
+          <div class="relative rounded-2xl overflow-hidden mb-5">
+            <img src="${getCarImage(car.image)}" class="w-full h-80 object-cover" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
+            <span class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">${escapeHtml(car.brand)}</span>
+          </div>
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-4">
+            <div>
+              <h2 class="text-2xl sm:text-3xl font-black font-heading text-slate-900 dark:text-white">${escapeHtml(car.name)}</h2>
+              <span class="text-xs text-gray-500 dark:text-gray-400">Mã SKU: 4TL-00${car.id} | Tình trạng: Sẵn giao ngay</span>
+            </div>
+            <div class="text-2xl sm:text-3xl font-black text-indigo-600 dark:text-indigo-500 font-heading">${formatCurrency(car.price)}</div>
+          </div>
+          <div class="grid grid-cols-3 gap-3 my-4">
+            <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
+              <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Động cơ</span>
+              <strong class="text-xs text-slate-900 dark:text-white">${escapeHtml(car.engine || "N/A")}</strong>
+            </div>
+            <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
+              <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Hộp số</span>
+              <strong class="text-xs text-slate-900 dark:text-white">${escapeHtml(car.transmission || "Tự động")}</strong>
+            </div>
+            <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
+              <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Nhiên liệu</span>
+              <strong class="text-xs text-slate-900 dark:text-white">${escapeHtml(car.fuel || "Xăng")}</strong>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <h4 class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Chi tiết trang bị & Mẫu xe</h4>
+            <p class="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed bg-gray-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-gray-200 dark:border-white/5 whitespace-pre-line">${escapeHtml(car.description || "Chưa có mô tả chi tiết.")}</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
+            <button onclick="closeModal('detailModal'); openQRModalById(${car.id})" class="bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3 rounded-2xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-qrcode"></i> Đặt Cọc Giữ Xe
+            </button>
+            <button onclick="closeModal('detailModal'); openBookingModalById(${car.id})" class="bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-slate-800 dark:text-gray-200 font-bold py-3 rounded-2xl text-xs transition border border-gray-300 dark:border-white/10 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-car-side"></i> Lái Thử Tận Nơi
+            </button>
+            <button onclick="toggleCompareCar(${car.id}); closeModal('detailModal');" class="bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 font-bold py-3 rounded-2xl text-xs transition border border-indigo-500/30 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-code-compare"></i> ${isCompared ? 'Hủy so sánh' : '+ Thêm so sánh'}
+            </button>
+          </div>
+        `;
+        openModal("detailModal");
+      }
+
+      function openQRModalById(id) {
+        const car = allCars.find(c => Number(c.id) === Number(id));
+        if (!car) return;
+        document.getElementById("qrCarName").innerText = `Đặt cọc ưu tiên mẫu: ${car.name}`;
+        document.getElementById("qrMemo").innerText = `COC ${car.id} ${car.name}`.substring(0, 30);
+        const qrImg = document.getElementById("qrImage");
+        qrImg.src = `https://img.vietqr.io/image/MB-0706850014-compact2.png?amount=500000000&addInfo=${encodeURIComponent('COC ' + car.name)}`;
+        openModal("qrModal");
+      }
+
+      async function confirmDepositSuccess() {
+        const name = document.getElementById("qrCustomerName").value.trim();
+        const phone = document.getElementById("qrCustomerPhone").value.trim();
+        const memo = document.getElementById("qrMemo").innerText;
+        if (!name || !phone) {
+          showToast("Vui lòng điền đầy đủ họ tên và số điện thoại!", "error");
+          return;
+        }
+        try {
+          await fetch("../php/save_order.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "deposit", name, phone, note: memo })
+          });
+        } catch(e) {}
+        showToast("Đã ghi nhận thông tin đặt cọc thành công! Nhân viên sẽ liên hệ lại ngay.", "success");
+        closeModal("qrModal");
+      }
+
+      function openBookingModalById(id) {
+        const car = allCars.find(c => Number(c.id) === Number(id));
+        const carName = car ? car.name : "Tất cả mẫu xe";
+        document.getElementById("modalBookingCar").value = carName;
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById("modalBookingDate").value = tomorrow.toISOString().split("T")[0];
+        openModal("bookingModal");
+      }
+
+      async function handleModalBooking(e) {
+        e.preventDefault();
+        const car = document.getElementById("modalBookingCar").value;
+        const name = document.getElementById("modalBookingName").value;
+        const phone = document.getElementById("modalBookingPhone").value;
+        const date = document.getElementById("modalBookingDate").value;
+        try {
+          await fetch("../php/save_order.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "booking", name, phone, car, date, note: "Đặt lái thử từ trang Bộ sưu tập" })
+          });
+        } catch(e) {}
+        showToast("Đăng ký lịch lái thử thành công cho quý khách: " + name, "success");
+        closeModal("bookingModal");
+      }
+
+      function toggleCompareCar(id) {
+        const targetId = Number(id);
+        const idx = comparedCars.findIndex(c => Number(c.id) === targetId);
+        if (idx > -1) {
+          comparedCars.splice(idx, 1);
+          showToast("Đã gỡ xe khỏi bảng so sánh.", "success");
+        } else {
+          if (comparedCars.length >= 3) {
+            showToast("Chỉ có thể so sánh tối đa 3 mẫu xe cùng lúc!", "error");
+            return;
+          }
+          const car = allCars.find(c => Number(c.id) === targetId);
+          if (car) {
+            comparedCars.push(car);
+            showToast(`Đã thêm ${car.name} vào bảng so sánh.`, "success");
+          }
+        }
+        document.getElementById("compareCount").innerText = comparedCars.length;
+        renderCars(allCars);
+      }
+
+      function openCompareModal() {
+        if (comparedCars.length === 0 && allCars.length >= 2) {
+          comparedCars = [allCars[0], allCars[1]];
+        }
+        document.getElementById("compareCount").innerText = comparedCars.length;
+        const container = document.getElementById("compareTableContainer");
+        if (!container) return;
+
+        container.innerHTML = `
+          <div class="mb-4 flex flex-wrap items-center justify-between gap-3 bg-gray-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-gray-200 dark:border-white/10 text-xs">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-bold text-slate-700 dark:text-gray-300">Thêm xe so sánh:</span>
+              <select onchange="handleAddCarToCompare(this.value)" class="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-gray-300 dark:border-white/10 text-slate-800 dark:text-white">
+                <option value="">-- Chọn thêm xe --</option>
+                ${allCars.filter(c => !comparedCars.some(cc => Number(cc.id) === Number(c.id))).map(c => `<option value="${c.id}">${escapeHtml(c.name)} (${formatBillion(c.price)})</option>`).join("")}
+              </select>
+            </div>
+            <button onclick="comparedCars=[]; closeModal('compareModal'); document.getElementById('compareCount').innerText='0'; renderCars(allCars);" class="text-indigo-600 dark:text-indigo-400 hover:underline font-bold">
+              <i class="fa-solid fa-trash mr-1"></i>Xóa hết so sánh
+            </button>
+          </div>
+          <table class="w-full table-fixed text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-gray-200 dark:border-white/10">
+                <th class="p-3 text-gray-500 w-36">Thông Số</th>
+                ${comparedCars.map(c => `
+                  <th class="p-3 text-slate-900 dark:text-white font-bold text-base min-w-[220px]">
+                    <div class="relative group mb-2">
+                      <img src="${getCarImage(c.image)}" class="w-full h-36 object-cover rounded-xl border border-gray-200 dark:border-white/10" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
+                      <button onclick="toggleCompareCar(${c.id}); openCompareModal();" title="Bỏ xe này" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs">✕</button>
+                    </div>
+                    <div class="leading-tight">${escapeHtml(c.name)}</div>
+                    <div class="text-indigo-600 dark:text-indigo-400 font-heading text-lg mt-1">${formatCurrency(c.price)}</div>
+                  </th>
+                `).join("")}
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 dark:divide-white/10 text-slate-700 dark:text-gray-300">
+              <tr>
+                <td class="p-3 font-bold text-gray-500">Hãng</td>
+                ${comparedCars.map(c => `<td class="p-3"><span class="px-2 py-0.5 rounded bg-indigo-600/10 text-indigo-300 font-bold">${escapeHtml(c.brand)}</span></td>`).join("")}
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-gray-500">Động Cơ</td>
+                ${comparedCars.map(c => `<td class="p-3">${escapeHtml(c.engine || "N/A")}</td>`).join("")}
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-gray-500">Hộp Số</td>
+                ${comparedCars.map(c => `<td class="p-3">${escapeHtml(c.transmission || "Tự động")}</td>`).join("")}
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-gray-500">Nhiên Liệu</td>
+                ${comparedCars.map(c => `<td class="p-3 font-semibold text-slate-900 dark:text-white">${escapeHtml(c.fuel || "Xăng")}</td>`).join("")}
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-gray-500">Mô Tả</td>
+                ${comparedCars.map(c => `<td class="p-3 leading-relaxed text-[11px] text-gray-500 dark:text-gray-400 break-words">${escapeHtml(c.description || "N/A")}</td>`).join("")}
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-gray-500">Thao Tác</td>
+                ${comparedCars.map(c => `
+                  <td class="p-3 space-y-1.5">
+                    <button onclick="closeModal('compareModal'); openBookingModalById(${c.id})" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-2 rounded-xl text-xs transition">Lái Thử</button>
+                    <button onclick="closeModal('compareModal'); openDetailModal(${c.id})" class="w-full bg-gray-100 dark:bg-slate-800 text-slate-800 dark:text-gray-200 font-bold py-2 rounded-xl text-xs transition">Xem Chi Tiết</button>
+                  </td>
+                `).join("")}
+              </tr>
+            </tbody>
+          </table>
+        `;
+        openModal("compareModal");
+      }
+
+      function handleAddCarToCompare(carId) {
+        if (!carId) return;
+        toggleCompareCar(carId);
+        openCompareModal();
       }
 
       document.getElementById("searchInput").addEventListener("input", filterCars);
