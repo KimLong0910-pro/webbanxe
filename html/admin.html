@@ -354,7 +354,7 @@
 
       async function loadAdminCars() {
         try {
-          const res = await fetch("../php/get_cars.php");
+          const res = await fetch("../php/get_cars.php?t=" + Date.now(), { cache: "no-store" });
           adminCars = await res.json();
           updateStats();
           renderAdminTable(adminCars);
@@ -546,60 +546,20 @@
         }
       };
 
-      // Định nghĩa hàm hiển thị thông báo Toast chuẩn
-      function showToast(message, type = 'success') {
-          const container = document.getElementById('toastContainer');
-          if (!container) {
-              alert(message); // Fallback nếu quên tạo container
-              return;
-          }
-
-          const toast = document.createElement('div');
-          toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl text-xs font-bold transition-all duration-300 transform translate-y-[-20px] opacity-0 border backdrop-blur-xl ${
-              type === 'success' 
-                  ? 'bg-emerald-950/90 border-emerald-500/40 text-emerald-300' 
-                  : 'bg-rose-950/90 border-rose-500/40 text-rose-300'
-          }`;
-
-          toast.innerHTML = `
-              <i class="fa-solid ${type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-triangle-exclamation text-rose-400'} text-base"></i>
-              <span>${message}</span>
-          `;
-
-          container.appendChild(toast);
-
-          setTimeout(() => {
-              toast.classList.remove('translate-y-[-20px]', 'opacity-0');
-          }, 10);
-
-          setTimeout(() => {
-              toast.classList.add('translate-y-[-20px]', 'opacity-0');
-              setTimeout(() => toast.remove(), 300);
-          }, 3000);
-      }
-
-      // Hàm xóa xe kết hợp gọi thông báo Toast chuẩn
+      // Hàm xóa xe
       async function deleteCar(id) {
         try {
           const res = await fetch("../php/delete_car.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: id })
+            body: JSON.stringify({ id: Number(id) })
           });
           
           const data = await res.json();
 
           if (data.status === "success") {
             showToast("Đã xóa mẫu xe thành công!", "success");
-            
-            // Tải lại bảng danh sách xe
-            if (typeof loadCars === "function") {
-              loadCars();
-            } else if (typeof fetchCars === "function") {
-              fetchCars();
-            } else {
-              location.reload();
-            }
+            await loadAdminCars();
           } else {
             showToast(data.message || "Không thể xóa mẫu xe này!", "error");
           }
@@ -613,7 +573,10 @@
 
       function openEditModal(id) {
         const car = adminCars.find((c) => Number(c.id) === Number(id));
-        if (!car) return;
+        if (!car) {
+          showToast("Không tìm thấy dữ liệu xe!", "error");
+          return;
+        }
 
         document.getElementById("editCarIdLabel").innerText = car.id;
         document.getElementById("edit_id").value = car.id;
@@ -625,9 +588,6 @@
         document.getElementById("edit_transmission").value = car.transmission || "";
         document.getElementById("edit_image").value = car.image || "";
         document.getElementById("edit_description").value = car.description || "";
-
-        document.getElementById("edit_description").value = car.description || "";
-        // Thêm dòng này để cập nhật bộ đếm khi mở modal sửa
         document.getElementById("editCharCount").innerText = (car.description ? car.description.length : 0) + " / 500 ký tự";
 
         const modal = document.getElementById("editCarModal");
@@ -641,36 +601,47 @@
         modal.style.display = "none";
       }
 
-      document.getElementById("editCarForm").onsubmit = async function (e) {
-        e.preventDefault();
-        try {
-          const res = await fetch("../php/edit_car.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              id: document.getElementById("edit_id").value,
-              name: document.getElementById("edit_name").value,
-              brand: document.getElementById("edit_brand").value,
-              price: document.getElementById("edit_price").value,
-              fuel: document.getElementById("edit_fuel").value,
-              engine: document.getElementById("edit_engine").value,
-              transmission: document.getElementById("edit_transmission").value,
-              image: document.getElementById("edit_image").value,
-              description: document.getElementById("edit_description").value,
-            }),
-          });
-          const data = await res.json();
-          if (data.status === "success") {
-            alert("✅ Đã cập nhật thông tin xe thành công!");
-            closeEditModal();
-            loadAdminCars();
-          } else {
-            alert("❌ " + (data.message || "Cập nhật thất bại!"));
+      // Đảm bảo trang tải xong mới gắn sự kiện cho #editCarForm
+      document.addEventListener("DOMContentLoaded", function () {
+        const editForm = document.getElementById("editCarForm");
+        if (!editForm) return;
+
+        editForm.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const payload = {
+            id: Number(document.getElementById("edit_id").value),
+            name: document.getElementById("edit_name").value.trim(),
+            brand: document.getElementById("edit_brand").value.trim(),
+            price: Number(document.getElementById("edit_price").value),
+            fuel: document.getElementById("edit_fuel").value.trim(),
+            engine: document.getElementById("edit_engine").value.trim(),
+            transmission: document.getElementById("edit_transmission").value.trim(),
+            image: document.getElementById("edit_image").value.trim(),
+            description: document.getElementById("edit_description").value.trim(),
+          };
+
+          try {
+            const res = await fetch("../php/edit_car.php", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            const data = await res.json();
+
+            if (data.status === "success") {
+              showToast("Đã cập nhật thông tin xe thành công!", "success");
+              closeEditModal();
+              await loadAdminCars();
+            } else {
+              showToast(data.message || "Cập nhật thất bại!", "error");
+            }
+          } catch (err) {
+            showToast("Lỗi kết nối máy chủ: " + err.message, "error");
           }
-        } catch (err) {
-          alert("Lỗi kết nối máy chủ: " + err);
-        }
-      };
+        });
+      });
+      
     </script>
 
     <!-- MODAL CHỈNH SỬA THÔNG TIN XE TRỰC TIẾP -->

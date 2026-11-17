@@ -38,10 +38,16 @@ if (!$pdo) {
 }
 
 try {
+    $check = $pdo->prepare("SELECT id FROM cars WHERE id = ?");
+    $check->execute([$id]);
+    if (!$check->fetch()) {
+        echo json_encode(["status" => "error", "message" => "Không tìm thấy xe có ID #{$id} trong cơ sở dữ liệu!"], JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+    
     $stmt = $pdo->prepare("UPDATE cars SET name=?, brand=?, price=?, image=?, engine=?, transmission=?, fuel=?, description=? WHERE id=?");
     $stmt->execute([$name, $brand, $price, $image, $engine, $transmission, $fuel, $description, $id]);
     echo json_encode(["status" => "success", "message" => "Cập nhật thông tin xe thành công!"], JSON_UNESCAPED_UNICODE);
 } catch (Exception $e) {
     echo json_encode(["status" => "error", "message" => "Lỗi CSDL: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
 }
-?>

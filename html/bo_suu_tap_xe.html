@@ -456,7 +456,7 @@
 
       async function fetchCars() {
         try {
-          const res = await fetch("../php/get_cars.php");
+          const res = await fetch("../php/get_cars.php?t=" + Date.now(), { cache: "no-store" });
           const data = await res.json();
           allCars = Array.isArray(data) ? data : [];
         } catch (e) {
