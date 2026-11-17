@@ -17,7 +17,6 @@ webbanxe/
 │   └── train_bot.html                   # Trang quản lý dữ liệu huấn luyện chatbot
 ├── images/
 │   └── qrcode.jpg                       # Mã QR đặt cọc
-├── images.zip                           # Tệp nén hình ảnh
 ├── index.html                           # Trang chủ showroom
 ├── js/
 │   └── theme.js                         # Cấu hình giao diện và tiện ích dùng chung
