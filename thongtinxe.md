@@ -2,7 +2,7 @@
 tên xe: Ferrari F8 Tributo
 hãng xe: Ferrari
 giá: 19000000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE3sDpn33xn9qTk5wTWc6EFHdkMEssFXSa6l-0td5o2w&s=10'
 động cơ: Xăng V8 3.9L Twin-Turbo (720 HP / 770 Nm)
 hộp số: Ly hợp kép 7 cấp F1
 nhiên liệu: Xăng
@@ -14,7 +14,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw0GaWZqHRGG_hseloDpgEOje7
 tên xe: Lamborghini Urus S
 hãng xe: Lamborghini
 giá: 16500000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHS2yGPTepN8pLd6xYDDwMDfzd7nNgw0Wb_yTGlGCm0A&s=10'
 động cơ: Xăng V8 4.0L Twin-Turbo (666 HP / 850 Nm)
 hộp số: Tự động 8 cấp
 nhiên liệu: Xăng
@@ -26,7 +26,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ098BS6eDBP3owhuf17ApxAaDb
 tên xe: Lexus RX350 Luxury
 hãng xe: Lexus
 giá: 4330000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOKn1MNoCINsLRyMryNK-gqu0xXC7E4vegTJpqDpxwKg&s'
 động cơ: Xăng 2.4L Turbo I4 (275 HP / 430 Nm)
 hộp số: Tự động 8 cấp
 nhiên liệu: Xăng
@@ -38,7 +38,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOMkj7dV-dZSUjqzqpyhMVxWrl
 tên xe: Audi Q7 45 TFSI quattro
 hãng xe: Audi
 giá: 3700000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsMi5fmiZg1cQubrLMpSpHHiwFbiC2puLtGW-dhi1Evw&s=10'
 động cơ: Xăng 2.0L TFSI Mild-Hybrid MHEV (252 HP / 370 Nm)
 hộp số: Tự động 8 cấp Tiptronic
 nhiên liệu: Xăng
@@ -50,29 +50,31 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXio_hwx7mM0zgI01Sdx4o-ZLy
 tên xe: Kia Carnival 2.2D Signature
 hãng xe: Kia
 giá: 1759000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDrQOfx7kICr3cyGjHqTHm_SMnzFbZOde_TVN6qS1FXw&s=10'
 động cơ: Diesel Smartstream 2.2L (199 HP / 440 Nm)
 hộp số: Tự động 8 cấp
 nhiên liệu: Dầu (Diesel)
 Giới thiệu tổng quan & Trang bị nổi bật: Xe gia đình hạng sang (MPV) cỡ lớn rộng rãi, trang bị đầy đủ như khoang hạng thương gia. Hàng ghế thứ hai chỉnh điện thư giãn tích hợp sưởi/làm mát, cửa sổ trời đôi độc lập, rèm che nắng và hệ thống âm thanh 12 loa Bose.
 https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5v0u6MMN_-u8H5QgBA6eq9gRrBtD3urv_V9zGDT_5ig&s=10
 https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKUw3TRHK3bFJ7Hv5brQb8FBAB1NJEcZdPSkYD5-8ysg&s=10
+
 6.
 tên xe: Mazda CX-5 2.0 Premium
 hãng xe: Mazda
 giá: 829000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpW39XsAvfNmzgS3h7r2TjxeeJTUhyLpVsnzGlKpS-mQ&s=10'
 động cơ: Xăng SkyActiv-G 2.0L (154 HP / 200 Nm)
 hộp số: Tự động 6 cấp
 nhiên liệu: Xăng
 Giới thiệu tổng quan & Trang bị nổi bật: Mẫu Crossover bán chạy hàng đầu phân khúc nhờ ngôn ngữ thiết kế KODO tinh tế. Trang bị màn hình hiển thị kính lái HUD, gương chiếu hậu chống chói tự động, cốp điện rảnh tay, 10 loa Bose cao cấp và gói an toàn chủ động i-Activsense.
 https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTInC9__STOHLHNime6eFjQhx4SSUEX5S8lyJn71cJTqQ&s=10
 https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIF5WKKGY123T08e8kSO_mXGGGMgDtg41luLhyq88TKw&s=10
+
 7.
 tên xe: Honda CR-V e:HEV RS
 hãng xe: Honda
 giá: 1259000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1568844293986-8d0400bd4745?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgYwkQ2_Bnn715DhM8OfuYNpzg5ozBqKoyC2evRYhhUw&s=10'
 động cơ: Xăng 2.0L kết hợp 2 mô-tơ điện (Tổng công suất 204 HP / 335 Nm)
 hộp số: Tự động vô cấp E-CVT
 nhiên liệu: Xăng Hybrid
@@ -83,18 +85,19 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8Vqeig2JBKNtNlJ5UGdtK69cm
 tên xe: Hyundai Accent 1.5 AT
 hãng xe: Hyundai
 giá: 489000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqxAlh0ojNuYt82BpLC-BRYGclFmTXJd-gJrp2lEF6WQ&s=10'
 động cơ: Xăng Smartstream G1.5 (115 HP / 144 Nm)
 hộp số: Tự động vô cấp thông minh iVT
 nhiên liệu: Xăng
 Giới thiệu tổng quan & Trang bị nổi bật: Sedan hạng B phổ thông, tiện nghi phong phú vượt tầm giá. Thiết kế phong cách Fastback thể thao trẻ trung, màn hình giải trí 8 inch tích hợp Apple CarPlay/Android Auto không dây, sạc điện thoại không dây và tính năng mở cốp thông minh.
 https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSahuOZxstBhmyAYM9STEFGftWiVL3FaEJV6jgiXXgjVQ&s=10
 https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1NEb-vWA47bMBzZmMi3bTdDEKeRmafgiCvZAUuKuHlA&s=10
+
 9.
 tên xe: Hyundai Tucson 2.0 Diesel
 hãng xe: Hyundai
 giá: 959000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1633695469580-33c23f609033?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStMbKbjpRugZbAa8Jxhz2GPdFPKMMrw8fJwjRdQ-TBZQ&s=10'
 động cơ: Diesel Smartstream D2.0 (186 HP / 416 Nm)
 hộp số: Tự động 8 cấp
 nhiên liệu: Dầu (Diesel)
@@ -106,7 +109,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-AHImYzA1sSv1yPO9EeJObAW1
 tên xe: Ford Everest Titanium+ 4x4
 hãng xe: Ford
 giá: 1468000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiZtZyv9cLXgHdi-7v-PjeTIL5tGeeU3tpnMYplS6XDw&s=10'
 động cơ: Bi-Turbo Diesel 2.0L i4 (210 HP / 500 Nm)
 hộp số: Tự động 10 cấp điện tử
 nhiên liệu: Dầu (Diesel)
@@ -118,7 +121,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfRprvZIOazCuK7ZgS3R8vKBIH
 tên xe: Ford Ranger Raptor 3.0 V6
 hãng xe: Ford
 giá: 1299000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkAP8_0fM7-es-s0TkuWfES4ERnhn3kRzgpiERtCEFyw&s=10'
 động cơ: Xăng EcoBoost 3.0L V6 Twin-Turbo (397 HP / 583 Nm)
 hộp số: Tự động 10 cấp điện tử
 nhiên liệu: Xăng
@@ -130,7 +133,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQH0fOuAoH-XV1q7BGhIXSq8KX
 tên xe: Toyota Corolla Cross 1.8HEV
 hãng xe: Toyota
 giá: 905000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1623869675781-80aa31012a5a?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpA_ZtVNe8sOc_-tGXiFue--SWAvHYn4hqdXnj1v5NYg&s=10'
 động cơ: Xăng 1.8L kết hợp mô-tơ điện Hybrid (Tổng công suất 122 HP)
 hộp số: Tự động vô cấp E-CVT
 nhiên liệu: Xăng Hybrid
@@ -142,7 +145,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaemDP4gzPH3lDaNIymrWag_h6
 tên xe: Toyota Camry 2.5Q
 hãng xe: Toyota
 giá: 1405000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYl1j8avzp_a52uX2szBu_X2g82yHbEtkqDDN0XtKJ6A&s=10'
 động cơ: Xăng Dynamic Force 2.5L (207 HP / 250 Nm)
 hộp số: Tự động 8 cấp
 nhiên liệu: Xăng
@@ -154,7 +157,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkDKY-KgdZor0p_2ggyNXFiRd7
 tên xe: VinFast VF5 Plus
 hãng xe: VinFast
 giá: 468000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd-uWGNUo1taSToXpQaIDCJxCi0OOXvd5SN34Va8zCgQ&s=10'
 động cơ: Động cơ điện đơn (Công suất 134 HP / Mô-men xoắn 135 Nm)
 hộp số: Tự động 1 cấp
 nhiên liệu: Điện
@@ -166,7 +169,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEnAbDWJMk7kjzcYqCfHxsNLGs
 tên xe: VinFast VF8 Plus
 hãng xe: VinFast
 giá: 1270000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMgh5eFb69xZCQCeJXpE2n1sx0fIj0gMZRsLUCkF7F2Q&s=10'
 động cơ: 2 mô-tơ điện AWD toàn thời gian (402 HP / 620 Nm)
 hộp số: Tự động 1 cấp
 nhiên liệu: Điện
@@ -178,7 +181,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNnZ23dQtN4guhpS1WTpIHS2Az
 tên xe: BMW 740i Pure Excellence
 hãng xe: BMW
 giá: 4699000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHMNStnEqOgN-AtfJc4ZxIl-FSqSxWD-_KPP9Zjk-BkA&s=10'
 động cơ: Xăng 3.0L I6 TwinPower Turbo Mild-Hybrid (381 HP / 540 Nm)
 hộp số: Tự động 8 cấp Steptronic Sport
 nhiên liệu: Xăng Mild-Hybrid
@@ -189,7 +192,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTpu21ap_2ACAfDEwwDAA0bGGi
 tên xe: Mercedes-AMG G63
 hãng xe: Mercedes-Benz
 giá: 11750000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1520031441872-265e4ff70366?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9k-mmUkZkHwMhAB8bjPOA9mFIiMkV_1C-dBgyFThkTA&s=10'
 động cơ: Xăng V8 4.0L Biturbo AMG (585 HP / 850 Nm)
 hộp số: Tự động thể thao 9 cấp AMG SPEEDSHIFT TCT 9G
 nhiên liệu: Xăng
@@ -201,7 +204,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKEtZnRwUw07P1WR5UkpeZNNF4
 tên xe: Porsche 911 Carrera S
 hãng xe: Porsche
 giá: 8500000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUGbNCOFMrr8i-ELaF9sQVPpIjPWMSJB44Ql_bo2667w&s=10'
 động cơ: Xăng Boxer 6 xi-lanh 3.0L Twin-Turbo (450 HP / 530 Nm)
 hộp số: Ly hợp kép 8 cấp PDK danh tiếng của Porsche
 nhiên liệu: Xăng
@@ -213,7 +216,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpMtyFyXiOJ0kzPQgcy_26PGob
 tên xe: Mercedes-Benz C-Class C300 AMG
 hãng xe: Mercedes-Benz
 giá: 2099000000
-ảnh (URL/.jpg,...): 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nJj5R87z1dpwUCcHbj1KwNTJtJBM4sYDjrEIgxRtRA&s=10'
 động cơ: Xăng 2.0L Turbo kết hợp công nghệ EQ Boost Mild-Hybrid (258 HP / 400 Nm)
 hộp số: Tự động 9 cấp 9G-TRONIC
 nhiên liệu: Xăng Mild-Hybrid
@@ -225,7 +228,7 @@ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR98khAhzlP1bBIDo7mN_uNiVMy
 tên xe: VinFast VF3
 hãng xe: VinFast
 giá: 240000000
-ảnh (URL/.jpg,...): 'https://vinfastquan12.com.vn/wp-content/uploads/2025/02/VinFast_VF3_Mau_trang.webp'
+ảnh (URL/.jpg,...): 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFJCmiv3bB_2DDesc8SnYvKr_hq-1IiNwk2YCGZKyqZA&s=10'
 động cơ: Động cơ điện đơn (Công suất 43 HP / Mô-men xoắn 110 Nm)
 hộp số: Tự động 1 cấp
 nhiên liệu: Điện
