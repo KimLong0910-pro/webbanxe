@@ -167,127 +167,156 @@ webbanxe/
     </header>
 
     <!-- HERO SECTION (CHIA 2 CỘT CÂN ĐỐI: TRÁI GIỚI THIỆU - PHẢI THÔNG SỐ & CTA) -->
-    <section
-      class="relative min-h-[540px] flex items-center hero-gradient-mesh overflow-hidden border-b border-gray-200 dark:border-white/10 py-14 lg:py-20">
+    <!-- HERO SECTION (BỐ CỤC 2 CỘT CHUẨN UX/UI) -->
+    <section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
+      <!-- Hiệu ứng ánh sáng nền (Ambient Glow) -->
       <div
-        class="relative w-full max-w-sm rounded-3xl overflow-hidden glass-card p-3 shadow-2xl border border-white/10 group">
-        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-900">
-          <img
-            src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800"
-            alt="Porsche 911 Carrera S"
-            class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-          <span
-            class="absolute top-3 left-3 bg-indigo-600/90 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-md">
-            <i class="fa-solid fa-bolt mr-1"></i>
-            SPOTLIGHT MỚI VỀ
-          </span>
-        </div>
-        <div class="p-3 space-y-1">
-          <span class="text-[10px] font-semibold text-gray-400 uppercase">Porsche Series</span>
-          <h4 class="text-base font-black text-white font-heading">Porsche 911 Carrera S</h4>
-          <div class="flex justify-between items-center pt-1">
-            <span class="text-[11px] text-gray-400">0-100km/h: 3.7s | 450 HP</span>
-            <strong class="text-indigo-400 font-heading text-sm">8,5 Tỷ VNĐ</strong>
-          </div>
-        </div>
-      </div>
-      <!-- Ambient Blur Glows -->
+        class="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-indigo-600/20 blur-[120px]"></div>
       <div
-        class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-600/10 dark:bg-indigo-600/15 rounded-full blur-3xl pointer-events-none"></div>
-      <div
-        class="absolute -bottom-40 -right-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        class="pointer-events-none absolute top-1/3 right-0 h-80 w-80 rounded-full bg-purple-600/15 blur-[120px]"></div>
 
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          <!-- Left Hero Content (7 cột) -->
-          <div class="lg:col-span-7 space-y-6 text-left">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-10">
+          <!-- CỘT TRÁI (7/12): TIÊU ĐỀ, CTA & CHỈ SỐ CAM KẾT -->
+          <div class="lg:col-span-7">
+            <!-- Badge nhỏ phía trên -->
             <div
-              class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider">
-              <i class="fa-solid fa-bolt text-indigo-600 dark:text-indigo-500"></i>
-              <span>Showroom Siêu Xe & Xe Sang Uy Tín Hàng Đầu</span>
+              class="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 backdrop-blur-md">
+              <span class="text-xs font-semibold tracking-wider text-indigo-400 uppercase">
+                ⚡ SHOWROOM SIÊU XE &amp; XE SANG UY TÍN HÀNG ĐẦU
+              </span>
             </div>
 
+            <!-- Tiêu đề chính (Đã tối ưu kích thước chữ để không bị rớt dòng lẻ) -->
             <h1
-              class="text-4xl sm:text-5xl lg:text-6xl font-black font-heading text-slate-900 dark:text-white leading-tight">
-              ĐỊNH CHUẨN ĐẲNG CẤP
-              <br />
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-violet-500">
-                SIÊU XE & XE SANG 2026
+              class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl xl:text-[54px] xl:leading-[1.15]">
+              ĐẲNG CẤP
+              <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
+                THƯỢNG LƯU
               </span>
+              <br class="hidden sm:inline" />
+              BỨT PHÁ MỌI GIỚI HẠN
             </h1>
 
-            <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base max-w-2xl leading-relaxed">
-              Trải nghiệm không gian trưng bày trực tuyến với đầy đủ các mẫu siêu xe thể thao, SUV hạng sang và xe thuần
-              điện mới nhất sẵn sàng bàn giao tận nhà trên toàn quốc.
+            <!-- Mô tả ngắn -->
+            <p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
+              Khám phá bộ sưu tập hơn
+              <strong class="font-semibold text-slate-900 dark:text-white">
+                50+ siêu xe thể thao, SUV cao cấp &amp; xe điện thế hệ mới
+              </strong>
+              sẵn sàng bàn giao trong 24h. Cam kết kiểm định 160 bước nghiêm ngặt, hỗ trợ trả góp đến 80%.
             </p>
 
-            <div class="flex flex-wrap items-center gap-4 pt-2">
+            <!-- Cụm 3 nút hành động (CTA) -->
+            <div class="mt-8 flex flex-wrap items-center gap-4">
+              <!-- Nút chính -->
               <a
                 href="html/bo_suu_tap_xe.html"
-                class="inline-flex items-center gap-2.5 bg-indigo-600 hover:bg-violet-700 text-white font-bold px-7 py-4 rounded-2xl text-sm shadow-xl shadow-indigo-600/30 transition transform hover:-translate-y-0.5">
-                <i class="fa-solid fa-car-side"></i>
-                Khám Phá Bộ Sưu Tập Xe
+                class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 transition-all duration-300 hover:scale-[1.02] hover:from-indigo-500 hover:to-purple-500">
+                <span>Khám Phá Bộ Sưu Tập</span>
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
               </a>
+
+              <!-- Nút phụ (Dự toán trả góp) -->
               <a
                 href="#loan-calculator"
-                class="inline-flex items-center gap-2 bg-white dark:bg-slate-900 hover:bg-gray-100 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-bold px-6 py-4 rounded-2xl text-sm border border-gray-200 dark:border-white/10 transition shadow-sm">
-                <i class="fa-solid fa-calculator text-indigo-500"></i>
-                Dự Toán Trả Góp
+                class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/70 px-6 py-3.5 text-sm font-semibold text-slate-800 backdrop-blur-md transition-all duration-300 hover:bg-slate-100 dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:bg-white/10">
+                <svg class="h-4 w-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                <span>Dự Toán Trả Góp</span>
               </a>
+
+              <!-- Link phụ (Đăng ký lái thử) -->
+              <button
+                onclick="openBookingModal('Tất cả mẫu xe')"
+                class="inline-flex items-center gap-1.5 px-2 py-2 text-sm font-medium text-slate-500 underline-offset-4 transition-colors hover:text-indigo-500 hover:underline dark:text-slate-400 dark:hover:text-indigo-300">
+                <span>Đăng ký lái thử tận nhà &rarr;</span>
+              </button>
+            </div>
+
+            <!-- Đường kẻ phân cách mờ -->
+            <div
+              class="my-9 h-px w-full bg-gradient-to-r from-slate-200 via-slate-300 to-transparent dark:from-white/15 dark:via-white/10 dark:to-transparent"></div>
+
+            <!-- Hàng 4 chỉ số cam kết phía dưới -->
+            <div class="grid grid-cols-2 gap-6 sm:grid-cols-4">
+              <div>
+                <div class="text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">50+</div>
+                <div class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Siêu xe có sẵn</div>
+              </div>
+              <div>
+                <div
+                  class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-2xl font-extrabold text-transparent sm:text-3xl">
+                  100%
+                </div>
+                <div class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Kiểm định chính hãng</div>
+              </div>
+              <div>
+                <div class="text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">80%</div>
+                <div class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Hỗ trợ vay trả góp</div>
+              </div>
+              <div>
+                <div
+                  class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-2xl font-extrabold text-transparent sm:text-3xl">
+                  24/7
+                </div>
+                <div class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Cứu hộ &amp; Giao xe VIP</div>
+              </div>
             </div>
           </div>
 
-          <!-- Right Hero Card (5 cột) -->
+          <!-- CỘT PHẢI (5/12): CARD XE SPOTLIGHT NỔI BẬT -->
           <div class="lg:col-span-5">
-            <div
-              class="glass-panel p-6 sm:p-8 rounded-3xl border border-gray-200/80 dark:border-white/10 shadow-2xl space-y-6 bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl">
-              <div class="flex items-center justify-between border-b border-gray-200 dark:border-white/10 pb-4">
-                <div>
-                  <span class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">
-                    HỆ THỐNG PHÂN PHỐI 4TL
-                  </span>
-                  <h3 class="text-xl font-black font-heading text-slate-900 dark:text-white mt-0.5">
-                    CAM KẾT CHẤT LƯỢNG VÀNG
-                  </h3>
-                </div>
+            <a
+              href="html/detail.html?id=3"
+              class="group relative block overflow-hidden rounded-3xl border border-slate-200/80 bg-slate-900 shadow-2xl shadow-indigo-950/40 transition-all duration-500 hover:-translate-y-1.5 hover:border-indigo-500/50 dark:border-white/15">
+              <!-- Ảnh xe tỷ lệ vuông/4:3 lớn -->
+              <div class="relative aspect-[4/3] w-full overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800"
+                  alt="Porsche 911 Carrera S"
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+
+                <!-- Lớp phủ gradient tối dần ở đáy để làm nổi chữ -->
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-transparent"></div>
+
+                <!-- Nhãn góc trên trái -->
                 <div
-                  class="w-12 h-12 rounded-2xl bg-indigo-600/15 text-indigo-500 flex items-center justify-center text-xl">
-                  <i class="fa-solid fa-award"></i>
+                  class="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-indigo-600/90 px-3.5 py-1 text-[11px] font-bold tracking-wider text-white uppercase shadow-md backdrop-blur-md">
+                  <span>★ SPOTLIGHT MỚI VỀ</span>
                 </div>
               </div>
 
-              <div class="grid grid-cols-2 gap-4">
-                <div
-                  class="p-4 rounded-2xl bg-gray-50 dark:bg-slate-950/70 border border-gray-200/60 dark:border-white/5">
-                  <div class="text-2xl sm:text-3xl font-black font-heading text-indigo-600 dark:text-indigo-400">
-                    20+
+              <!-- Khung thông tin Glassmorphism ở đáy card -->
+              <div
+                class="relative -mt-20 mx-3 mb-3 rounded-2xl border border-white/15 bg-slate-950/75 p-5 backdrop-blur-xl">
+                <div class="flex items-end justify-between gap-4">
+                  <div>
+                    <p class="text-[11px] font-bold tracking-widest text-indigo-400 uppercase">PORSCHE SERIES</p>
+                    <h2 class="mt-0.5 text-xl font-bold text-white sm:text-2xl">Porsche 911 Carrera S</h2>
+                    <p class="mt-1.5 text-xs text-slate-300">
+                      0-100 km/h: 3.7s
+                      <span class="mx-1 text-slate-500">|</span>
+                      450 HP
+                      <span class="mx-1 text-slate-500">|</span>
+                      Hộp số PDK 8 cấp
+                    </p>
                   </div>
-                  <div class="text-xs text-gray-600 dark:text-gray-400 mt-1 font-medium">Mẫu Siêu Xe Sẵn Kho</div>
-                </div>
-                <div
-                  class="p-4 rounded-2xl bg-gray-50 dark:bg-slate-950/70 border border-gray-200/60 dark:border-white/5">
-                  <div class="text-2xl sm:text-3xl font-black font-heading text-emerald-500">160</div>
-                  <div class="text-xs text-gray-600 dark:text-gray-400 mt-1 font-medium">Điểm Kiểm Định Hãng</div>
-                </div>
-                <div
-                  class="p-4 rounded-2xl bg-gray-50 dark:bg-slate-950/70 border border-gray-200/60 dark:border-white/5">
-                  <div class="text-2xl sm:text-3xl font-black font-heading text-amber-500">85%</div>
-                  <div class="text-xs text-gray-600 dark:text-gray-400 mt-1 font-medium">Hỗ Trợ Vay Ngân Hàng</div>
-                </div>
-                <div
-                  class="p-4 rounded-2xl bg-gray-50 dark:bg-slate-950/70 border border-gray-200/60 dark:border-white/5">
-                  <div class="text-2xl sm:text-3xl font-black font-heading text-violet-500">24/7</div>
-                  <div class="text-xs text-gray-600 dark:text-gray-400 mt-1 font-medium">Giao Xe & Cứu Hộ VIP</div>
+
+                  <div class="text-right shrink-0">
+                    <span class="block text-[11px] text-slate-400">Giá niêm yết</span>
+                    <span class="text-lg font-extrabold text-indigo-400 sm:text-xl">8,5 Tỷ VNĐ</span>
+                  </div>
                 </div>
               </div>
-
-              <button
-                onclick="openBookingModal('Tư vấn & Lái thử tại Showroom')"
-                class="w-full py-3.5 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:opacity-90 font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shadow-lg">
-                <i class="fa-solid fa-calendar-check"></i>
-                Đặt Lịch Xem Xe & Lái Thử Ngay
-              </button>
-            </div>
+            </a>
           </div>
         </div>
       </div>
