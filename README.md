@@ -150,6 +150,22 @@
   <!-- HERO SECTION (CHIA 2 CỘT CÂN ĐỐI: TRÁI GIỚI THIỆU - PHẢI THÔNG SỐ & CTA) -->
   <section
     class="relative min-h-[540px] flex items-center hero-gradient-mesh overflow-hidden border-b border-gray-200 dark:border-white/10 py-14 lg:py-20">
+    <div class="relative w-full max-w-sm rounded-3xl overflow-hidden glass-card p-3 shadow-2xl border border-white/10 group">
+      <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-900">
+        <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800" alt="Porsche 911 Carrera S" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        <span class="absolute top-3 left-3 bg-indigo-600/90 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-md">
+          <i class="fa-solid fa-bolt mr-1"></i> SPOTLIGHT MỚI VỀ
+        </span>
+      </div>
+      <div class="p-3 space-y-1">
+        <span class="text-[10px] font-semibold text-gray-400 uppercase">Porsche Series</span>
+        <h4 class="text-base font-black text-white font-heading">Porsche 911 Carrera S</h4>
+        <div class="flex justify-between items-center pt-1">
+          <span class="text-[11px] text-gray-400">0-100km/h: 3.5s | 450 HP</span>
+          <strong class="text-indigo-400 font-heading text-sm">8,5 Tỷ VNĐ</strong>
+        </div>
+      </div>
+    </div>
     <!-- Ambient Blur Glows -->
     <div
       class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-600/10 dark:bg-indigo-600/15 rounded-full blur-3xl pointer-events-none">
@@ -1955,7 +1971,6 @@
     <div id="toastContainer" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none"></div>
 
     <div class="max-w-6xl mx-auto space-y-6">
-    class="hidden bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-gray-100 min-h-screen p-4 sm:p-8 font-sans transition-colors duration-300">
     <div class="max-w-6xl mx-auto space-y-6">
       <!-- Top Admin Header -->
       <header
@@ -5274,6 +5289,85 @@ try {
       </div>
     </div>
 
+    <!-- LUXURY FLOATING AI CHATBOT WIDGET -->
+    <div class="fixed bottom-6 right-6 z-50">
+      <!-- Chat Bubble Button -->
+      <button id="chatBubbleBtn" onclick="toggleChat()" type="button" aria-label="Mở Trợ lý AI 4TL"
+        class="relative pulse-ring w-14 h-14 bg-gradient-to-tr from-indigo-600 to-indigo-500 text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition duration-300 group cursor-pointer">
+        <i id="chatBubbleIcon" class="fa-solid fa-headset text-2xl group-hover:rotate-12 transition"></i>
+        <span class="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full shadow-sm"></span>
+      </button>
+
+      <!-- Chat Window -->
+      <div id="chatWindow"
+        class="hidden absolute bottom-20 right-0 w-[calc(100vw-3rem)] sm:w-96 max-h-[calc(100vh-120px)] bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-gray-200 dark:border-white/15 rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[520px] transition-all origin-bottom-right"
+        style="display: none">
+        <!-- Chat Header -->
+        <div class="bg-gradient-to-r from-violet-700 to-indigo-600 p-4 text-white flex justify-between items-center shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-white shadow-inner">
+              <i class="fa-solid fa-robot"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold leading-tight">4TL AI Assistant</h4>
+              <span class="text-[10px] text-indigo-200 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                Trực tuyến 24/7
+              </span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <a href="bot_train.html" target="_blank" title="Mở trang tư vấn AI toàn màn hình"
+              class="w-7 h-7 rounded-full bg-black/20 text-white hover:bg-black/40 flex items-center justify-center text-xs transition">
+              <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+            </a>
+            <button onclick="toggleChat()" type="button" title="Đóng chat"
+              class="w-7 h-7 rounded-full bg-black/20 text-white hover:bg-black/40 flex items-center justify-center text-xs transition">
+              ✕
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Suggestions -->
+        <div class="p-2.5 bg-gray-100/80 dark:bg-slate-950/60 border-b border-gray-200 dark:border-white/10 flex gap-1.5 overflow-x-auto text-[11px] whitespace-nowrap">
+          <button onclick="quickPrompt('Giá xe VinFast VF3?')"
+            class="px-2.5 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-indigo-600 text-gray-700 dark:text-gray-300 hover:text-white border border-gray-200 dark:border-transparent transition">
+            ⚡ Giá VF3
+          </button>
+          <button onclick="quickPrompt('Tư vấn xe dưới 2 tỷ')"
+            class="px-2.5 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-indigo-600 text-gray-700 dark:text-gray-300 hover:text-white border border-gray-200 dark:border-transparent transition">
+            💰 Dưới 2 tỷ
+          </button>
+          <button onclick="quickPrompt('Tư vấn thủ tục trả góp')"
+            class="px-2.5 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-indigo-600 text-gray-700 dark:text-gray-300 hover:text-white border border-gray-200 dark:border-transparent transition">
+            💳 Trả góp
+          </button>
+          <button onclick="quickPrompt('Đăng ký lái thử xe')"
+            class="px-2.5 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-indigo-600 text-gray-700 dark:text-gray-300 hover:text-white border border-gray-200 dark:border-transparent transition">
+            🏎️ Lái thử
+          </button>
+        </div>
+
+        <!-- Chat Messages Box -->
+        <div id="chatBox" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
+          <div class="bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 shadow-sm leading-relaxed">
+            👋 Xin kính chào quý khách! Em là Trợ lý AI Showroom 4TL. Em có thể hỗ trợ quý khách tra cứu thông số kỹ thuật, bảng giá lăn bánh, chính sách trả góp hay lịch lái thử hôm nay ạ?
+          </div>
+        </div>
+
+        <!-- Chat Input Form -->
+        <div class="p-3 bg-gray-50 dark:bg-slate-950 border-t border-gray-200 dark:border-white/10 flex gap-2">
+          <input type="text" id="chatInput" onkeydown="if (event.key === 'Enter') sendChatMessage();"
+            placeholder="Nhập câu hỏi (VD: giá C300, VF3, G63)..."
+            class="flex-1 bg-white dark:bg-slate-900 border border-gray-300 dark:border-white/10 px-3.5 py-2.5 rounded-xl text-xs text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+          <button onclick="sendChatMessage()"
+            class="bg-indigo-600 hover:bg-violet-700 text-white px-4 py-2.5 rounded-xl font-bold text-xs transition">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- JAVASCRIPT LOGIC -->
     <script>
       let allCars = [];
@@ -5379,7 +5473,7 @@ try {
           return `
             <div class="glass-card rounded-3xl overflow-hidden flex flex-col justify-between group bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-white/10 shadow-md">
               <div class="relative overflow-hidden aspect-[16/10] bg-slate-900">
-                <img src="${getCarImage(car.image)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openDetailModal(${car.id})" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
+                <img src="${getCarImage(car.image)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="window.location.href='detail.html?id=${car.id}'" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
                 <span class="absolute top-3 left-3 bg-indigo-600/90 backdrop-blur text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
                   ${escapeHtml(car.brand)}
                 </span>
@@ -5389,7 +5483,7 @@ try {
               </div>
               <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 onclick="openDetailModal(${car.id})" class="text-xl font-black text-slate-900 dark:text-white cursor-pointer hover:text-indigo-500 line-clamp-1">${escapeHtml(car.name)}</h3>
+                  <h3 onclick="window.location.href='detail.html?id=${car.id}'" class="text-xl font-black text-slate-900 dark:text-white cursor-pointer hover:text-indigo-500 line-clamp-1">${escapeHtml(car.name)}</h3>
                   <div class="text-indigo-600 dark:text-indigo-400 font-heading text-2xl font-black my-1">${formatCurrency(car.price)}</div>
                   <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">${escapeHtml(car.description || 'Động cơ hiệu năng cao, thiết kế sang trọng và trang bị công nghệ đỉnh cao.')}</p>
                 </div>
@@ -5404,7 +5498,7 @@ try {
                 </div>
 
                 <div class="flex items-center justify-between pt-1">
-                  <button onclick="openDetailModal(${car.id})" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                  <button onclick="window.location.href='detail.html?id=${car.id}'" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
                     Xem chi tiết thông số <i class="fa-solid fa-arrow-right ml-0.5"></i>
                   </button>
                   <button onclick="toggleCompareCar(${car.id})" class="text-xs font-semibold px-2.5 py-1 rounded-lg ${isCompared ? 'bg-indigo-600 text-white' : 'bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300'} transition">
@@ -5449,7 +5543,6 @@ try {
         renderCars(allCars);
       }
 
-      // Modal Handlers
       function openModal(id) {
         const el = document.getElementById(id);
         if (el) {
@@ -5475,59 +5568,12 @@ try {
         }
       });
 
-      function openDetailModal(id) {
-        const car = allCars.find(c => Number(c.id) === Number(id));
-        if (!car) return;
-        const isCompared = comparedCars.some(c => Number(c.id) === Number(id));
-
-        document.getElementById("modalContent").innerHTML = `
-          <div class="relative rounded-2xl overflow-hidden mb-5">
-            <img src="${getCarImage(car.image)}" class="w-full h-80 object-cover" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
-            <span class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">${escapeHtml(car.brand)}</span>
-          </div>
-          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-4">
-            <div>
-              <h2 class="text-2xl sm:text-3xl font-black font-heading text-slate-900 dark:text-white">${escapeHtml(car.name)}</h2>
-              <span class="text-xs text-gray-500 dark:text-gray-400">Mã SKU: 4TL-00${car.id} | Tình trạng: Sẵn giao ngay</span>
-            </div>
-            <div class="text-2xl sm:text-3xl font-black text-indigo-600 dark:text-indigo-500 font-heading">${formatCurrency(car.price)}</div>
-          </div>
-          <div class="grid grid-cols-3 gap-3 my-4">
-            <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
-              <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Động cơ</span>
-              <strong class="text-xs text-slate-900 dark:text-white">${escapeHtml(car.engine || "N/A")}</strong>
-            </div>
-            <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
-              <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Hộp số</span>
-              <strong class="text-xs text-slate-900 dark:text-white">${escapeHtml(car.transmission || "Tự động")}</strong>
-            </div>
-            <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
-              <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Nhiên liệu</span>
-              <strong class="text-xs text-slate-900 dark:text-white">${escapeHtml(car.fuel || "Xăng")}</strong>
-            </div>
-          </div>
-          <div class="space-y-2">
-            <h4 class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Chi tiết trang bị & Mẫu xe</h4>
-            <p class="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed bg-gray-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-gray-200 dark:border-white/5 whitespace-pre-line">${escapeHtml(car.description || "Chưa có mô tả chi tiết.")}</p>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
-            <button onclick="closeModal('detailModal'); openQRModalById(${car.id})" class="bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3 rounded-2xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
-              <i class="fa-solid fa-qrcode"></i> Đặt Cọc Giữ Xe
-            </button>
-            <button onclick="closeModal('detailModal'); openBookingModalById(${car.id})" class="bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-slate-800 dark:text-gray-200 font-bold py-3 rounded-2xl text-xs transition border border-gray-300 dark:border-white/10 flex items-center justify-center gap-2">
-              <i class="fa-solid fa-car-side"></i> Lái Thử Tận Nơi
-            </button>
-            <button onclick="toggleCompareCar(${car.id}); closeModal('detailModal');" class="bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 font-bold py-3 rounded-2xl text-xs transition border border-indigo-500/30 flex items-center justify-center gap-2">
-              <i class="fa-solid fa-code-compare"></i> ${isCompared ? 'Hủy so sánh' : '+ Thêm so sánh'}
-            </button>
-          </div>
-        `;
-        openModal("detailModal");
-      }
+      let currentDepositCar = null;
 
       function openQRModalById(id) {
         const car = allCars.find(c => Number(c.id) === Number(id));
         if (!car) return;
+        currentDepositCar = car;
         document.getElementById("qrCarName").innerText = `Đặt cọc ưu tiên mẫu: ${car.name}`;
         document.getElementById("qrMemo").innerText = `COC ${car.id} ${car.name}`.substring(0, 30);
         const qrImg = document.getElementById("qrImage");
@@ -5539,18 +5585,35 @@ try {
         const name = document.getElementById("qrCustomerName").value.trim();
         const phone = document.getElementById("qrCustomerPhone").value.trim();
         const memo = document.getElementById("qrMemo").innerText;
+        
         if (!name || !phone) {
           showToast("Vui lòng điền đầy đủ họ tên và số điện thoại!", "error");
           return;
         }
+
         try {
-          await fetch("../php/save_order.php", {
+          const res = await fetch("../php/save_order.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ type: "deposit", name, phone, note: memo })
+            body: JSON.stringify({
+              type: "deposit",
+              car_name: currentDepositCar ? currentDepositCar.name : "Xe Showroom 4TL",
+              car_price: currentDepositCar ? currentDepositCar.price : 0,
+              memo: memo,
+              customer_name: name,
+              customer_phone: phone
+            })
           });
+          const result = await res.json();
+          if (result.status !== "success") {
+            showToast(result.message || "Lỗi lưu giao dịch đặt cọc!", "error");
+            return;
+          }
         } catch(e) {}
+
         showToast("Đã ghi nhận thông tin đặt cọc thành công! Nhân viên sẽ liên hệ lại ngay.", "success");
+        document.getElementById("qrCustomerName").value = "";
+        document.getElementById("qrCustomerPhone").value = "";
         closeModal("qrModal");
       }
 
@@ -5614,7 +5677,7 @@ try {
           <div class="mb-4 flex flex-wrap items-center justify-between gap-3 bg-gray-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-gray-200 dark:border-white/10 text-xs">
             <div class="flex flex-wrap items-center gap-2">
               <span class="font-bold text-slate-700 dark:text-gray-300">Thêm xe so sánh:</span>
-              <select onchange="handleAddCarToCompare(this.value)" class="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-gray-300 dark:border-white/10 text-slate-800 dark:text-white">
+              <select onchange="handleAddCarToCompare(this.value)" class="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-white/10 text-slate-800 dark:text-white">
                 <option value="">-- Chọn thêm xe --</option>
                 ${allCars.filter(c => !comparedCars.some(cc => Number(cc.id) === Number(c.id))).map(c => `<option value="${c.id}">${escapeHtml(c.name)} (${formatBillion(c.price)})</option>`).join("")}
               </select>
@@ -5665,7 +5728,7 @@ try {
                 ${comparedCars.map(c => `
                   <td class="p-3 space-y-1.5">
                     <button onclick="closeModal('compareModal'); openBookingModalById(${c.id})" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-2 rounded-xl text-xs transition">Lái Thử</button>
-                    <button onclick="closeModal('compareModal'); openDetailModal(${c.id})" class="w-full bg-gray-100 dark:bg-slate-800 text-slate-800 dark:text-gray-200 font-bold py-2 rounded-xl text-xs transition">Xem Chi Tiết</button>
+                    <button onclick="closeModal('compareModal'); window.location.href='detail.html?id=${c.id}'" class="w-full bg-gray-100 dark:bg-slate-800 text-slate-800 dark:text-gray-200 font-bold py-2 rounded-xl text-xs transition">Xem Chi Tiết</button>
                   </td>
                 `).join("")}
               </tr>
@@ -5681,6 +5744,93 @@ try {
         openCompareModal();
       }
 
+      // CHATBOT ASSISTANT LOGIC (Gọi API PHP ở thư mục gốc: ../php/bot_train.php)
+      function toggleChat() {
+        const chatWin = document.getElementById("chatWindow");
+        const chatIcon = document.getElementById("chatBubbleIcon");
+        if (!chatWin) return;
+
+        const isCurrentlyHidden = chatWin.style.display === "none" || chatWin.classList.contains("hidden");
+
+        if (isCurrentlyHidden) {
+          chatWin.classList.remove("hidden");
+          chatWin.style.display = "flex";
+          if (chatIcon) {
+            chatIcon.className = "fa-solid fa-xmark text-2xl transition";
+          }
+          const chatBox = document.getElementById("chatBox");
+          if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+          setTimeout(() => {
+            const input = document.getElementById("chatInput");
+            if (input) input.focus();
+          }, 100);
+        } else {
+          chatWin.classList.add("hidden");
+          chatWin.style.display = "none";
+          if (chatIcon) {
+            chatIcon.className = "fa-solid fa-headset text-2xl group-hover:rotate-12 transition";
+          }
+        }
+      }
+
+      function quickPrompt(text) {
+        document.getElementById("chatInput").value = text;
+        sendChatMessage();
+      }
+
+      async function sendChatMessage() {
+        const input = document.getElementById("chatInput");
+        const text = input.value.trim();
+        if (!text) return;
+
+        const chatBox = document.getElementById("chatBox");
+
+        chatBox.innerHTML += `
+          <div class="bg-indigo-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] ml-auto text-xs shadow-md leading-relaxed">
+              ${escapeHtml(text)}
+          </div>
+        `;
+        input.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        const typingId = "typing-" + Date.now();
+        chatBox.innerHTML += `
+          <div id="${typingId}" class="bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400 p-2.5 rounded-2xl rounded-tl-none max-w-[50%] self-start text-xs border border-gray-200 dark:border-white/5 flex items-center gap-1">
+              <span class="animate-bounce">●</span><span class="animate-bounce delay-100">●</span><span class="animate-bounce delay-200">●</span>
+          </div>
+        `;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        try {
+          const res = await fetch("../php/bot_train.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: text }),
+          });
+          const data = await res.json();
+
+          const typingEl = document.getElementById(typingId);
+          if (typingEl) typingEl.remove();
+
+          chatBox.innerHTML += `
+            <div class="bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 shadow-sm leading-relaxed">
+                ${data.reply}
+            </div>
+          `;
+          chatBox.scrollTop = chatBox.scrollHeight;
+        } catch (err) {
+          const typingEl = document.getElementById(typingId);
+          if (typingEl) typingEl.remove();
+
+          chatBox.innerHTML += `
+            <div class="bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 shadow-sm leading-relaxed">
+                Dạ quý khách cần tư vấn chi tiết về mẫu xe nào, xin vui lòng gọi trực tiếp Hotline VIP <strong>0706.850.014</strong> để được phục vụ 24/7 ạ!
+            </div>
+          `;
+          chatBox.scrollTop = chatBox.scrollHeight;
+        }
+      }
+
       document.getElementById("searchInput").addEventListener("input", filterCars);
       document.getElementById("brandFilter").addEventListener("change", filterCars);
       document.getElementById("priceFilter").addEventListener("change", filterCars);
@@ -5688,6 +5838,80 @@ try {
 
       fetchCars();
     </script>
+
+    <!-- LUXURY FLOATING AI CHATBOT WIDGET HTML -->
+    <div class="fixed bottom-6 right-6 z-50">
+      <button id="chatBubbleBtn" onclick="toggleChat()" type="button" aria-label="Mở Trợ lý AI 4TL"
+        class="relative pulse-ring w-14 h-14 bg-gradient-to-tr from-indigo-600 to-indigo-500 text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition duration-300 group cursor-pointer">
+        <i id="chatBubbleIcon" class="fa-solid fa-headset text-2xl group-hover:rotate-12 transition"></i>
+        <span class="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full shadow-sm"></span>
+      </button>
+
+      <div id="chatWindow"
+        class="hidden absolute bottom-20 right-0 w-[calc(100vw-3rem)] sm:w-96 max-h-[calc(100vh-120px)] bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-gray-200 dark:border-white/15 rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[520px] transition-all origin-bottom-right"
+        style="display: none">
+        <div class="bg-gradient-to-r from-violet-700 to-indigo-600 p-4 text-white flex justify-between items-center shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-white shadow-inner">
+              <i class="fa-solid fa-robot"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold leading-tight">4TL AI Assistant</h4>
+              <span class="text-[10px] text-indigo-200 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                Trực tuyến 24/7
+              </span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <a href="bot_train.html" target="_blank" title="Mở trang tư vấn AI toàn màn hình"
+              class="w-7 h-7 rounded-full bg-black/20 text-white hover:bg-black/40 flex items-center justify-center text-xs transition">
+              <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+            </a>
+            <button onclick="toggleChat()" type="button" title="Đóng chat"
+              class="w-7 h-7 rounded-full bg-black/20 text-white hover:bg-black/40 flex items-center justify-center text-xs transition">
+              ✕
+            </button>
+          </div>
+        </div>
+
+        <div class="p-2.5 bg-gray-100/80 dark:bg-slate-950/60 border-b border-gray-200 dark:border-white/10 flex gap-1.5 overflow-x-auto text-[11px] whitespace-nowrap">
+          <button onclick="quickPrompt('Giá xe VinFast VF3?')"
+            class="px-2.5 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-indigo-600 text-gray-700 dark:text-gray-300 hover:text-white border border-gray-200 dark:border-transparent transition">
+            ⚡ Giá VF3
+          </button>
+          <button onclick="quickPrompt('Tư vấn xe dưới 2 tỷ')"
+            class="px-2.5 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-indigo-600 text-gray-700 dark:text-gray-300 hover:text-white border border-gray-200 dark:border-transparent transition">
+            💰 Dưới 2 tỷ
+          </button>
+          <button onclick="quickPrompt('Tư vấn thủ tục trả góp')"
+            class="px-2.5 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-indigo-600 text-gray-700 dark:text-gray-300 hover:text-white border border-gray-200 dark:border-transparent transition">
+            💳 Trả góp
+          </button>
+          <button onclick="quickPrompt('Đăng ký lái thử xe')"
+            class="px-2.5 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-indigo-600 text-gray-700 dark:text-gray-300 hover:text-white border border-gray-200 dark:border-transparent transition">
+            🏎️ Lái thử
+          </button>
+        </div>
+
+        <div id="chatBox" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
+          <div class="bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 shadow-sm leading-relaxed">
+            👋 Xin kính chào quý khách! Em là Trợ lý AI Showroom 4TL. Em có thể hỗ trợ quý khách tra cứu thông số kỹ thuật, bảng giá lăn bánh, chính sách trả góp hay lịch lái thử hôm nay ạ?
+          </div>
+        </div>
+
+        <div class="p-3 bg-gray-50 dark:bg-slate-950 border-t border-gray-200 dark:border-white/10 flex gap-2">
+          <input type="text" id="chatInput" onkeydown="if (event.key === 'Enter') sendChatMessage();"
+            placeholder="Nhập câu hỏi (VD: giá C300, VF3, G63)..."
+            class="flex-1 bg-white dark:bg-slate-900 border border-gray-300 dark:border-white/10 px-3.5 py-2.5 rounded-xl text-xs text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+          <button onclick="sendChatMessage()"
+            class="bg-indigo-600 hover:bg-violet-700 text-white px-4 py-2.5 rounded-xl font-bold text-xs transition">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>
 ```
