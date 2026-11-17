@@ -437,9 +437,20 @@
       }
 
       async function deleteOrder(table, id) {
-        if (confirm("Xóa bản ghi này?")) {
-          await fetch(`../php/manage_orders.php?action=delete&table=${table}&id=${id}`);
-          loadCRMOrders();
+        // Thay vì dùng hộp thoại confirm() mặc định của trình duyệt, 
+        // ta gọi trực tiếp API xóa và hiển thị Toast thông báo kết quả
+        try {
+          const res = await fetch(`../php/manage_orders.php?action=delete&table=${table}&id=${id}`);
+          const data = await res.json();
+
+          if (data.status === "success") {
+            showToast("Đã xóa bản ghi thành công!", "success");
+            loadCRMOrders();
+          } else {
+            showToast(data.message || "Không thể xóa bản ghi này!", "error");
+          }
+        } catch (err) {
+          showToast("Lỗi kết nối máy chủ khi xóa!", "error");
         }
       }
 
@@ -531,18 +542,66 @@
         }
       };
 
+      // Định nghĩa hàm hiển thị thông báo Toast chuẩn
+      function showToast(message, type = 'success') {
+          const container = document.getElementById('toastContainer');
+          if (!container) {
+              alert(message); // Fallback nếu quên tạo container
+              return;
+          }
+
+          const toast = document.createElement('div');
+          toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl text-xs font-bold transition-all duration-300 transform translate-y-[-20px] opacity-0 border backdrop-blur-xl ${
+              type === 'success' 
+                  ? 'bg-emerald-950/90 border-emerald-500/40 text-emerald-300' 
+                  : 'bg-rose-950/90 border-rose-500/40 text-rose-300'
+          }`;
+
+          toast.innerHTML = `
+              <i class="fa-solid ${type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-triangle-exclamation text-rose-400'} text-base"></i>
+              <span>${message}</span>
+          `;
+
+          container.appendChild(toast);
+
+          setTimeout(() => {
+              toast.classList.remove('translate-y-[-20px]', 'opacity-0');
+          }, 10);
+
+          setTimeout(() => {
+              toast.classList.add('translate-y-[-20px]', 'opacity-0');
+              setTimeout(() => toast.remove(), 300);
+          }, 3000);
+      }
+
+      // Hàm xóa xe kết hợp gọi thông báo Toast chuẩn
       async function deleteCar(id) {
-        if (!confirm("Bạn có chắc muốn xóa mẫu xe này khỏi cơ sở dữ liệu?")) return;
         try {
-          const res = await fetch(`../php/delete_car.php?id=${id}`);
+          const res = await fetch("../php/delete_car.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: id })
+          });
+          
           const data = await res.json();
+
           if (data.status === "success") {
-            loadAdminCars();
+            showToast("Đã xóa mẫu xe thành công!", "success");
+            
+            // Tải lại bảng danh sách xe
+            if (typeof loadCars === "function") {
+              loadCars();
+            } else if (typeof fetchCars === "function") {
+              fetchCars();
+            } else {
+              location.reload();
+            }
           } else {
-            alert("❌ " + (data.message || "Không thể xóa xe!"));
+            showToast(data.message || "Không thể xóa mẫu xe này!", "error");
           }
         } catch (err) {
-          alert("Lỗi kết nối khi xóa xe: " + err);
+          console.error(err);
+          showToast("Lỗi kết nối máy chủ khi xóa xe!", "error");
         }
       }
 

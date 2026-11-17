@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="vi" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bộ Sưu Tập Siêu Xe - SHOWROOM 4TL</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- ✅ 1. Thẻ gọi JS ở thư mục gốc (thêm ../ ở đầu) -->
+    <script src="../js/theme.js"></script>
+    <!-- ✅ 2. Thẻ gọi CSS ở thư mục gốc (thêm ../ ở đầu) -->
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body class="bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-gray-100 transition-colors duration-300 min-h-screen selection:bg-indigo-600 selection:text-white">
+    
+    <!-- KHUNG CHỨA THÔNG BÁO TOAST -->
+    <div id="toastContainer" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none"></div>
+
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-40 bg-white/85 dark:bg-slate-950/85 backdrop-blur-xl border-b border-gray-200/80 dark:border-white/10 px-4 md:px-8 py-3.5 transition-all duration-300 shadow-sm">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a href="../index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-900 flex items-center justify-center text-white shadow-lg shadow-indigo-600/30">
+            <i class="fa-solid fa-shield-halved text-lg"></i>
+          </div>
+          <div>
+            <div class="text-2xl font-black tracking-wider text-slate-900 dark:text-white font-heading leading-none flex items-center gap-1">
+              4TL <span class="text-indigo-600">MOTORS</span>
+            </div>
+            <span class="text-[10px] font-semibold text-gray-500 dark:text-gray-400 tracking-widest uppercase">Supercar Collection</span>
+          </div>
+        </a>
+
+        <div class="flex items-center gap-3">
+          <!-- ✅ 3. Nút quay lại trang chủ (thêm ../ vào href) -->
+          <a href="../index.html" class="bg-gray-100 hover:bg-gray-200 text-slate-700 dark:bg-slate-800 dark:text-gray-200 px-4 py-2 rounded-xl text-xs font-bold border border-gray-200 dark:border-white/10 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-arrow-left"></i> Quay Lại Trang Chủ
+          </a>
+          <button id="themeToggle" type="button" class="w-10 h-10 rounded-xl bg-gray-100 text-amber-500 dark:bg-slate-800 dark:text-yellow-400 flex items-center justify-center border border-gray-200 dark:border-white/10 transition shadow-sm">
+            <i id="themeIcon" class="fa-solid fa-sun text-base"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- BRAND LOGO / QUICK FILTER STRIP -->
+    <section class="py-6 bg-gray-100/80 dark:bg-slate-950/90 border-b border-gray-200 dark:border-white/10 overflow-x-auto">
+      <div class="max-w-7xl mx-auto px-4 flex items-center gap-2 sm:gap-3 justify-start md:justify-center min-w-max" id="brandPillContainer"></div>
+    </section>
+
+    <!-- MAIN CAR SHOWROOM & INVENTORY -->
+    <main id="car-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold text-indigo-600 dark:text-indigo-500 tracking-widest uppercase flex items-center gap-1.5">
+            <i class="fa-solid fa-car-side"></i> BỘ SƯU TẬP XE 2026
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-black font-heading mt-1 text-slate-900 dark:text-white">
+            TOÀN BỘ SIÊU XE & XE SANG SẴN GIAO
+          </h2>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="carCountBadge" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-white/10 shadow-sm">
+            Đang hiển thị: <strong class="text-indigo-600">0</strong> xe
+          </span>
+          <button onclick="resetAllFilters()" class="text-xs text-gray-500 hover:text-indigo-600 underline transition">
+            <i class="fa-solid fa-rotate-left mr-1"></i> Đặt lại bộ lọc
+          </button>
+        </div>
+      </div>
+
+      <!-- ADVANCED FILTER & SEARCH PANEL -->
+      <div class="glass-panel p-5 rounded-3xl space-y-4 shadow-xl border border-gray-200/80 dark:border-white/10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <div class="relative lg:col-span-2">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400 text-sm"></i>
+            <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên xe, hãng xe..." class="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-slate-900/90 border border-gray-300 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+          </div>
+          <div>
+            <select id="brandFilter" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-900/90 border border-gray-300 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500">
+              <option value="">Tất cả thương hiệu</option>
+            </select>
+          </div>
+          <div>
+            <select id="priceFilter" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-900/90 border border-gray-300 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500">
+              <option value="">Tất cả phân khúc giá</option>
+              <option value="under-1b">Dưới 1 Tỷ VNĐ</option>
+              <option value="1b-3b">1 Tỷ - 3 Tỷ VNĐ</option>
+              <option value="3b-8b">3 Tỷ - 8 Tỷ VNĐ</option>
+              <option value="over-8b">Trên 8 Tỷ VNĐ (Siêu xe)</option>
+            </select>
+          </div>
+          <div>
+            <select id="fuelFilter" class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-900/90 border border-gray-300 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500">
+              <option value="">Tất cả nhiên liệu</option>
+              <option value="Điện">⚡ Xe thuần điện (EV)</option>
+              <option value="Xăng">⛽ Xe máy xăng</option>
+              <option value="Hybrid">🔋 Xe Hybrid</option>
+              <option value="Dầu">🚜 Xe máy dầu (Diesel)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAR INVENTORY GRID -->
+      <div id="carGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2"></div>
+    </main>
+
+    <script>
+      let allCars = [];
+
+      async function fetchCars() {
+        try {
+          // ✅ 4. Lệnh fetch dữ liệu (thêm ../ ở đầu đường dẫn php)
+          const res = await fetch("../php/get_cars.php");
+          const data = await res.json();
+          allCars = Array.isArray(data) ? data : [];
+        } catch(e) {
+          allCars = [];
+        }
+        renderBrandPills();
+        populateBrandDropdown();
+        renderCars(allCars);
+      }
+
+      function renderBrandPills() {
+        const brands = ["Tất cả", ...[...new Set(allCars.map(c => c.brand))].sort()];
+        document.getElementById("brandPillContainer").innerHTML = brands.map((b, idx) => `
+          <button data-brand="${b}" onclick="filterByBrandQuick(this.dataset.brand)" class="brand-pill px-4 py-1.5 rounded-full text-xs font-bold border border-gray-200 dark:border-white/10 ${idx === 0 ? "active bg-indigo-600 text-white" : "bg-white text-slate-700 dark:bg-slate-900 dark:text-gray-300"}">${b}</button>
+        `).join("");
+      }
+
+      function populateBrandDropdown() {
+        const brands = [...new Set(allCars.map(c => c.brand))].sort();
+        const select = document.getElementById("brandFilter");
+        select.innerHTML = '<option value="">Tất cả thương hiệu</option>';
+        brands.forEach(b => {
+          const opt = document.createElement("option");
+          opt.value = b;
+          opt.textContent = b;
+          select.appendChild(opt);
+        });
+      }
+
+      function renderCars(cars) {
+        const grid = document.getElementById("carGrid");
+        document.getElementById("carCountBadge").innerHTML = `Đang hiển thị: <strong class="text-indigo-600">${cars.length}</strong> xe`;
+        
+        grid.innerHTML = cars.map(car => `
+          <div class="glass-card rounded-3xl overflow-hidden flex flex-col justify-between group bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-white/10 shadow-md">
+            <div class="relative overflow-hidden aspect-[16/10] bg-slate-900">
+              <img src="${getCarImage(car.image)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="window.location.href='detail.html?id=${car.id}'">
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h3 onclick="window.location.href='detail.html?id=${car.id}'" class="text-xl font-black text-slate-900 dark:text-white cursor-pointer hover:text-indigo-500">${escapeHtml(car.name)}</h3>
+                <div class="text-indigo-600 font-heading text-2xl font-black my-1">${Number(car.price).toLocaleString("vi-VN")} VNĐ</div>
+              </div>
+              <button onclick="window.location.href='detail.html?id=${car.id}'" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-2.5 rounded-xl text-xs transition">Xem Chi Tiết</button>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      function filterCars() {
+        const search = document.getElementById("searchInput").value.toLowerCase().trim();
+        const brand = document.getElementById("brandFilter").value;
+        
+        let filtered = allCars.filter(c => {
+          const matchSearch = !search || c.name.toLowerCase().includes(search) || c.brand.toLowerCase().includes(search);
+          const matchBrand = !brand || c.brand === brand;
+          return matchSearch && matchBrand;
+        });
+        renderCars(filtered);
+      }
+
+      document.getElementById("searchInput").addEventListener("input", filterCars);
+      document.getElementById("brandFilter").addEventListener("change", filterCars);
+      document.getElementById("priceFilter").addEventListener("change", filterCars);
+      document.getElementById("fuelFilter").addEventListener("change", filterCars);
+
+      fetchCars();
+    </script>
+  </body>
+</html>
