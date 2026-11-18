@@ -346,15 +346,15 @@
                 id="calcDownPercent"
                 min="10"
                 max="80"
-                step="5"
+                step="1"
                 value="20"
                 oninput="calculateLoan()"
                 class="w-full" />
-              <div class="flex justify-between text-[11px] text-gray-400">
-                <span>10% (Tối thiểu)</span>
-                <span>30%</span>
-                <span>50%</span>
-                <span>80%</span>
+              <div class="relative h-4 text-[11px] text-gray-400">
+                <span class="absolute left-0">10% (Tối thiểu)</span>
+                <span class="absolute left-[28.57%] -translate-x-1/2">30%</span>
+                <span class="absolute left-[57.14%] -translate-x-1/2">50%</span>
+                <span class="absolute right-0">80%</span>
               </div>
             </div>
 
