@@ -4,17 +4,17 @@
 
 ```bash
 webbanxe/
-├── .gitignore                          # Quy tắc bỏ qua tệp khi dùng Git
-├── README.md                            # Giới thiệu và ghi chú dự án
+├── .gitignore                           # Quy tắc bỏ qua tệp khi dùng Git
+├── README.md                            # Giới thiệu và cây thư mục dự án
 ├── css/
 │   └── style.css                        # Kiểu dáng dùng chung cho website
 ├── html/
 │   ├── admin.html                       # Trang quản trị xe và đơn hàng
-│   ├── car_collection.html              # Trang danh sách, lọc và so sánh xe
 │   ├── bot_train.html                   # Giao diện chatbot tư vấn xe
+│   ├── car_collection.html              # Trang danh sách, lọc và so sánh xe
 │   ├── detail.html                      # Trang thông tin chi tiết xe
 │   ├── login.html                       # Trang đăng nhập quản trị
-|   ├── orders_history.html              # Ghi lại lịch sử đơn hàng và tiến độ
+│   ├── orders_history.html              # Tra cứu lịch sử đặt cọc và lịch hẹn
 │   └── train_bot.html                   # Trang quản lý dữ liệu huấn luyện chatbot
 ├── images/
 │   └── qrcode.jpg                       # Mã QR đặt cọc
@@ -29,11 +29,11 @@ webbanxe/
 │   ├── delete_car.php                   # Xóa xe khỏi cơ sở dữ liệu
 │   ├── edit_car.php                     # Cập nhật thông tin xe
 │   ├── get_cars.php                     # Lấy danh sách xe
+│   ├── get_customer_orders.php          # Tra cứu đơn hàng theo số điện thoại
 │   ├── login.php                        # Xác thực tài khoản quản trị
 │   ├── logout.php                       # Đăng xuất quản trị
 │   ├── manage_orders.php                # Quản lý lịch hẹn và đơn đặt cọc
 │   ├── save_order.php                   # Lưu lịch hẹn và thông tin đặt cọc
-|   ├── get_customer_orders.php          #
 │   └── train_bot.php                    # Quản lý dữ liệu huấn luyện chatbot
 ├── sql/
 │   └── schema.sql                       # Tạo bảng và nạp dữ liệu mẫu
