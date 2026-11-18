@@ -46,6 +46,12 @@
         </a>
 
         <div class="flex items-center gap-3">
+          <a
+            href="orders_history.html"
+            class="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 px-3.5 py-2 rounded-xl text-xs font-bold border border-emerald-500/30 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            Đơn Của Tôi
+          </a>
           <button
             onclick="openCompareModal()"
             class="relative bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 px-4 py-2 rounded-xl text-xs font-bold border border-indigo-500/30 transition flex items-center gap-1.5">
@@ -705,6 +711,8 @@
           }
         } catch (e) {}
 
+        localStorage.setItem("4tl_customer_phone", phone.replace(/[^0-9]/g, ""));
+
         showToast("Đã ghi nhận thông tin đặt cọc thành công! Nhân viên sẽ liên hệ lại ngay.", "success");
         document.getElementById("qrCustomerName").value = "";
         document.getElementById("qrCustomerPhone").value = "";
@@ -734,6 +742,9 @@
             body: JSON.stringify({ type: "booking", name, phone, car, date, note: "Đặt lái thử từ trang Bộ sưu tập" }),
           });
         } catch (e) {}
+
+        localStorage.setItem("4tl_customer_phone", phone.replace(/[^0-9]/g, ""));
+
         showToast("Đăng ký lịch lái thử thành công cho quý khách: " + name, "success");
         closeModal("bookingModal");
       }

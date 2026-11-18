@@ -10,10 +10,11 @@ webbanxe/
 │   └── style.css                        # Kiểu dáng dùng chung cho website
 ├── html/
 │   ├── admin.html                       # Trang quản trị xe và đơn hàng
-│   ├── bo_suu_tap_xe.html               # Trang danh sách, lọc và so sánh xe
+│   ├── car_collection.html              # Trang danh sách, lọc và so sánh xe
 │   ├── bot_train.html                   # Giao diện chatbot tư vấn xe
 │   ├── detail.html                      # Trang thông tin chi tiết xe
 │   ├── login.html                       # Trang đăng nhập quản trị
+|   ├── orders_history.html              # Ghi lại lịch sử đơn hàng và tiến độ
 │   └── train_bot.html                   # Trang quản lý dữ liệu huấn luyện chatbot
 ├── images/
 │   └── qrcode.jpg                       # Mã QR đặt cọc
@@ -32,6 +33,7 @@ webbanxe/
 │   ├── logout.php                       # Đăng xuất quản trị
 │   ├── manage_orders.php                # Quản lý lịch hẹn và đơn đặt cọc
 │   ├── save_order.php                   # Lưu lịch hẹn và thông tin đặt cọc
+|   ├── get_customer_orders.php         
 │   └── train_bot.php                    # Quản lý dữ liệu huấn luyện chatbot
 ├── sql/
 │   └── schema.sql                       # Tạo bảng và nạp dữ liệu mẫu
@@ -72,7 +74,7 @@ webbanxe/
         Ưu Đãi Đặc Biệt
       </span>
       <span>Tặng gói bảo hiểm thân vỏ 2 năm + Gói phủ Ceramic VIP khi cọc xe online trong tháng</span>
-      <a href="html/bo_suu_tap_xe.html" class="underline ml-2 hover:text-yellow-200">Khám Phá Ngay &rarr;</a>
+      <a href="html/car_collection.html" class="underline ml-2 hover:text-yellow-200">Khám Phá Ngay &rarr;</a>
     </div>
 
     <!-- MAIN HEADER / NAVBAR -->
@@ -107,7 +109,7 @@ webbanxe/
             Trang Chủ
           </a>
           <a
-            href="html/bo_suu_tap_xe.html"
+            href="html/car_collection.html"
             class="hover:text-indigo-600 dark:hover:text-indigo-400 transition flex items-center gap-1.5">
             <i class="fa-solid fa-car text-xs"></i>
             Bộ Sưu Tập Xe
@@ -119,20 +121,17 @@ webbanxe/
             Dự Toán Trả Góp
           </a>
           <!-- Comparison Nav Link -->
-          <button
-            onclick="toggleCompareModal()"
-            class="hover:text-indigo-600 dark:hover:text-indigo-400 transition flex items-center gap-1.5 font-semibold text-sm">
-            <i class="fa-solid fa-code-compare text-xs text-indigo-500"></i>
-            <span>So Sánh Xe</span>
-            <span id="compareNavCount" class="bg-indigo-600 text-white text-[10px] px-1.5 py-0.2 rounded-full hidden">
-              0
-            </span>
-          </button>
           <a
             href="#map-section"
             class="hover:text-indigo-600 dark:hover:text-indigo-400 transition flex items-center gap-1.5">
             <i class="fa-solid fa-map-location-dot text-xs"></i>
             Showroom
+          </a>
+          <a
+            href="html/orders_history.html"
+            class="hover:text-indigo-600 dark:hover:text-indigo-400 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-clock-rotate-left text-xs text-indigo-500"></i>
+            Đơn Của Tôi
           </a>
           <a
             href="html/admin.html"
@@ -211,7 +210,7 @@ webbanxe/
             <div class="mt-8 flex flex-wrap items-center gap-4">
               <!-- Nút chính -->
               <a
-                href="html/bo_suu_tap_xe.html"
+                href="html/car_collection.html"
                 class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 transition-all duration-300 hover:scale-[1.02] hover:from-indigo-500 hover:to-purple-500">
                 <span>Khám Phá Bộ Sưu Tập</span>
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -445,13 +444,13 @@ webbanxe/
 
           <!-- Result Dashboard Card -->
           <div
-            class="lg:col-span-5 bg-gradient-to-b from-indigo-50 via-white to-gray-50 dark:bg-gradient-to-b dark:from-indigo-600/20 dark:via-slate-900 dark:to-slate-900 p-6 sm:p-8 rounded-3xl border border-indigo-200 dark:border-indigo-500/30 space-y-6 shadow-xl">
+            class="lg:col-span-5 glass-card bg-gradient-to-b from-indigo-50/90 via-white/95 to-purple-50/80 dark:from-indigo-950/50 dark:via-slate-900/60 dark:to-purple-950/40 p-6 sm:p-8 rounded-3xl border border-indigo-200 dark:border-indigo-500/30 space-y-6 shadow-xl">
             <div class="border-b border-gray-200 dark:border-white/10 pb-4">
               <span class="text-xs text-gray-500 dark:text-gray-400 uppercase font-bold tracking-wider">
                 Ước tính trả hàng tháng (Gốc + Lãi)
               </span>
               <div
-                class="text-3xl sm:text-4xl font-black text-indigo-600 dark:text-indigo-500 font-heading mt-1"
+                class="text-3xl sm:text-4xl font-black text-indigo-600 dark:text-indigo-400 font-heading mt-1"
                 id="resMonthlyPayment">
                 -- VNĐ
               </div>
@@ -815,19 +814,19 @@ webbanxe/
             <h4 class="text-white font-bold uppercase text-xs tracking-wider">Dòng Xe Bán Chạy</h4>
             <ul class="space-y-2">
               <li>
-                <a href="html/bo_suu_tap_xe.html" class="hover:text-indigo-400 transition">Porsche 911 Series</a>
+                <a href="html/car_collection.html" class="hover:text-indigo-400 transition">Porsche 911 Series</a>
               </li>
               <li>
-                <a href="html/bo_suu_tap_xe.html" class="hover:text-indigo-400 transition">Mercedes-AMG G63</a>
+                <a href="html/car_collection.html" class="hover:text-indigo-400 transition">Mercedes-AMG G63</a>
               </li>
               <li>
-                <a href="html/bo_suu_tap_xe.html" class="hover:text-indigo-400 transition">VinFast VF3 & VF8</a>
+                <a href="html/car_collection.html" class="hover:text-indigo-400 transition">VinFast VF3 & VF8</a>
               </li>
               <li>
-                <a href="html/bo_suu_tap_xe.html" class="hover:text-indigo-400 transition">Ferrari F8 Tributo</a>
+                <a href="html/car_collection.html" class="hover:text-indigo-400 transition">Ferrari F8 Tributo</a>
               </li>
               <li>
-                <a href="html/bo_suu_tap_xe.html" class="hover:text-indigo-400 transition">BMW 7-Series</a>
+                <a href="html/car_collection.html" class="hover:text-indigo-400 transition">BMW 7-Series</a>
               </li>
             </ul>
           </div>
@@ -873,38 +872,13 @@ webbanxe/
           class="pt-8 border-t border-gray-800 dark:border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left text-gray-500">
           <p>© 2026 SHOWROOM 4TL. Bản quyền phát triển bởi Sinh viên ĐH Văn Lang.</p>
           <div class="flex gap-4">
-            <span>Đẳng Cấp • Minh Bạch • Tận Tâm</span>
+            <span>Đẳng Cấp • Minh Bạch • Tận Tâm • Thanh Lịch</span>
           </div>
         </div>
       </div>
     </footer>
 
     <!-- STICKY COMPARISON DOCK (Appears when >= 1 car is selected) -->
-    <div
-      id="comparisonDock"
-      class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-indigo-500/40 px-5 py-3 rounded-2xl shadow-2xl items-center gap-4 hidden transition-all duration-300"
-      style="display: none">
-      <div class="flex items-center gap-2" id="compareThumbnails">
-        <!-- Selected cars thumbnails -->
-      </div>
-      <div class="h-6 w-px bg-gray-300 dark:bg-white/20"></div>
-      <button
-        onclick="openCompareModal()"
-        class="bg-indigo-600 hover:bg-violet-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md transition flex items-center gap-1.5">
-        <i class="fa-solid fa-code-compare"></i>
-        <span>
-          So Sánh Ngay (
-          <span id="compareCount">0</span>
-          /3)
-        </span>
-      </button>
-      <button
-        onclick="clearComparison()"
-        title="Xóa tất cả"
-        class="text-gray-400 hover:text-indigo-600 dark:hover:text-white text-xs">
-        ✕
-      </button>
-    </div>
 
     <!-- MODAL 1: CHI TIẾT XE -->
     <div
@@ -992,33 +966,6 @@ webbanxe/
           <i class="fa-solid fa-circle-check mr-1.5"></i>
           Tôi Đã Hoàn Tất Chuyển Khoản
         </button>
-      </div>
-    </div>
-
-    <!-- MODAL 3: SO SÁNH XE ĐỐI ĐẦU -->
-    <div
-      id="compareModal"
-      class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-4 overflow-y-auto hidden"
-      style="display: none">
-      <div
-        class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-5xl w-full p-6 sm:p-8 relative shadow-2xl border border-gray-200 dark:border-white/15 max-h-[90vh] overflow-y-auto space-y-6">
-        <div class="flex justify-between items-center border-b border-gray-200 dark:border-white/10 pb-4">
-          <div>
-            <h3 class="text-2xl font-black font-heading text-slate-900 dark:text-white">SO SÁNH THÔNG SỐ XE ĐỐI ĐẦU</h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              Xem trực quan thông số, phân khúc và mức giá giữa các mẫu xe bạn đang phân vân.
-            </p>
-          </div>
-          <button
-            onclick="closeModal('compareModal')"
-            class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center justify-center transition">
-            ✕
-          </button>
-        </div>
-
-        <div id="compareTableContainer" class="overflow-x-auto">
-          <!-- Injected via JavaScript -->
-        </div>
       </div>
     </div>
 
@@ -1481,7 +1428,6 @@ webbanxe/
       ];
 
       let allCars = [];
-      let comparedCars = [];
 
       function openBookingModalById(id) {
         const car = allCars.find((c) => Number(c.id) === Number(id));
@@ -1512,7 +1458,7 @@ webbanxe/
 
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape") {
-          ["detailModal", "compareModal", "qrModal", "bookingModal"].forEach(closeModal);
+          ["detailModal", "qrModal", "bookingModal"].forEach(closeModal);
           const chatWin = document.getElementById("chatWindow");
           if (chatWin && (chatWin.style.display === "flex" || !chatWin.classList.contains("hidden"))) {
             toggleChat();
@@ -1520,7 +1466,7 @@ webbanxe/
         }
       });
 
-      ["detailModal", "compareModal", "qrModal", "bookingModal"].forEach((id) => {
+      ["detailModal", "qrModal", "bookingModal"].forEach((id) => {
         const el = document.getElementById(id);
         if (el) {
           el.addEventListener("click", function (e) {
@@ -1614,9 +1560,8 @@ webbanxe/
           const percent = ((val - min) / (max - min)) * 100;
 
           const isLight = document.documentElement.classList.contains("light");
-          const trackBg = isLight ? "#cbd5e1" : "#334155";
-
-          slider.style.background = `linear-gradient(to right, #6366f1 0%, #6366f1 ${percent}%, ${trackBg} ${percent}%, ${trackBg} 100%)`;
+          const trackBg = isLight ? "#ddd6fe" : "#2e1065";
+          slider.style.background = `linear-gradient(to right, #6d28d9 0%, #a78bfa ${percent}%, ${trackBg} ${percent}%, ${trackBg} 100%)`;
         });
 
         const price = parseFloat(document.getElementById("calcPriceInput").value) || 0;
@@ -1653,190 +1598,10 @@ webbanxe/
         attributeFilter: ["class"],
       });
 
-      function toggleCompareCar(id) {
-        const targetId = Number(id);
-        const car = allCars.find((c) => Number(c.id) === targetId);
-        if (!car) return;
-
-        const idx = comparedCars.findIndex((c) => Number(c.id) === targetId);
-        if (idx > -1) {
-          comparedCars.splice(idx, 1);
-        } else {
-          if (comparedCars.length >= 3) {
-            showToast("Chỉ có thể so sánh tối đa 3 mẫu xe cùng lúc!", "error");
-            return;
-          }
-          comparedCars.push(car);
-        }
-
-        updateCompareDock();
-      }
-
-      function updateCompareDock() {
-        const dock = document.getElementById("comparisonDock");
-        const thumbs = document.getElementById("compareThumbnails");
-        const count = document.getElementById("compareCount");
-        const navBadge = document.getElementById("compareNavCount");
-
-        if (count) count.innerText = comparedCars.length;
-        if (navBadge) {
-          navBadge.innerText = comparedCars.length;
-          if (comparedCars.length > 0) {
-            navBadge.classList.remove("hidden");
-          } else {
-            navBadge.classList.add("hidden");
-          }
-        }
-
-        if (dock) {
-          if (comparedCars.length > 0) {
-            dock.classList.remove("hidden");
-            dock.style.display = "flex";
-          } else {
-            dock.classList.add("hidden");
-            dock.style.display = "none";
-          }
-        }
-
-        if (thumbs) {
-          thumbs.innerHTML = comparedCars
-            .map(
-              (c) => `
-              <div class="relative group" title="${escapeHtml(c.name)}">
-                  <img src="${getCarImage(c.image)}" class="w-10 h-10 object-cover rounded-xl border-2 border-indigo-500 shadow" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
-                  <button onclick="toggleCompareCar(${Number(c.id)})" title="Bỏ xe này" class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-indigo-600 hover:bg-violet-700 rounded-full text-[9px] text-white flex items-center justify-center shadow">✕</button>
-              </div>
-          `,
-            )
-            .join("");
-        }
-      }
-
-      function clearComparison() {
-        comparedCars = [];
-        updateCompareDock();
-      }
-
-      function toggleCompareModal() {
-        if (comparedCars.length === 0) {
-          if (allCars.length >= 2) {
-            comparedCars = [allCars[0], allCars[1]];
-            updateCompareDock();
-          } else if (allCars.length === 1) {
-            comparedCars = [allCars[0]];
-            updateCompareDock();
-          }
-        }
-        openCompareModal();
-      }
-
-      function openCompareModal() {
-        if (comparedCars.length === 0 && allCars.length >= 2) {
-          comparedCars = [allCars[0], allCars[1]];
-          updateCompareDock();
-        }
-
-        const container = document.getElementById("compareTableContainer");
-        if (!container) return;
-
-        container.innerHTML = `
-                <div class="mb-4 flex flex-wrap items-center justify-between gap-3 bg-gray-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-gray-200 dark:border-white/10 text-xs">
-                    <div class="flex flex-wrap items-center gap-2">
-                        <span class="font-bold text-slate-700 dark:text-gray-300">Thêm xe vào bảng so sánh:</span>
-                        <select onchange="handleAddCarToCompare(this.value)" class="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-gray-300 dark:border-white/10 text-slate-800 dark:text-white">
-                            <option value="">-- Chọn thêm xe để so sánh --</option>
-                            ${allCars
-                              .filter((c) => !comparedCars.some((cc) => Number(cc.id) === Number(c.id)))
-                              .map(
-                                (c) => `
-                                <option value="${c.id}">${escapeHtml(c.name)} (${formatBillion(c.price)})</option>
-                            `,
-                              )
-                              .join("")}
-                        </select>
-                    </div>
-                    <button onclick="clearComparison(); closeModal('compareModal');" class="text-indigo-600 dark:text-indigo-400 hover:underline font-bold">
-                        <i class="fa-solid fa-trash mr-1"></i>Xóa hết so sánh
-                    </button>
-                </div>
-
-                <table class="w-full table-fixed text-left border-collapse text-xs">
-                    <thead>
-                        <tr class="border-b border-gray-200 dark:border-white/10">
-                            <th class="p-3 text-gray-500 dark:text-gray-400 w-36">Thông Số</th>
-                            ${comparedCars
-                              .map(
-                                (c) => `
-                                <th class="p-3 text-slate-900 dark:text-white font-bold text-base min-w-[220px]">
-                                    <div class="relative group mb-2">
-                                        <img src="${getCarImage(c.image)}" class="w-full h-36 object-cover rounded-xl border border-gray-200 dark:border-white/10" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
-                                        <button onclick="toggleCompareCar(${c.id}); openCompareModal();" title="Bỏ xe này" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-indigo-600 hover:bg-violet-700 text-white flex items-center justify-center text-xs shadow hover:scale-110 transition">✕</button>
-                                    </div>
-                                    <div class="leading-tight">${escapeHtml(c.name)}</div>
-                                    <div class="text-indigo-600 dark:text-indigo-500 font-heading text-lg mt-1">${formatCurrency(c.price)}</div>
-                                </th>
-                            `,
-                              )
-                              .join("")}
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 dark:divide-white/10 text-slate-700 dark:text-gray-300">
-                        <tr>
-                            <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Hãng Sản Xuất</td>
-                            ${comparedCars.map((c) => `<td class="p-3"><span class="px-2 py-0.5 rounded bg-indigo-600/10 dark:bg-indigo-600/30 text-indigo-600 dark:text-red-300 font-bold">${escapeHtml(c.brand)}</span></td>`).join("")}
-                        </tr>
-                        <tr>
-                            <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Động Cơ & Công Suất</td>
-                            ${comparedCars.map((c) => `<td class="p-3 font-medium">${escapeHtml(c.engine || "Đang cập nhật")}</td>`).join("")}
-                        </tr>
-                        <tr>
-                            <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Hộp Số</td>
-                            ${comparedCars.map((c) => `<td class="p-3 font-medium">${escapeHtml(c.transmission || "Tự động")}</td>`).join("")}
-                        </tr>
-                        <tr>
-                            <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Nhiên Liệu</td>
-                            ${comparedCars.map((c) => `<td class="p-3 font-semibold text-slate-900 dark:text-white">${escapeHtml(c.fuel || "Xăng")}</td>`).join("")}
-                        </tr>
-                        <tr>
-                            <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Mô Tả & Điểm Nhấn</td>
-                            ${comparedCars.map((c) => `<td class="p-3 leading-relaxed text-[11px] text-gray-600 dark:text-gray-400 break-words break-all whitespace-pre-line align-top">${escapeHtml(c.description || "Chưa có thông tin")}</td>`).join("")}
-                        </tr>
-                        <tr>
-                            <td class="p-3 font-bold text-gray-500 dark:text-gray-400">Thao Tác</td>
-                            ${comparedCars
-                              .map(
-                                (c) => `
-                                <td class="p-3 space-y-1.5">
-                                    <button onclick="closeModal('compareModal'); openBookingModalById(${c.id})" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-2 rounded-xl text-xs transition shadow">
-                                        Đăng Ký Lái Thử
-                                    </button>
-                                    <button onclick="closeModal('compareModal'); openDetailModal(${c.id})" class="w-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-gray-200 font-bold py-2 rounded-xl text-xs transition border border-gray-300 dark:border-white/10">
-                                        Xem Chi Tiết
-                                    </button>
-                                </td>
-                            `,
-                              )
-                              .join("")}
-                        </tr>
-                    </tbody>
-                </table>
-            `;
-
-        openModal("compareModal");
-      }
-
-      function handleAddCarToCompare(carId) {
-        if (!carId) return;
-        toggleCompareCar(carId);
-        openCompareModal();
-      }
-
       function openDetailModal(id) {
         const targetId = Number(id);
         const car = allCars.find((c) => Number(c.id) === targetId);
         if (!car) return;
-
-        const isCompared = comparedCars.some((c) => Number(c.id) === targetId);
 
         document.getElementById("modalContent").innerHTML = `
                 <div class="relative rounded-2xl overflow-hidden mb-5">
@@ -1878,16 +1643,12 @@ webbanxe/
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3">
                     <button onclick="closeModal('detailModal'); openQRModalById(${car.id})" class="bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3 rounded-2xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
                         <i class="fa-solid fa-qrcode"></i> Đặt Cọc Giữ Xe
                     </button>
                     <button onclick="closeModal('detailModal'); openBookingModalById(${car.id})" class="bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-white font-bold py-3 rounded-2xl text-xs border border-gray-300 dark:border-white/10 transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-car-side"></i> Lái Thử Tận Nơi
-                    </button>
-                    <button onclick="toggleCompareCar(${car.id}); closeModal('detailModal');" class="${isCompared ? "bg-emerald-600 text-white" : "bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-800 dark:text-white"} font-bold py-3 rounded-2xl text-xs border border-gray-300 dark:border-white/10 transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-code-compare"></i> ${isCompared ? "Đang so sánh" : "+ So sánh xe"}
-                    </button>
                 </div>
                 
                 <div class="pt-1 text-center">
@@ -1955,6 +1716,8 @@ webbanxe/
             return;
           }
 
+          localStorage.setItem("4tl_customer_phone", cusPhone.replace(/[^0-9]/g, ""));
+
           showToast(
             "Đã lưu thông tin giao dịch cọc! Kế toán sẽ gọi xác nhận qua SĐT " + cusPhone + " trong 15 phút.",
             "success",
@@ -1982,6 +1745,8 @@ webbanxe/
           });
 
           const result = await res.json();
+
+          localStorage.setItem("4tl_customer_phone", phone.replace(/[^0-9]/g, ""));
 
           if (result.status === "success") {
             showToast("Đã lưu lịch lái thử thành công cho khách hàng: " + name, "success");
@@ -2018,6 +1783,8 @@ webbanxe/
           });
 
           const result = await res.json();
+
+          localStorage.setItem("4tl_customer_phone", phone.replace(/[^0-9]/g, ""));
 
           if (result.status === "success") {
             showToast("Đã tiếp nhận lịch hẹn lái thử của quý khách " + name + "!", "success");
@@ -2553,9 +2320,10 @@ webbanxe/
                         </span>
                     </td>
                     <td class="p-3 text-right space-x-2">
-                        <button onclick="updateOrder('deposits', ${d.id}, 'verified')" class="text-emerald-500 hover:underline font-bold">Xác nhận</button>
-                        <button onclick="deleteOrder('deposits', ${d.id})" class="text-indigo-500 hover:underline font-bold">Xóa</button>
-                    </td>
+                      <button onclick="updateOrder('deposits', ${d.id}, 'verified')" class="text-emerald-500 hover:underline font-bold">Xác nhận</button>
+                      <button onclick="updateOrder('deposits', ${d.id}, 'cancelled')" class="text-amber-500 hover:underline font-bold">Hủy</button>
+                      <button onclick="deleteOrder('deposits', ${d.id})" class="text-rose-500 hover:underline font-bold">Xóa</button>
+                  </td>
                 </tr>
             `,
                   )
@@ -2582,9 +2350,10 @@ webbanxe/
                         </span>
                     </td>
                     <td class="p-3 text-right space-x-2">
-                        <button onclick="updateOrder('bookings', ${b.id}, 'confirmed')" class="text-emerald-500 hover:underline font-bold">Duyệt</button>
-                        <button onclick="deleteOrder('bookings', ${b.id})" class="text-indigo-500 hover:underline font-bold">Xóa</button>
-                    </td>
+                      <button onclick="updateOrder('bookings', ${b.id}, 'confirmed')" class="text-emerald-500 hover:underline font-bold">Duyệt</button>
+                      <button onclick="updateOrder('bookings', ${b.id}, 'cancelled')" class="text-amber-500 hover:underline font-bold">Hủy</button>
+                      <button onclick="deleteOrder('bookings', ${b.id})" class="text-rose-500 hover:underline font-bold">Xóa</button>
+                  </td>
                 </tr>
             `,
                   )
@@ -3593,7 +3362,7 @@ webbanxe/
                             <a href="tel:0765650114" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3.5 rounded-2xl text-xs flex items-center justify-center gap-2 transition shadow-lg shadow-indigo-600/30">
                                 <i class="fa-solid fa-phone"></i> Gọi Hotline Tư Vấn Ngay: 0765.650.114
                             </a>
-                            <a href="bo_suu_tap_xe.html" class="w-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-gray-300 font-bold py-3 rounded-2xl text-xs flex items-center justify-center gap-2 border border-gray-200 dark:border-white/10 transition">
+                            <a href="car_collection.html" class="w-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-gray-300 font-bold py-3 rounded-2xl text-xs flex items-center justify-center gap-2 border border-gray-200 dark:border-white/10 transition">
                                 <i class="fa-solid fa-car"></i> Xem Các Mẫu Xe Khác
                             </a>
                         </div>
@@ -3632,7 +3401,7 @@ webbanxe/
       id="themeToggle"
       type="button"
       title="Chuyển chế độ Sáng / Tối"
-      class="fixed top-5 right-5 w-10 h-10 rounded-xl bg-white/90 hover:bg-gray-100 text-indigo-600 dark:bg-slate-800/90 dark:hover:bg-slate-700 dark:text-amber-300 flex items-center justify-center border border-gray-200 dark:border-white/10 transition shadow-md">
+      class="fixed top-5 right-5 z-50 w-10 h-10 rounded-xl bg-white/90 hover:bg-gray-100 text-indigo-600 dark:bg-slate-800/90 dark:hover:bg-slate-700 dark:text-amber-300 flex items-center justify-center border border-gray-200 dark:border-white/10 transition shadow-md">
       <i id="themeIcon" class="fa-solid fa-sun text-base"></i>
     </button> -->
 
@@ -5128,18 +4897,34 @@ try {
 
 ### file style.css:
 ```css
-/* SHOWROOM 4TL - INDIGO & VIOLET LUXURY AUTOMOTIVE DESIGN SYSTEM */
-
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Montserrat:wght@600;700;800;900&display=swap');
-
+/* 4TL MOTORS - ROYAL AMETHYST (VELVET VIOLET GLOW - DARK & LIGHT EDITION) */
 :root {
     --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
     --font-heading: 'Montserrat', 'Be Vietnam Pro', sans-serif;
-    --primary: #6366f1;
-    --primary-hover: #4f46e5;
-    --accent-violet: #8b5cf6;
-    --primary-glow: rgba(99, 102, 241, 0.45);
+
+    /* Core Royal Amethyst Palette */
+    --primary: #8b5cf6;          /* Violet 500 */
+    --primary-hover: #7c3aed;    /* Violet 600 */
+    --accent-violet: #a78bfa;    /* Violet 400 */
+    --accent-lavender: #ddd6fe;  /* Violet 200 */
+    --accent-orchid: #9333ea;    /* Purple 600 */
     --gold: #f59e0b;
+
+    --primary-glow: rgba(139, 92, 246, 0.45);
+    --galaxy-gradient: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 50%, #4f46e5 100%);
+    --aurora-text-gradient: linear-gradient(135deg, #ffffff 10%, #ddd6fe 45%, #a78bfa 78%, #818cf8 100%);
+}
+
+html.light {
+    --primary: #6d28d9;
+    --primary-hover: #5b21b6;
+    --accent-violet: #7c3aed;
+    --accent-lavender: #8b5cf6;
+    --accent-orchid: #9333ea;
+
+    --primary-glow: rgba(109, 40, 217, 0.25);
+    --galaxy-gradient: linear-gradient(135deg, #5b21b6 0%, #7c3aed 52%, #4338ca 100%);
+    --aurora-text-gradient: linear-gradient(135deg, #1e1b4b 8%, #5b21b6 48%, #7c3aed 82%, #4f46e5 100%);
 }
 
 html {
@@ -5150,157 +4935,416 @@ html {
 body {
     overflow-x: hidden;
     font-family: var(--font-sans);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
     font-family: var(--font-heading);
 }
 
-/* Custom Scrollbar - Dark Mode */
+/* 1. DARK MODE: DEEP VELVET PURPLE & AMETHYST GLOW */
+html.dark {
+    background: #090514 !important;
+}
+
+html.dark body {
+    background: transparent !important;
+    position: relative;
+    isolation: isolate;
+}
+
+/* Nền ánh tím hoàng gia đa tầng (Không còn hồng gắt hay cyan) */
+html.dark body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+
+    background-color: #090514;
+    background-image:
+        radial-gradient(
+            ellipse 70% 55% at 20% 15%,
+            rgba(124, 58, 237, 0.32) 0%,
+            rgba(91, 33, 182, 0.14) 45%,
+            transparent 75%
+        ),
+        radial-gradient(
+            ellipse 65% 50% at 82% 28%,
+            rgba(139, 92, 246, 0.28) 0%,
+            rgba(76, 29, 149, 0.12) 48%,
+            transparent 75%
+        ),
+        radial-gradient(
+            ellipse 80% 60% at 50% 85%,
+            rgba(109, 40, 217, 0.26) 0%,
+            rgba(46, 16, 101, 0.15) 50%,
+            transparent 80%
+        ),
+        linear-gradient(
+            180deg,
+            #0b0618 0%,
+            #120926 50%,
+            #080412 100%
+        );
+    background-attachment: fixed;
+}
+
+/* Cho phép <main> và <section> trong suốt hoàn toàn để lộ nền ngân hà */
+html.dark :is(main, section):not(#chatWindow):not([id$="Modal"] *) {
+    background-color: transparent !important;
+}
+
+/* Chỉ giữ nền kính mờ cho thanh điều hướng trên cùng (header) và chân trang (footer) */
+html.dark header {
+    background-color: rgba(15, 9, 32, 0.65) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+html.dark footer {
+    background-color: rgba(11, 6, 24, 0.78) !important;
+}
+
+/* Giữ nền đặc vừa đủ cho Popup Modal và Cửa sổ Chat */
+html.dark :is(#detailModal, #qrModal, #compareModal, #bookingModal, #editCarModal) > div,
+html.dark #chatWindow {
+    background-color: rgba(18, 11, 40, 0.95) !important;
+    border-color: rgba(139, 92, 246, 0.38) !important;
+}
+
+/* 2. LIGHT MODE: SOFT LAVENDER MIST (SƯƠNG TÍM NHẠT) */
+html.light {
+    background: #f5f3ff !important;
+}
+
+html.light body {
+    background: transparent !important;
+    position: relative;
+    isolation: isolate;
+}
+
+html.light body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+    background-color: #f5f3ff;
+    background-image:
+        radial-gradient(ellipse at 14% 16%, rgba(196, 181, 253, 0.55) 0%, transparent 50%),
+        radial-gradient(ellipse at 86% 22%, rgba(221, 214, 254, 0.60) 0%, transparent 48%),
+        radial-gradient(ellipse at 50% 88%, rgba(167, 139, 250, 0.32) 0%, transparent 55%);
+    background-attachment: fixed;
+}
+
+html.light body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background-image:
+        radial-gradient(2px 2px at 45px 65px, rgba(124, 58, 237, 0.25) 99%, transparent),
+        radial-gradient(1.5px 1.5px at 180px 140px, rgba(139, 92, 246, 0.22) 99%, transparent),
+        radial-gradient(2px 2px at 320px 90px, rgba(109, 40, 217, 0.22) 99%, transparent),
+        radial-gradient(1.5px 1.5px at 260px 270px, rgba(147, 51, 234, 0.20) 99%, transparent);
+    background-size: 460px 350px;
+}
+
+/* 3. BỤI ÁNH SÁNG TÍM LẤP LÁNH NHẸ (DARK MODE) */
+html.dark body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(1.2px 1.2px at 25px 35px, rgba(237, 233, 254, 0.85) 99%, transparent),
+        radial-gradient(1.8px 1.8px at 95px 115px, rgba(196, 181, 253, 0.90) 99%, transparent),
+        radial-gradient(1.2px 1.2px at 180px 65px, rgba(167, 139, 250, 0.85) 99%, transparent),
+        radial-gradient(2px 2px at 240px 180px, rgba(221, 214, 254, 0.88) 99%, transparent),
+        radial-gradient(1.2px 1.2px at 310px 45px, rgba(255, 255, 255, 0.85) 99%, transparent),
+        radial-gradient(1.5px 1.5px at 370px 140px, rgba(168, 85, 247, 0.82) 99%, transparent),
+        radial-gradient(1.2px 1.2px at 420px 230px, rgba(221, 214, 254, 0.80) 99%, transparent),
+        radial-gradient(1.5px 1.5px at 145px 265px, rgba(196, 181, 253, 0.85) 99%, transparent);
+
+    background-size: 460px 350px;
+    background-repeat: repeat;
+    opacity: 0.45;
+    animation: galaxyStarsTwinkle 5s ease-in-out infinite alternate;
+}
+
+@keyframes galaxyStarsTwinkle {
+    0% { opacity: 0.25; filter: brightness(0.9); }
+    50% { opacity: 0.45; filter: brightness(1.05); }
+    100% { opacity: 0.60; filter: brightness(1.18); }
+}
+
+/* 4. SAO LẤP LÁNH ÁNH TÍM */
+.galaxy-sparkles {
+    display: none;
+}
+
+html.dark body .galaxy-sparkles {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.galaxy-sparkles span {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #ede9fe;
+    box-shadow:
+        0 0 6px 2px rgba(221, 214, 254, 0.85),
+        0 0 16px 5px rgba(139, 92, 246, 0.65);
+    opacity: 0.2;
+    animation: sparklePulse 3.8s ease-in-out infinite;
+}
+
+.galaxy-sparkles span::before,
+.galaxy-sparkles span::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.galaxy-sparkles span::before {
+    width: 1px;
+    height: 18px;
+    background: linear-gradient(transparent, rgba(221, 214, 254, 0.9), transparent);
+}
+
+.galaxy-sparkles span::after {
+    width: 18px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(221, 214, 254, 0.9), transparent);
+}
+
+.galaxy-sparkles span:nth-child(1) { left: 12%; top: 18%; animation-delay: 0s; }
+.galaxy-sparkles span:nth-child(2) { left: 28%; top: 65%; animation-delay: 1.2s; }
+.galaxy-sparkles span:nth-child(3) { left: 48%; top: 28%; animation-delay: 2.1s; }
+.galaxy-sparkles span:nth-child(4) { left: 67%; top: 75%; animation-delay: 0.7s; }
+.galaxy-sparkles span:nth-child(5) { left: 83%; top: 35%; animation-delay: 1.8s; }
+.galaxy-sparkles span:nth-child(6) { left: 92%; top: 82%; animation-delay: 2.7s; }
+.galaxy-sparkles span:nth-child(7) { left: 38%; top: 88%; animation-delay: 1.5s; }
+.galaxy-sparkles span:nth-child(8) { left: 75%; top: 12%; animation-delay: 0.4s; }
+
+@keyframes sparklePulse {
+    0%, 100% { opacity: 0.12; transform: scale(0.55) rotate(0deg); }
+    45% { opacity: 0.90; transform: scale(1.3) rotate(45deg); }
+    65% { opacity: 0.50; transform: scale(0.9) rotate(90deg); }
+}
+
+/* 5. VỆT SÁNG ÁNH TÍM NHẸ */
+.galaxy-meteors {
+    display: none;
+}
+
+html.dark body .galaxy-meteors {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.galaxy-meteors span {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: #ede9fe;
+    box-shadow: 0 0 8px 2px rgba(167, 139, 250, 0.9);
+    opacity: 0;
+}
+
+.galaxy-meteors span::after {
+    content: "";
+    position: absolute;
+    right: 1px;
+    top: 0;
+    width: 70px;
+    height: 1px;
+    transform: rotate(-35deg);
+    transform-origin: right center;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(139, 92, 246, 0.25),
+        rgba(196, 181, 253, 0.65),
+        rgba(255, 255, 255, 0.92)
+    );
+}
+
+.galaxy-meteors span:nth-child(1) { left: 18%; top: 10%; animation: meteorFall 9s linear infinite 2s; }
+.galaxy-meteors span:nth-child(2) { left: 72%; top: 20%; animation: meteorFall 12s linear infinite 6s; }
+.galaxy-meteors span:nth-child(3) { left: 45%; top: 5%; animation: meteorFall 10s linear infinite 9s; }
+
+@keyframes meteorFall {
+    0% { opacity: 0; transform: translate(0, 0); }
+    3% { opacity: 0.80; }
+    12% { opacity: 0.60; }
+    20% { opacity: 0; transform: translate(-150px, 190px); }
+    100% { opacity: 0; transform: translate(-150px, 190px); }
+}
+
+/* 6. SCROLLBAR ÁNH TÍM */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: #0f172a;
+    background: #090514;
 }
 ::-webkit-scrollbar-thumb {
-    background: #334155;
-    border-radius: 9999px;
+    background: linear-gradient(180deg, #6d28d9, #8b5cf6);
+    border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #6366f1;
+    background: linear-gradient(180deg, #8b5cf6, #a78bfa);
 }
 
-/* Custom Scrollbar - Light Mode */
 .light ::-webkit-scrollbar-track {
-    background: #f1f5f9;
+    background: #ede9fe;
 }
 .light ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-}
-.light ::-webkit-scrollbar-thumb:hover {
-    background: #6366f1;
+    background: linear-gradient(180deg, #7c3aed, #8b5cf6);
 }
 
-/* Glassmorphism Classes */
+/* 7. GLASSMORPHISM PANELS & CARDS (ÁNH TÍM MỊN) */
 .glass-panel {
-    background: rgba(15, 23, 42, 0.78);
+    background: rgba(18, 11, 40, 0.38);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(139, 92, 246, 0.15);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    border: 1px solid rgba(139, 92, 246, 0.28);
+    box-shadow: 0 10px 35px rgba(9, 5, 22, 0.42), inset 0 1px 0 rgba(221, 214, 254, 0.12);
 }
 
 .light .glass-panel {
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.90);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(224, 231, 255, 0.95);
-    box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.08);
+    border: 1px solid rgba(124, 58, 237, 0.20);
+    box-shadow: 0 10px 28px -5px rgba(109, 40, 217, 0.12);
 }
 
 .glass-card {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(23, 14, 50, 0.40);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(139, 92, 246, 0.24);
+    transition: all 0.32s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .light .glass-card {
-    background: #ffffff;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(139, 92, 246, 0.18);
+    box-shadow: 0 6px 16px rgba(109, 40, 217, 0.07);
 }
 
 .glass-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(129, 140, 248, 0.5);
-    box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5), 0 0 22px 2px rgba(99, 102, 241, 0.22);
+    border-color: rgba(167, 139, 250, 0.65);
+    box-shadow:
+        0 20px 35px -10px rgba(0, 0, 0, 0.65),
+        0 0 28px rgba(139, 92, 246, 0.35),
+        0 0 45px rgba(109, 40, 217, 0.18);
 }
 
 .light .glass-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(99, 102, 241, 0.45);
-    box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.12), 0 8px 10px -6px rgba(124, 58, 237, 0.08);
+    border-color: rgba(124, 58, 237, 0.45);
+    box-shadow:
+        0 18px 28px -6px rgba(109, 40, 217, 0.16),
+        0 0 18px rgba(139, 92, 246, 0.12);
 }
 
-/* Luxury Glow & Gradients (Blue-Violet) */
+/* 8. BUTTONS, TEXT GRADIENTS & GLOWS */
+:is(button, a).bg-indigo-600 {
+    background-image: var(--galaxy-gradient) !important;
+    border: 1px solid rgba(221, 214, 254, 0.2);
+    box-shadow: 0 6px 20px -4px rgba(139, 92, 246, 0.5);
+    transition: all 0.25s ease;
+}
+
+:is(button, a).bg-indigo-600:hover {
+    filter: brightness(1.12);
+    box-shadow: 0 8px 26px -2px rgba(167, 139, 250, 0.55);
+}
+
 .glow-red {
-    box-shadow: 0 0 25px rgba(99, 102, 241, 0.45);
+    box-shadow: 0 0 24px rgba(139, 92, 246, 0.40), 0 0 42px rgba(109, 40, 217, 0.22);
 }
 
 .glow-red-sm {
-    box-shadow: 0 0 12px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.32);
 }
 
-.text-gradient-red {
-    background: linear-gradient(135deg, #ffffff 15%, #a5b4fc 55%, #8b5cf6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.light .text-gradient-red {
-    background: linear-gradient(135deg, #1e1b4b 15%, #4f46e5 60%, #7c3aed 100%);
+.text-gradient-red,
+.text-galaxy-gradient {
+    background: var(--aurora-text-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-gold {
-    background: linear-gradient(135deg, #fef08a 0%, #f59e0b 60%, #b45309 100%);
+    background: linear-gradient(135deg, #fef08a, #f59e0b 60%, #b45309);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* Background Gradients - Xanh dương pha tím */
-.hero-gradient-mesh {
-    background-image: 
-        radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.24) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.20) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(15, 23, 42, 0.95) 0px, transparent 80%);
+/* 9. HERO GRADIENT MESH (ÁNH TÍM SÂU) */
+html.dark .hero-gradient-mesh {
+    background-color: transparent !important;
+    background-image:
+        radial-gradient(ellipse at 22% 45%, rgba(124, 58, 237, 0.28), transparent 58%),
+        radial-gradient(ellipse at 82% 30%, rgba(139, 92, 246, 0.20), transparent 55%),
+        radial-gradient(ellipse at 65% 85%, rgba(91, 33, 182, 0.18), transparent 58%);
 }
 
 .light .hero-gradient-mesh {
-    background-image: 
-        radial-gradient(at 0% 0%, rgba(224, 231, 255, 0.95) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(237, 233, 254, 0.85) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, #f8fafc 0px, transparent 80%);
+    background-image:
+        radial-gradient(at 0% 0%, rgba(221, 214, 254, 0.72), transparent 55%),
+        radial-gradient(at 100% 0%, rgba(196, 181, 253, 0.62), transparent 55%),
+        radial-gradient(at 50% 100%, rgba(237, 233, 254, 0.75), transparent 60%);
 }
 
-/* Pulse Glow Animation */
+/* 10. ANIMATIONS, RANGE SLIDER, FILTER PILLS */
 @keyframes pulse-ring {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(99, 102, 241, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.65); }
+    70% { transform: scale(1); box-shadow: 0 0 0 13px rgba(139, 92, 246, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
 }
 
 .pulse-ring {
     animation: pulse-ring 2.5s infinite cubic-bezier(0.4, 0, 0.6, 1);
 }
 
-/* Shimmer Loading / Luxury Shine */
 .shine-hover {
     position: relative;
     overflow: hidden;
 }
 
 .shine-hover::after {
-    content: '';
+    content: "";
     position: absolute;
     top: -50%;
     left: -60%;
     width: 20%;
     height: 200%;
-    background: linear-gradient(
-        60deg,
-        rgba(255, 255, 255, 0) 20%,
-        rgba(255, 255, 255, 0.25) 50%,
-        rgba(255, 255, 255, 0) 80%
-    );
+    background: linear-gradient(60deg, transparent 20%, rgba(237, 233, 254, 0.28) 50%, transparent 80%);
     transform: rotate(25deg);
     transition: all 0.75s ease;
 }
@@ -5309,89 +5353,64 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     left: 140%;
 }
 
-/* Range input styling for Installment Calculator */
+/* Range Input (Thanh trượt dự toán trả góp ánh tím) */
 input[type=range] {
     -webkit-appearance: none;
     appearance: none;
-    background: #334155;
+    background: #2e1065;
     height: 6px;
-    border-radius: 9999px;
+    border-radius: 999px;
     outline: none;
 }
+
 .light input[type=range] {
-    background: #cbd5e1;
+    background: #ddd6fe;
     cursor: pointer;
 }
+
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1, #7c3aed);
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.65);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.8);
     transition: transform 0.15s ease;
 }
+
 input[type=range]::-webkit-slider-thumb:hover {
     transform: scale(1.2);
 }
 
-/* Brand Filter Pills */
-.brand-pill {
-    transition: all 0.2s ease;
+/* Brand & Category Filter Pills */
+.brand-pill,
+.cat-pill {
+    transition: all 0.22s ease;
     user-select: none;
 }
-.brand-pill.active {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
-    color: #ffffff !important;
-    border-color: #6366f1 !important;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-}
-.light .brand-pill:not(.active) {
-    background: #ffffff;
-    color: #334155;
-    border-color: #e2e8f0;
-}
-.light .brand-pill:not(.active):hover {
-    border-color: #6366f1;
-    color: #4f46e5;
-}
 
-/* Category Filter Pills */
-.cat-pill {
-    transition: all 0.2s ease;
-}
+.brand-pill.active,
 .cat-pill.active {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
-    color: #ffffff !important;
-    border-color: #6366f1 !important;
+    background: var(--galaxy-gradient) !important;
+    color: #fff !important;
+    border-color: rgba(196, 181, 253, 0.65) !important;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.48);
 }
+
+.light .brand-pill:not(.active),
 .light .cat-pill:not(.active) {
-    background: #ffffff;
-    color: #334155;
-    border-color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.92);
+    color: #3b0764;
+    border-color: #ddd6fe;
 }
+
+.light .brand-pill:not(.active):hover,
 .light .cat-pill:not(.active):hover {
-    background: #eef2ff;
-    color: #4f46e5;
-}
-
-/* Custom Dropdown Animation */
-.nav-group:hover .dropdown-menu {
-    display: block;
-    animation: fadeInSlide 0.25s ease forwards;
-}
-
-@keyframes fadeInSlide {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    border-color: #7c3aed;
+    color: #6d28d9;
+    background: #f5f3ff;
 }
 ```
 
@@ -5651,14 +5670,20 @@ if (typeof tailwind !== "undefined") {
       extend: {
         colors: {
           brand: {
-            50: "#eef2ff",
-            100: "#e0e7ff",
-            400: "#818cf8",
-            500: "#6366f1",
-            600: "#4f46e5",
-            700: "#4338ca",
-            800: "#3730a3",
-            900: "#312e81",
+            50: "#faf5ff",
+            100: "#f3e8ff",
+            400: "#c084fc",
+            500: "#a855f7",
+            600: "#9333ea",
+            700: "#7e22ce",
+            800: "#6b21a8",
+            900: "#581c87",
+          },
+          galaxy: {
+            space: "#090514",
+            nebula: "#8b5cf6",
+            aurora: "#a78bfa",
+            pearl: "#f5f3ff",
           },
         },
         fontFamily: {
@@ -5703,7 +5728,7 @@ function toggleGlobalTheme() {
   applyGlobalTheme(savedTheme);
 })();
 
-// 5. Gắn sự kiện click cho nút #themeToggle sau khi DOM tải xong
+// 5. Gắn sự kiện click cho nút #themeToggle & Tự động khởi tạo hiệu ứng Galaxy (Sao 4 cánh + Sao băng)
 document.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem("theme") || "dark";
   applyGlobalTheme(savedTheme);
@@ -5711,6 +5736,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeToggle = document.getElementById("themeToggle");
   if (themeToggle) {
     themeToggle.onclick = toggleGlobalTheme;
+  }
+
+  // Tự động chèn hiệu ứng Sao 4 cánh & Sao băng nếu chưa có trong HTML
+  if (!document.querySelector(".galaxy-sparkles")) {
+    const sparkles = document.createElement("div");
+    sparkles.className = "galaxy-sparkles";
+    sparkles.setAttribute("aria-hidden", "true");
+    sparkles.innerHTML = "<span></span>".repeat(8);
+    document.body.prepend(sparkles);
+  }
+
+  if (!document.querySelector(".galaxy-meteors")) {
+    const meteors = document.createElement("div");
+    meteors.className = "galaxy-meteors";
+    meteors.setAttribute("aria-hidden", "true");
+    meteors.innerHTML = "<span></span>".repeat(3);
+    document.body.prepend(meteors);
   }
 });
 
@@ -5767,44 +5809,7 @@ function escapeHtml(str) {
 }
 ```
 
-### file delete_car.php:
-```php
-<?php
-require_once 'auth_check.php';
-requireAdminApi();
-
-require_once 'db.php';
-header("Content-Type: application/json; charset=UTF-8");
-
-if (!$pdo) {
-    echo json_encode(["status" => "error", "message" => "Chưa kết nối được CSDL MySQL"], JSON_UNESCAPED_UNICODE);
-    exit();
-}
-
-$input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
-$id = intval($_GET['id'] ?? $input['id'] ?? 0);
-
-if ($id <= 0) {
-    echo json_encode(["status" => "error", "message" => "ID xe không hợp lệ!"], JSON_UNESCAPED_UNICODE);
-    exit();
-}
-
-try {
-    $stmt = $pdo->prepare("DELETE FROM cars WHERE id = ?");
-    $stmt->execute([$id]);
-
-    if ($stmt->rowCount() > 0) {
-        echo json_encode(["status" => "success", "message" => "Xóa xe thành công!"], JSON_UNESCAPED_UNICODE);
-    } else {
-        echo json_encode(["status" => "error", "message" => "Không tìm thấy xe cần xóa hoặc xe đã bị xóa trước đó."], JSON_UNESCAPED_UNICODE);
-    }
-} catch (Exception $e) {
-    echo json_encode(["status" => "error", "message" => "Lỗi CSDL: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
-}
-?>
-```
-
-### file bo_suu_tap_xe.html
+### file car_collection.html
 ```html
 <!doctype html>
 <html lang="vi" class="dark">
@@ -5854,6 +5859,12 @@ try {
         </a>
 
         <div class="flex items-center gap-3">
+          <a
+            href="orders_history.html"
+            class="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 px-3.5 py-2 rounded-xl text-xs font-bold border border-emerald-500/30 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            Đơn Của Tôi
+          </a>
           <button
             onclick="openCompareModal()"
             class="relative bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 px-4 py-2 rounded-xl text-xs font-bold border border-indigo-500/30 transition flex items-center gap-1.5">
@@ -6513,6 +6524,8 @@ try {
           }
         } catch (e) {}
 
+        localStorage.setItem("4tl_customer_phone", phone.replace(/[^0-9]/g, ""));
+
         showToast("Đã ghi nhận thông tin đặt cọc thành công! Nhân viên sẽ liên hệ lại ngay.", "success");
         document.getElementById("qrCustomerName").value = "";
         document.getElementById("qrCustomerPhone").value = "";
@@ -6542,6 +6555,9 @@ try {
             body: JSON.stringify({ type: "booking", name, phone, car, date, note: "Đặt lái thử từ trang Bộ sưu tập" }),
           });
         } catch (e) {}
+
+        localStorage.setItem("4tl_customer_phone", phone.replace(/[^0-9]/g, ""));
+
         showToast("Đăng ký lịch lái thử thành công cho quý khách: " + name, "success");
         closeModal("bookingModal");
       }
@@ -6850,4 +6866,520 @@ try {
     </div>
   </body>
 </html>
+```
+
+### file orders_history.html:
+```html
+<!doctype html>
+<html lang="vi" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lịch Sử Đơn Hàng & Lái Thử - SHOWROOM 4TL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../js/theme.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body
+    class="bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-gray-100 transition-colors duration-300 min-h-screen selection:bg-indigo-600 selection:text-white">
+    <!-- TOAST CONTAINER -->
+    <div
+      id="toastContainer"
+      class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none"></div>
+
+    <!-- NAVBAR -->
+    <header
+      class="sticky top-0 z-40 bg-white/85 dark:bg-slate-950/85 backdrop-blur-xl border-b border-gray-200/80 dark:border-white/10 px-4 md:px-8 py-3.5 transition-all duration-300 shadow-sm">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a href="../index.html" class="flex items-center gap-3 group">
+          <div
+            class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-900 flex items-center justify-center text-white shadow-lg shadow-indigo-600/30">
+            <i class="fa-solid fa-shield-halved text-lg"></i>
+          </div>
+          <div>
+            <div
+              class="text-2xl font-black tracking-wider text-slate-900 dark:text-white font-heading leading-none flex items-center gap-1">
+              4TL
+              <span class="text-indigo-600">MOTORS</span>
+            </div>
+            <span class="text-[10px] font-semibold text-gray-500 dark:text-gray-400 tracking-widest uppercase">
+              Order Tracking
+            </span>
+          </div>
+        </a>
+
+        <div class="flex items-center gap-3">
+          <a
+            href="car_collection.html"
+            class="hidden sm:flex bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 px-4 py-2 rounded-xl text-xs font-bold border border-indigo-500/30 transition items-center gap-1.5">
+            <i class="fa-solid fa-car"></i>
+            Bộ Sưu Tập Xe
+          </a>
+          <a
+            href="../index.html"
+            class="bg-gray-100 hover:bg-gray-200 text-slate-700 dark:bg-slate-800 dark:text-gray-200 px-4 py-2 rounded-xl text-xs font-bold border border-gray-200 dark:border-white/10 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-arrow-left"></i>
+            Trang Chủ
+          </a>
+          <button
+            id="themeToggle"
+            type="button"
+            title="Chuyển chế độ Sáng / Tối"
+            class="w-10 h-10 rounded-xl bg-gray-100 text-amber-500 dark:bg-slate-800 dark:text-yellow-400 flex items-center justify-center border border-gray-200 dark:border-white/10 transition shadow-sm">
+            <i id="themeIcon" class="fa-solid fa-sun text-base"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <!-- HEADER & SEARCH FORM -->
+      <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-gray-200 dark:border-white/10 shadow-2xl space-y-6">
+        <div class="text-center max-w-2xl mx-auto space-y-2">
+          <span
+            class="text-xs font-bold text-indigo-600 dark:text-indigo-400 tracking-widest uppercase inline-flex items-center gap-1.5">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            CỔNG THÔNG TIN KHÁCH HÀNG
+          </span>
+          <h1 class="text-2xl sm:text-3xl font-black font-heading text-slate-900 dark:text-white">
+            TRA CỨU LỊCH SỬ ĐẶT CỌC & LÁI THỬ
+          </h1>
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+            Nhập số điện thoại bạn đã dùng khi đặt cọc giữ xe hoặc đăng ký lái thử để theo dõi tiến độ xử lý từ Showroom
+            4TL.
+          </p>
+        </div>
+
+        <form
+          id="lookupForm"
+          onsubmit="handleLookupSubmit(event)"
+          class="max-w-xl mx-auto flex flex-col sm:flex-row gap-3">
+          <div class="relative flex-1">
+            <i class="fa-solid fa-phone absolute left-4 top-3.5 text-gray-400 text-sm"></i>
+            <input
+              type="tel"
+              id="lookupPhoneInput"
+              required
+              placeholder="Nhập số điện thoại của bạn (VD: 0909123456)..."
+              class="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-white/15 rounded-2xl text-sm text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition" />
+          </div>
+          <button
+            type="submit"
+            class="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold px-6 py-3 rounded-2xl text-sm transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 shrink-0">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Tra Cứu Ngay</span>
+          </button>
+        </form>
+
+        <div id="savedPhoneHint" class="hidden text-center text-xs text-gray-500 dark:text-gray-400">
+          Đang hiển thị lịch sử cho SĐT:
+          <strong id="currentSearchedPhone" class="text-indigo-600 dark:text-indigo-400 font-mono"></strong>
+          <button
+            type="button"
+            onclick="refreshCurrentLookup()"
+            class="ml-2 text-emerald-600 dark:text-emerald-400 hover:underline font-bold">
+            <i class="fa-solid fa-rotate"></i>
+            Làm mới tiến độ
+          </button>
+        </div>
+      </div>
+
+      <!-- EMPTY / INITIAL STATE -->
+      <div
+        id="emptyStateBox"
+        class="bg-white dark:bg-slate-900/60 p-10 rounded-3xl border border-gray-200 dark:border-white/10 text-center space-y-3">
+        <div
+          class="w-14 h-14 rounded-2xl bg-indigo-600/10 text-indigo-600 dark:text-indigo-400 mx-auto flex items-center justify-center text-2xl">
+          <i class="fa-solid fa-file-invoice"></i>
+        </div>
+        <h3 class="text-base font-bold text-slate-900 dark:text-white">Chưa có dữ liệu hiển thị</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 max-w-md mx-auto">
+          Hãy nhập số điện thoại của bạn ở khung phía trên để kiểm tra trạng thái xác nhận chuyển khoản đặt cọc hoặc
+          lịch hẹn lái thử xe.
+        </p>
+      </div>
+
+      <!-- RESULTS CONTAINER -->
+      <div id="resultsContainer" class="hidden space-y-8">
+        <!-- SECTION 1: ĐƠN ĐẶT CỌC GIỮ XE -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-black font-heading text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-qrcode text-indigo-600 dark:text-indigo-400"></i>
+              ĐƠN ĐẶT CỌC GIỮ XE
+            </h2>
+            <span
+              id="customerDepositCount"
+              class="text-xs font-bold px-3 py-1 rounded-full bg-indigo-600/10 text-indigo-600 dark:text-indigo-400">
+              0 đơn
+            </span>
+          </div>
+          <div id="customerDepositList" class="grid grid-cols-1 gap-4"></div>
+        </section>
+
+        <!-- SECTION 2: LỊCH HẸN LÁI THỬ & TƯ VẤN -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-black font-heading text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-calendar-check text-emerald-500"></i>
+              LỊCH HẸN LÁI THỬ & TƯ VẤN
+            </h2>
+            <span
+              id="customerBookingCount"
+              class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+              0 lịch hẹn
+            </span>
+          </div>
+          <div id="customerBookingList" class="grid grid-cols-1 gap-4"></div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toastContainer");
+        if (!container) return;
+        const toast = document.createElement("div");
+        toast.className = `pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-2xl text-xs font-bold border backdrop-blur-xl ${
+          type === "success"
+            ? "bg-emerald-950/90 border-emerald-500/40 text-emerald-300"
+            : "bg-rose-950/90 border-rose-500/40 text-rose-300"
+        }`;
+        toast.innerHTML = `<i class="fa-solid ${type === "success" ? "fa-circle-check text-emerald-400" : "fa-triangle-exclamation text-rose-400"}"></i><span>${escapeHtml(message)}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 3200);
+      }
+
+      function formatCurrency(num) {
+        const val = Number(num) || 0;
+        if (val <= 0) return "Theo thỏa thuận";
+        return Math.round(val).toLocaleString("vi-VN") + " VNĐ";
+      }
+
+      // Tạo thanh tiến độ 3 bước cho Đơn Đặt Cọc
+      function renderDepositProgress(status) {
+        if (status === "cancelled") {
+          return `
+            <div class="mt-4 p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-bold flex items-center gap-2">
+              <i class="fa-solid fa-circle-xmark text-base"></i>
+              <span>Đơn đặt cọc này đã bị hủy. Vui lòng liên hệ Hotline 0765.650.114 nếu cần hỗ trợ hoàn/đổi.</span>
+            </div>
+          `;
+        }
+
+        const isVerified = status === "verified";
+        return `
+          <div class="mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
+            <div class="grid grid-cols-3 gap-2 text-center text-[11px]">
+              <!-- Bước 1 -->
+              <div class="flex flex-col items-center gap-1.5">
+                <div class="w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold shadow">
+                  <i class="fa-solid fa-check text-xs"></i>
+                </div>
+                <span class="font-bold text-slate-800 dark:text-white">1. Đã gửi yêu cầu</span>
+                <span class="text-[10px] text-gray-400">Hệ thống đã ghi nhận</span>
+              </div>
+
+              <!-- Bước 2 -->
+              <div class="flex flex-col items-center gap-1.5">
+                <div class="w-7 h-7 rounded-full ${isVerified ? "bg-emerald-500 text-white" : "bg-amber-500 text-white animate-pulse"} flex items-center justify-center font-bold shadow">
+                  <i class="fa-solid ${isVerified ? "fa-check" : "fa-hourglass-half"} text-xs"></i>
+                </div>
+                <span class="font-bold ${isVerified ? "text-slate-800 dark:text-white" : "text-amber-500"}">2. Kế toán đối soát</span>
+                <span class="text-[10px] text-gray-400">${isVerified ? "Đã khớp giao dịch" : "Đang kiểm tra CK"}</span>
+              </div>
+
+              <!-- Bước 3 -->
+              <div class="flex flex-col items-center gap-1.5">
+                <div class="w-7 h-7 rounded-full ${isVerified ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/40" : "bg-gray-200 dark:bg-slate-800 text-gray-400"} flex items-center justify-center font-bold">
+                  <i class="fa-solid fa-car-side text-xs"></i>
+                </div>
+                <span class="font-bold ${isVerified ? "text-indigo-600 dark:text-indigo-400" : "text-gray-400"}">3. Giữ xe & Bàn giao</span>
+                <span class="text-[10px] text-gray-400">${isVerified ? "Xe đã khóa giữ cho bạn" : "Chờ xác nhận cọc"}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Tạo thanh tiến độ 3 bước cho Lịch Lái Thử
+      function renderBookingProgress(status) {
+        if (status === "cancelled") {
+          return `
+            <div class="mt-4 p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-bold flex items-center gap-2">
+              <i class="fa-solid fa-circle-xmark text-base"></i>
+              <span>Lịch hẹn này đã hủy. Bạn có thể đặt lại lịch mới bất cứ lúc nào!</span>
+            </div>
+          `;
+        }
+
+        const isConfirmed = status === "confirmed";
+        return `
+          <div class="mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
+            <div class="grid grid-cols-3 gap-2 text-center text-[11px]">
+              <!-- Bước 1 -->
+              <div class="flex flex-col items-center gap-1.5">
+                <div class="w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold shadow">
+                  <i class="fa-solid fa-check text-xs"></i>
+                </div>
+                <span class="font-bold text-slate-800 dark:text-white">1. Đã đăng ký</span>
+                <span class="text-[10px] text-gray-400">Tiếp nhận thông tin</span>
+              </div>
+
+              <!-- Bước 2 -->
+              <div class="flex flex-col items-center gap-1.5">
+                <div class="w-7 h-7 rounded-full ${isConfirmed ? "bg-emerald-500 text-white" : "bg-amber-500 text-white animate-pulse"} flex items-center justify-center font-bold shadow">
+                  <i class="fa-solid ${isConfirmed ? "fa-check" : "fa-phone-volume"} text-xs"></i>
+                </div>
+                <span class="font-bold ${isConfirmed ? "text-slate-800 dark:text-white" : "text-amber-500"}">2. Chuyên viên xác nhận</span>
+                <span class="text-[10px] text-gray-400">${isConfirmed ? "Đã chốt lịch hẹn" : "Chờ Admin duyệt"}</span>
+              </div>
+
+              <!-- Bước 3 -->
+              <div class="flex flex-col items-center gap-1.5">
+                <div class="w-7 h-7 rounded-full ${isConfirmed ? "bg-emerald-600 text-white shadow-lg shadow-emerald-600/40" : "bg-gray-200 dark:bg-slate-800 text-gray-400"} flex items-center justify-center font-bold">
+                  <i class="fa-solid fa-key text-xs"></i>
+                </div>
+                <span class="font-bold ${isConfirmed ? "text-emerald-600 dark:text-emerald-400" : "text-gray-400"}">3. Sẵn sàng trải nghiệm</span>
+                <span class="text-[10px] text-gray-400">${isConfirmed ? "Xe đã chuẩn bị sẵn" : "Chờ xác nhận"}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      async function lookupOrdersByPhone(phone, silent = false) {
+        const clean = String(phone || "").replace(/[^0-9]/g, "");
+        if (clean.length < 8) {
+          if (!silent) showToast("Vui lòng nhập số điện thoại hợp lệ!", "error");
+          return;
+        }
+
+        try {
+          const res = await fetch(`../php/get_customer_orders.php?phone=${encodeURIComponent(clean)}&t=${Date.now()}`, {
+            cache: "no-store",
+          });
+          const data = await res.json();
+
+          if (data.status !== "success") {
+            if (!silent) showToast(data.message || "Không thể tra cứu dữ liệu!", "error");
+            return;
+          }
+
+          localStorage.setItem("4tl_customer_phone", clean);
+          document.getElementById("lookupPhoneInput").value = clean;
+          document.getElementById("currentSearchedPhone").innerText = clean;
+          document.getElementById("savedPhoneHint").classList.remove("hidden");
+
+          const deposits = data.deposits || [];
+          const bookings = data.bookings || [];
+
+          document.getElementById("emptyStateBox").classList.add("hidden");
+          document.getElementById("resultsContainer").classList.remove("hidden");
+
+          // Render Đơn đặt cọc
+          document.getElementById("customerDepositCount").innerText = `${deposits.length} đơn`;
+          const depContainer = document.getElementById("customerDepositList");
+          depContainer.innerHTML =
+            deposits.length === 0
+              ? `<div class="bg-white dark:bg-slate-900/60 p-6 rounded-2xl border border-gray-200 dark:border-white/10 text-xs text-gray-500 text-center">Không tìm thấy đơn đặt cọc nào gắn với SĐT này.</div>`
+              : deposits
+                  .map((d) => {
+                    const badgeClass =
+                      d.status === "verified"
+                        ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30"
+                        : d.status === "cancelled"
+                          ? "bg-rose-500/15 text-rose-500 border-rose-500/30"
+                          : "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30";
+                    const statusLabel =
+                      d.status === "verified"
+                        ? "Đã xác nhận nhận cọc"
+                        : d.status === "cancelled"
+                          ? "Đã hủy đơn"
+                          : "Đang chờ kế toán đối soát";
+
+                    return `
+                      <div class="bg-white dark:bg-slate-900/80 p-5 sm:p-6 rounded-3xl border border-gray-200 dark:border-white/10 shadow-lg">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div>
+                            <div class="flex items-center gap-2 text-xs text-gray-400 font-mono">
+                              <span>Mã đơn: #COC-${Number(d.id)}</span>
+                              <span>•</span>
+                              <span>${escapeHtml(d.created_at || "")}</span>
+                            </div>
+                            <h3 class="text-lg font-black text-slate-900 dark:text-white mt-1">${escapeHtml(d.car_name)}</h3>
+                            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 space-x-3">
+                              <span>Khách hàng: <strong class="text-slate-800 dark:text-gray-200">${escapeHtml(d.customer_name)}</strong></span>
+                              <span>Nội dung CK: <strong class="font-mono text-amber-600 dark:text-yellow-400">${escapeHtml(d.memo)}</strong></span>
+                            </div>
+                          </div>
+                          <div class="sm:text-right space-y-1.5">
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-bold border ${badgeClass}">
+                              ${statusLabel}
+                            </span>
+                            <div class="text-sm font-black text-indigo-600 dark:text-indigo-400 font-heading">
+                              Giá xe: ${formatCurrency(d.car_price)}
+                            </div>
+                          </div>
+                        </div>
+                        ${renderDepositProgress(d.status)}
+                      </div>
+                    `;
+                  })
+                  .join("");
+
+          // Render Lịch lái thử
+          document.getElementById("customerBookingCount").innerText = `${bookings.length} lịch hẹn`;
+          const bookContainer = document.getElementById("customerBookingList");
+          bookContainer.innerHTML =
+            bookings.length === 0
+              ? `<div class="bg-white dark:bg-slate-900/60 p-6 rounded-2xl border border-gray-200 dark:border-white/10 text-xs text-gray-500 text-center">Không tìm thấy lịch hẹn lái thử nào gắn với SĐT này.</div>`
+              : bookings
+                  .map((b) => {
+                    const badgeClass =
+                      b.status === "confirmed"
+                        ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30"
+                        : b.status === "cancelled"
+                          ? "bg-rose-500/15 text-rose-500 border-rose-500/30"
+                          : "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30";
+                    const statusLabel =
+                      b.status === "confirmed"
+                        ? "Admin đã duyệt & chốt lịch"
+                        : b.status === "cancelled"
+                          ? "Lịch hẹn đã hủy"
+                          : "Đang chờ chuyên viên xác nhận";
+
+                    return `
+                      <div class="bg-white dark:bg-slate-900/80 p-5 sm:p-6 rounded-3xl border border-gray-200 dark:border-white/10 shadow-lg">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div>
+                            <div class="flex items-center gap-2 text-xs text-gray-400 font-mono">
+                              <span>Mã lịch hẹn: #LT-${Number(b.id)}</span>
+                              <span>•</span>
+                              <span>Ngày hẹn: <strong class="text-slate-700 dark:text-gray-200">${escapeHtml(b.booking_date || "Linh hoạt")}</strong></span>
+                            </div>
+                            <h3 class="text-lg font-black text-slate-900 dark:text-white mt-1">${escapeHtml(b.car_name)}</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                              Khách hàng: <strong class="text-slate-800 dark:text-gray-200">${escapeHtml(b.customer_name)}</strong>
+                              ${b.note ? ` • Ghi chú: <span class="italic">${escapeHtml(b.note)}</span>` : ""}
+                            </p>
+                          </div>
+                          <div class="sm:text-right">
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-bold border ${badgeClass}">
+                              ${statusLabel}
+                            </span>
+                          </div>
+                        </div>
+                        ${renderBookingProgress(b.status)}
+                      </div>
+                    `;
+                  })
+                  .join("");
+
+          if (!silent) {
+            showToast(`Tìm thấy ${deposits.length} đơn cọc và ${bookings.length} lịch hẹn!`, "success");
+          }
+        } catch (err) {
+          if (!silent) showToast("Lỗi kết nối máy chủ PHP!", "error");
+        }
+      }
+
+      function handleLookupSubmit(e) {
+        e.preventDefault();
+        const phone = document.getElementById("lookupPhoneInput").value;
+        lookupOrdersByPhone(phone, false);
+      }
+
+      function refreshCurrentLookup() {
+        const phone = document.getElementById("lookupPhoneInput").value;
+        if (phone) lookupOrdersByPhone(phone, false);
+      }
+
+      // Tự động điền SĐT nếu truyền qua URL (?phone=...) hoặc đã lưu trong localStorage
+      window.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const urlPhone = params.get("phone");
+        const savedPhone = localStorage.getItem("4tl_customer_phone");
+        const targetPhone = urlPhone || savedPhone;
+
+        if (targetPhone) {
+          document.getElementById("lookupPhoneInput").value = targetPhone;
+          lookupOrdersByPhone(targetPhone, true);
+        }
+      });
+    </script>
+  </body>
+</html>
+```
+
+### file get_customer_orders.php: 
+```php
+<?php
+require_once 'db.php';
+header("Content-Type: application/json; charset=UTF-8");
+
+// Nhận số điện thoại từ GET hoặc POST JSON
+$input = json_decode(file_get_contents('php://input'), true) ?: [];
+$rawPhone = $_GET['phone'] ?? $input['phone'] ?? '';
+
+// Chuẩn hóa SĐT: chỉ giữ lại chữ số để tránh lệch do dấu chấm/khoảng trắng (VD: 0909.123.456 -> 0909123456)
+$cleanPhone = preg_replace('/[^0-9]/', '', trim($rawPhone));
+
+if (strlen($cleanPhone) < 8) {
+    echo json_encode([
+        "status" => "error",
+        "message" => "Vui lòng nhập số điện thoại hợp lệ (ít nhất 8 chữ số)!"
+    ], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
+if (!$pdo) {
+    echo json_encode([
+        "status" => "error",
+        "message" => "Không thể kết nối cơ sở dữ liệu MySQL."
+    ], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
+try {
+    // 1. Lấy danh sách đơn đặt cọc theo SĐT (so sánh sau khi loại bỏ dấu chấm/khoảng trắng)
+    $stmtDep = $pdo->prepare("
+        SELECT id, car_name, car_price, memo, customer_name, customer_phone, status, created_at
+        FROM deposits
+        WHERE REPLACE(REPLACE(REPLACE(customer_phone, '.', ''), ' ', ''), '-', '') = ?
+        ORDER BY id DESC
+    ");
+    $stmtDep->execute([$cleanPhone]);
+    $deposits = $stmtDep->fetchAll();
+
+    // 2. Lấy danh sách lịch lái thử / tư vấn theo SĐT
+    $stmtBook = $pdo->prepare("
+        SELECT id, customer_name, phone, car_name, booking_date, note, status, created_at
+        FROM bookings
+        WHERE REPLACE(REPLACE(REPLACE(phone, '.', ''), ' ', ''), '-', '') = ?
+        ORDER BY id DESC
+    ");
+    $stmtBook->execute([$cleanPhone]);
+    $bookings = $stmtBook->fetchAll();
+
+    echo json_encode([
+        "status" => "success",
+        "phone" => $cleanPhone,
+        "deposits" => $deposits,
+        "bookings" => $bookings
+    ], JSON_UNESCAPED_UNICODE);
+} catch (Exception $e) {
+    echo json_encode([
+        "status" => "error",
+        "message" => "Lỗi truy vấn dữ liệu: " . $e->getMessage()
+    ], JSON_UNESCAPED_UNICODE);
+}
 ```

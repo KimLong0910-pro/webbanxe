@@ -389,9 +389,10 @@
                         </span>
                     </td>
                     <td class="p-3 text-right space-x-2">
-                        <button onclick="updateOrder('deposits', ${d.id}, 'verified')" class="text-emerald-500 hover:underline font-bold">Xác nhận</button>
-                        <button onclick="deleteOrder('deposits', ${d.id})" class="text-indigo-500 hover:underline font-bold">Xóa</button>
-                    </td>
+                      <button onclick="updateOrder('deposits', ${d.id}, 'verified')" class="text-emerald-500 hover:underline font-bold">Xác nhận</button>
+                      <button onclick="updateOrder('deposits', ${d.id}, 'cancelled')" class="text-amber-500 hover:underline font-bold">Hủy</button>
+                      <button onclick="deleteOrder('deposits', ${d.id})" class="text-rose-500 hover:underline font-bold">Xóa</button>
+                  </td>
                 </tr>
             `,
                   )
@@ -418,9 +419,10 @@
                         </span>
                     </td>
                     <td class="p-3 text-right space-x-2">
-                        <button onclick="updateOrder('bookings', ${b.id}, 'confirmed')" class="text-emerald-500 hover:underline font-bold">Duyệt</button>
-                        <button onclick="deleteOrder('bookings', ${b.id})" class="text-indigo-500 hover:underline font-bold">Xóa</button>
-                    </td>
+                      <button onclick="updateOrder('bookings', ${b.id}, 'confirmed')" class="text-emerald-500 hover:underline font-bold">Duyệt</button>
+                      <button onclick="updateOrder('bookings', ${b.id}, 'cancelled')" class="text-amber-500 hover:underline font-bold">Hủy</button>
+                      <button onclick="deleteOrder('bookings', ${b.id})" class="text-rose-500 hover:underline font-bold">Xóa</button>
+                  </td>
                 </tr>
             `,
                   )

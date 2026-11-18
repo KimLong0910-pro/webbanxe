@@ -6,14 +6,20 @@ if (typeof tailwind !== "undefined") {
       extend: {
         colors: {
           brand: {
-            50: "#eef2ff",
-            100: "#e0e7ff",
-            400: "#818cf8",
-            500: "#6366f1",
-            600: "#4f46e5",
-            700: "#4338ca",
-            800: "#3730a3",
-            900: "#312e81",
+            50: "#faf5ff",
+            100: "#f3e8ff",
+            400: "#c084fc",
+            500: "#a855f7",
+            600: "#9333ea",
+            700: "#7e22ce",
+            800: "#6b21a8",
+            900: "#581c87",
+          },
+          galaxy: {
+            space: "#090514",
+            nebula: "#8b5cf6",
+            aurora: "#a78bfa",
+            pearl: "#f5f3ff",
           },
         },
         fontFamily: {
@@ -58,7 +64,7 @@ function toggleGlobalTheme() {
   applyGlobalTheme(savedTheme);
 })();
 
-// 5. Gắn sự kiện click cho nút #themeToggle sau khi DOM tải xong
+// 5. Gắn sự kiện click cho nút #themeToggle & Tự động khởi tạo hiệu ứng Galaxy (Sao 4 cánh + Sao băng)
 document.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem("theme") || "dark";
   applyGlobalTheme(savedTheme);
@@ -66,6 +72,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeToggle = document.getElementById("themeToggle");
   if (themeToggle) {
     themeToggle.onclick = toggleGlobalTheme;
+  }
+
+  // Tự động chèn hiệu ứng Sao 4 cánh & Sao băng nếu chưa có trong HTML
+  if (!document.querySelector(".galaxy-sparkles")) {
+    const sparkles = document.createElement("div");
+    sparkles.className = "galaxy-sparkles";
+    sparkles.setAttribute("aria-hidden", "true");
+    sparkles.innerHTML = "<span></span>".repeat(8);
+    document.body.prepend(sparkles);
+  }
+
+  if (!document.querySelector(".galaxy-meteors")) {
+    const meteors = document.createElement("div");
+    meteors.className = "galaxy-meteors";
+    meteors.setAttribute("aria-hidden", "true");
+    meteors.innerHTML = "<span></span>".repeat(3);
+    document.body.prepend(meteors);
   }
 });
 

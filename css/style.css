@@ -1,15 +1,31 @@
-/* SHOWROOM 4TL - INDIGO & VIOLET LUXURY AUTOMOTIVE DESIGN SYSTEM */
-
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Montserrat:wght@600;700;800;900&display=swap');
-
+/* 4TL MOTORS - ROYAL AMETHYST (VELVET VIOLET GLOW - DARK & LIGHT EDITION) */
 :root {
     --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
     --font-heading: 'Montserrat', 'Be Vietnam Pro', sans-serif;
-    --primary: #6366f1;
-    --primary-hover: #4f46e5;
-    --accent-violet: #8b5cf6;
-    --primary-glow: rgba(99, 102, 241, 0.45);
+
+    /* Core Royal Amethyst Palette */
+    --primary: #8b5cf6;          /* Violet 500 */
+    --primary-hover: #7c3aed;    /* Violet 600 */
+    --accent-violet: #a78bfa;    /* Violet 400 */
+    --accent-lavender: #ddd6fe;  /* Violet 200 */
+    --accent-orchid: #9333ea;    /* Purple 600 */
     --gold: #f59e0b;
+
+    --primary-glow: rgba(139, 92, 246, 0.45);
+    --galaxy-gradient: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 50%, #4f46e5 100%);
+    --aurora-text-gradient: linear-gradient(135deg, #ffffff 10%, #ddd6fe 45%, #a78bfa 78%, #818cf8 100%);
+}
+
+html.light {
+    --primary: #6d28d9;
+    --primary-hover: #5b21b6;
+    --accent-violet: #7c3aed;
+    --accent-lavender: #8b5cf6;
+    --accent-orchid: #9333ea;
+
+    --primary-glow: rgba(109, 40, 217, 0.25);
+    --galaxy-gradient: linear-gradient(135deg, #5b21b6 0%, #7c3aed 52%, #4338ca 100%);
+    --aurora-text-gradient: linear-gradient(135deg, #1e1b4b 8%, #5b21b6 48%, #7c3aed 82%, #4f46e5 100%);
 }
 
 html {
@@ -20,157 +36,416 @@ html {
 body {
     overflow-x: hidden;
     font-family: var(--font-sans);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
     font-family: var(--font-heading);
 }
 
-/* Custom Scrollbar - Dark Mode */
+/* 1. DARK MODE: DEEP VELVET PURPLE & AMETHYST GLOW */
+html.dark {
+    background: #090514 !important;
+}
+
+html.dark body {
+    background: transparent !important;
+    position: relative;
+    isolation: isolate;
+}
+
+/* Nền ánh tím hoàng gia đa tầng (Không còn hồng gắt hay cyan) */
+html.dark body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+
+    background-color: #090514;
+    background-image:
+        radial-gradient(
+            ellipse 70% 55% at 20% 15%,
+            rgba(124, 58, 237, 0.32) 0%,
+            rgba(91, 33, 182, 0.14) 45%,
+            transparent 75%
+        ),
+        radial-gradient(
+            ellipse 65% 50% at 82% 28%,
+            rgba(139, 92, 246, 0.28) 0%,
+            rgba(76, 29, 149, 0.12) 48%,
+            transparent 75%
+        ),
+        radial-gradient(
+            ellipse 80% 60% at 50% 85%,
+            rgba(109, 40, 217, 0.26) 0%,
+            rgba(46, 16, 101, 0.15) 50%,
+            transparent 80%
+        ),
+        linear-gradient(
+            180deg,
+            #0b0618 0%,
+            #120926 50%,
+            #080412 100%
+        );
+    background-attachment: fixed;
+}
+
+/* Cho phép <main> và <section> trong suốt hoàn toàn để lộ nền ngân hà */
+html.dark :is(main, section):not(#chatWindow):not([id$="Modal"] *) {
+    background-color: transparent !important;
+}
+
+/* Chỉ giữ nền kính mờ cho thanh điều hướng trên cùng (header) và chân trang (footer) */
+html.dark header {
+    background-color: rgba(15, 9, 32, 0.65) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+html.dark footer {
+    background-color: rgba(11, 6, 24, 0.78) !important;
+}
+
+/* Giữ nền đặc vừa đủ cho Popup Modal và Cửa sổ Chat */
+html.dark :is(#detailModal, #qrModal, #compareModal, #bookingModal, #editCarModal) > div,
+html.dark #chatWindow {
+    background-color: rgba(18, 11, 40, 0.95) !important;
+    border-color: rgba(139, 92, 246, 0.38) !important;
+}
+
+/* 2. LIGHT MODE: SOFT LAVENDER MIST (SƯƠNG TÍM NHẠT) */
+html.light {
+    background: #f5f3ff !important;
+}
+
+html.light body {
+    background: transparent !important;
+    position: relative;
+    isolation: isolate;
+}
+
+html.light body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+    background-color: #f5f3ff;
+    background-image:
+        radial-gradient(ellipse at 14% 16%, rgba(196, 181, 253, 0.55) 0%, transparent 50%),
+        radial-gradient(ellipse at 86% 22%, rgba(221, 214, 254, 0.60) 0%, transparent 48%),
+        radial-gradient(ellipse at 50% 88%, rgba(167, 139, 250, 0.32) 0%, transparent 55%);
+    background-attachment: fixed;
+}
+
+html.light body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background-image:
+        radial-gradient(2px 2px at 45px 65px, rgba(124, 58, 237, 0.25) 99%, transparent),
+        radial-gradient(1.5px 1.5px at 180px 140px, rgba(139, 92, 246, 0.22) 99%, transparent),
+        radial-gradient(2px 2px at 320px 90px, rgba(109, 40, 217, 0.22) 99%, transparent),
+        radial-gradient(1.5px 1.5px at 260px 270px, rgba(147, 51, 234, 0.20) 99%, transparent);
+    background-size: 460px 350px;
+}
+
+/* 3. BỤI ÁNH SÁNG TÍM LẤP LÁNH NHẸ (DARK MODE) */
+html.dark body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(1.2px 1.2px at 25px 35px, rgba(237, 233, 254, 0.85) 99%, transparent),
+        radial-gradient(1.8px 1.8px at 95px 115px, rgba(196, 181, 253, 0.90) 99%, transparent),
+        radial-gradient(1.2px 1.2px at 180px 65px, rgba(167, 139, 250, 0.85) 99%, transparent),
+        radial-gradient(2px 2px at 240px 180px, rgba(221, 214, 254, 0.88) 99%, transparent),
+        radial-gradient(1.2px 1.2px at 310px 45px, rgba(255, 255, 255, 0.85) 99%, transparent),
+        radial-gradient(1.5px 1.5px at 370px 140px, rgba(168, 85, 247, 0.82) 99%, transparent),
+        radial-gradient(1.2px 1.2px at 420px 230px, rgba(221, 214, 254, 0.80) 99%, transparent),
+        radial-gradient(1.5px 1.5px at 145px 265px, rgba(196, 181, 253, 0.85) 99%, transparent);
+
+    background-size: 460px 350px;
+    background-repeat: repeat;
+    opacity: 0.45;
+    animation: galaxyStarsTwinkle 5s ease-in-out infinite alternate;
+}
+
+@keyframes galaxyStarsTwinkle {
+    0% { opacity: 0.25; filter: brightness(0.9); }
+    50% { opacity: 0.45; filter: brightness(1.05); }
+    100% { opacity: 0.60; filter: brightness(1.18); }
+}
+
+/* 4. SAO LẤP LÁNH ÁNH TÍM */
+.galaxy-sparkles {
+    display: none;
+}
+
+html.dark body .galaxy-sparkles {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.galaxy-sparkles span {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #ede9fe;
+    box-shadow:
+        0 0 6px 2px rgba(221, 214, 254, 0.85),
+        0 0 16px 5px rgba(139, 92, 246, 0.65);
+    opacity: 0.2;
+    animation: sparklePulse 3.8s ease-in-out infinite;
+}
+
+.galaxy-sparkles span::before,
+.galaxy-sparkles span::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.galaxy-sparkles span::before {
+    width: 1px;
+    height: 18px;
+    background: linear-gradient(transparent, rgba(221, 214, 254, 0.9), transparent);
+}
+
+.galaxy-sparkles span::after {
+    width: 18px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(221, 214, 254, 0.9), transparent);
+}
+
+.galaxy-sparkles span:nth-child(1) { left: 12%; top: 18%; animation-delay: 0s; }
+.galaxy-sparkles span:nth-child(2) { left: 28%; top: 65%; animation-delay: 1.2s; }
+.galaxy-sparkles span:nth-child(3) { left: 48%; top: 28%; animation-delay: 2.1s; }
+.galaxy-sparkles span:nth-child(4) { left: 67%; top: 75%; animation-delay: 0.7s; }
+.galaxy-sparkles span:nth-child(5) { left: 83%; top: 35%; animation-delay: 1.8s; }
+.galaxy-sparkles span:nth-child(6) { left: 92%; top: 82%; animation-delay: 2.7s; }
+.galaxy-sparkles span:nth-child(7) { left: 38%; top: 88%; animation-delay: 1.5s; }
+.galaxy-sparkles span:nth-child(8) { left: 75%; top: 12%; animation-delay: 0.4s; }
+
+@keyframes sparklePulse {
+    0%, 100% { opacity: 0.12; transform: scale(0.55) rotate(0deg); }
+    45% { opacity: 0.90; transform: scale(1.3) rotate(45deg); }
+    65% { opacity: 0.50; transform: scale(0.9) rotate(90deg); }
+}
+
+/* 5. VỆT SÁNG ÁNH TÍM NHẸ */
+.galaxy-meteors {
+    display: none;
+}
+
+html.dark body .galaxy-meteors {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.galaxy-meteors span {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: #ede9fe;
+    box-shadow: 0 0 8px 2px rgba(167, 139, 250, 0.9);
+    opacity: 0;
+}
+
+.galaxy-meteors span::after {
+    content: "";
+    position: absolute;
+    right: 1px;
+    top: 0;
+    width: 70px;
+    height: 1px;
+    transform: rotate(-35deg);
+    transform-origin: right center;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(139, 92, 246, 0.25),
+        rgba(196, 181, 253, 0.65),
+        rgba(255, 255, 255, 0.92)
+    );
+}
+
+.galaxy-meteors span:nth-child(1) { left: 18%; top: 10%; animation: meteorFall 9s linear infinite 2s; }
+.galaxy-meteors span:nth-child(2) { left: 72%; top: 20%; animation: meteorFall 12s linear infinite 6s; }
+.galaxy-meteors span:nth-child(3) { left: 45%; top: 5%; animation: meteorFall 10s linear infinite 9s; }
+
+@keyframes meteorFall {
+    0% { opacity: 0; transform: translate(0, 0); }
+    3% { opacity: 0.80; }
+    12% { opacity: 0.60; }
+    20% { opacity: 0; transform: translate(-150px, 190px); }
+    100% { opacity: 0; transform: translate(-150px, 190px); }
+}
+
+/* 6. SCROLLBAR ÁNH TÍM */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: #0f172a;
+    background: #090514;
 }
 ::-webkit-scrollbar-thumb {
-    background: #334155;
-    border-radius: 9999px;
+    background: linear-gradient(180deg, #6d28d9, #8b5cf6);
+    border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #6366f1;
+    background: linear-gradient(180deg, #8b5cf6, #a78bfa);
 }
 
-/* Custom Scrollbar - Light Mode */
 .light ::-webkit-scrollbar-track {
-    background: #f1f5f9;
+    background: #ede9fe;
 }
 .light ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-}
-.light ::-webkit-scrollbar-thumb:hover {
-    background: #6366f1;
+    background: linear-gradient(180deg, #7c3aed, #8b5cf6);
 }
 
-/* Glassmorphism Classes */
+/* 7. GLASSMORPHISM PANELS & CARDS (ÁNH TÍM MỊN) */
 .glass-panel {
-    background: rgba(15, 23, 42, 0.78);
+    background: rgba(18, 11, 40, 0.38);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(139, 92, 246, 0.15);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    border: 1px solid rgba(139, 92, 246, 0.28);
+    box-shadow: 0 10px 35px rgba(9, 5, 22, 0.42), inset 0 1px 0 rgba(221, 214, 254, 0.12);
 }
 
 .light .glass-panel {
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.90);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(224, 231, 255, 0.95);
-    box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.08);
+    border: 1px solid rgba(124, 58, 237, 0.20);
+    box-shadow: 0 10px 28px -5px rgba(109, 40, 217, 0.12);
 }
 
 .glass-card {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(23, 14, 50, 0.40);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(139, 92, 246, 0.24);
+    transition: all 0.32s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .light .glass-card {
-    background: #ffffff;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(139, 92, 246, 0.18);
+    box-shadow: 0 6px 16px rgba(109, 40, 217, 0.07);
 }
 
 .glass-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(129, 140, 248, 0.5);
-    box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5), 0 0 22px 2px rgba(99, 102, 241, 0.22);
+    border-color: rgba(167, 139, 250, 0.65);
+    box-shadow:
+        0 20px 35px -10px rgba(0, 0, 0, 0.65),
+        0 0 28px rgba(139, 92, 246, 0.35),
+        0 0 45px rgba(109, 40, 217, 0.18);
 }
 
 .light .glass-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(99, 102, 241, 0.45);
-    box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.12), 0 8px 10px -6px rgba(124, 58, 237, 0.08);
+    border-color: rgba(124, 58, 237, 0.45);
+    box-shadow:
+        0 18px 28px -6px rgba(109, 40, 217, 0.16),
+        0 0 18px rgba(139, 92, 246, 0.12);
 }
 
-/* Luxury Glow & Gradients (Blue-Violet) */
+/* 8. BUTTONS, TEXT GRADIENTS & GLOWS */
+:is(button, a).bg-indigo-600 {
+    background-image: var(--galaxy-gradient) !important;
+    border: 1px solid rgba(221, 214, 254, 0.2);
+    box-shadow: 0 6px 20px -4px rgba(139, 92, 246, 0.5);
+    transition: all 0.25s ease;
+}
+
+:is(button, a).bg-indigo-600:hover {
+    filter: brightness(1.12);
+    box-shadow: 0 8px 26px -2px rgba(167, 139, 250, 0.55);
+}
+
 .glow-red {
-    box-shadow: 0 0 25px rgba(99, 102, 241, 0.45);
+    box-shadow: 0 0 24px rgba(139, 92, 246, 0.40), 0 0 42px rgba(109, 40, 217, 0.22);
 }
 
 .glow-red-sm {
-    box-shadow: 0 0 12px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.32);
 }
 
-.text-gradient-red {
-    background: linear-gradient(135deg, #ffffff 15%, #a5b4fc 55%, #8b5cf6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.light .text-gradient-red {
-    background: linear-gradient(135deg, #1e1b4b 15%, #4f46e5 60%, #7c3aed 100%);
+.text-gradient-red,
+.text-galaxy-gradient {
+    background: var(--aurora-text-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-gold {
-    background: linear-gradient(135deg, #fef08a 0%, #f59e0b 60%, #b45309 100%);
+    background: linear-gradient(135deg, #fef08a, #f59e0b 60%, #b45309);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* Background Gradients - Xanh dương pha tím */
-.hero-gradient-mesh {
-    background-image: 
-        radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.24) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.20) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(15, 23, 42, 0.95) 0px, transparent 80%);
+/* 9. HERO GRADIENT MESH (ÁNH TÍM SÂU) */
+html.dark .hero-gradient-mesh {
+    background-color: transparent !important;
+    background-image:
+        radial-gradient(ellipse at 22% 45%, rgba(124, 58, 237, 0.28), transparent 58%),
+        radial-gradient(ellipse at 82% 30%, rgba(139, 92, 246, 0.20), transparent 55%),
+        radial-gradient(ellipse at 65% 85%, rgba(91, 33, 182, 0.18), transparent 58%);
 }
 
 .light .hero-gradient-mesh {
-    background-image: 
-        radial-gradient(at 0% 0%, rgba(224, 231, 255, 0.95) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(237, 233, 254, 0.85) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, #f8fafc 0px, transparent 80%);
+    background-image:
+        radial-gradient(at 0% 0%, rgba(221, 214, 254, 0.72), transparent 55%),
+        radial-gradient(at 100% 0%, rgba(196, 181, 253, 0.62), transparent 55%),
+        radial-gradient(at 50% 100%, rgba(237, 233, 254, 0.75), transparent 60%);
 }
 
-/* Pulse Glow Animation */
+/* 10. ANIMATIONS, RANGE SLIDER, FILTER PILLS */
 @keyframes pulse-ring {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(99, 102, 241, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.65); }
+    70% { transform: scale(1); box-shadow: 0 0 0 13px rgba(139, 92, 246, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
 }
 
 .pulse-ring {
     animation: pulse-ring 2.5s infinite cubic-bezier(0.4, 0, 0.6, 1);
 }
 
-/* Shimmer Loading / Luxury Shine */
 .shine-hover {
     position: relative;
     overflow: hidden;
 }
 
 .shine-hover::after {
-    content: '';
+    content: "";
     position: absolute;
     top: -50%;
     left: -60%;
     width: 20%;
     height: 200%;
-    background: linear-gradient(
-        60deg,
-        rgba(255, 255, 255, 0) 20%,
-        rgba(255, 255, 255, 0.25) 50%,
-        rgba(255, 255, 255, 0) 80%
-    );
+    background: linear-gradient(60deg, transparent 20%, rgba(237, 233, 254, 0.28) 50%, transparent 80%);
     transform: rotate(25deg);
     transition: all 0.75s ease;
 }
@@ -179,87 +454,62 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     left: 140%;
 }
 
-/* Range input styling for Installment Calculator */
+/* Range Input (Thanh trượt dự toán trả góp ánh tím) */
 input[type=range] {
     -webkit-appearance: none;
     appearance: none;
-    background: #334155;
+    background: #2e1065;
     height: 6px;
-    border-radius: 9999px;
+    border-radius: 999px;
     outline: none;
 }
+
 .light input[type=range] {
-    background: #cbd5e1;
+    background: #ddd6fe;
     cursor: pointer;
 }
+
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1, #7c3aed);
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.65);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.8);
     transition: transform 0.15s ease;
 }
+
 input[type=range]::-webkit-slider-thumb:hover {
     transform: scale(1.2);
 }
 
-/* Brand Filter Pills */
-.brand-pill {
-    transition: all 0.2s ease;
+/* Brand & Category Filter Pills */
+.brand-pill,
+.cat-pill {
+    transition: all 0.22s ease;
     user-select: none;
 }
-.brand-pill.active {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
-    color: #ffffff !important;
-    border-color: #6366f1 !important;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-}
-.light .brand-pill:not(.active) {
-    background: #ffffff;
-    color: #334155;
-    border-color: #e2e8f0;
-}
-.light .brand-pill:not(.active):hover {
-    border-color: #6366f1;
-    color: #4f46e5;
-}
 
-/* Category Filter Pills */
-.cat-pill {
-    transition: all 0.2s ease;
-}
+.brand-pill.active,
 .cat-pill.active {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
-    color: #ffffff !important;
-    border-color: #6366f1 !important;
+    background: var(--galaxy-gradient) !important;
+    color: #fff !important;
+    border-color: rgba(196, 181, 253, 0.65) !important;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.48);
 }
+
+.light .brand-pill:not(.active),
 .light .cat-pill:not(.active) {
-    background: #ffffff;
-    color: #334155;
-    border-color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.92);
+    color: #3b0764;
+    border-color: #ddd6fe;
 }
+
+.light .brand-pill:not(.active):hover,
 .light .cat-pill:not(.active):hover {
-    background: #eef2ff;
-    color: #4f46e5;
-}
-
-/* Custom Dropdown Animation */
-.nav-group:hover .dropdown-menu {
-    display: block;
-    animation: fadeInSlide 0.25s ease forwards;
-}
-
-@keyframes fadeInSlide {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    border-color: #7c3aed;
+    color: #6d28d9;
+    background: #f5f3ff;
 }
