@@ -1800,12 +1800,32 @@ webbanxe/
       }
 
       async function requestLoanConsult() {
-        const phone = prompt("Quý khách vui lòng nhập Số điện thoại / Zalo để nhận bảng tính trả góp chi tiết:");
-        if (!phone || !phone.trim()) return;
-
+        // Điền trước thông tin hoặc mở modal trực tiếp
         const price = formatCurrency(document.getElementById("calcPriceInput").value);
         const downPercent = document.getElementById("calcDownPercent").value;
         const months = document.getElementById("calcMonths").value;
+        
+        // Lưu tạm thông tin gói vay để gửi khi khách bấm xác nhận
+        window.currentLoanData = {
+          car: `Gói vay xe ${price}`,
+          note: `Trả trước ${downPercent}%, kỳ hạn ${months} tháng`
+        };
+
+        openModal("zaloModal");
+      }
+
+      // Xử lý khi khách bấm nút "Gửi Yêu Cầu" trong Modal Zalo
+      async function submitZaloConsult() {
+        const phoneInput = document.getElementById("zaloPhoneInput");
+        const phone = phoneInput ? phoneInput.value.trim() : "";
+
+        let phoneRegex = /^(84|0[3|5|7|8|9])+([0-9]{8})$/;
+        if (!phoneRegex.test(phone)) {
+          showToast("Vui lòng nhập số điện thoại Zalo hợp lệ!", "error");
+          return;
+        }
+
+        const loanInfo = window.currentLoanData || { car: "Gói vay trả góp", note: "Tính toán trả góp" };
 
         try {
           const res = await fetch("php/save_order.php", {
@@ -1814,10 +1834,10 @@ webbanxe/
             body: JSON.stringify({
               type: "booking",
               name: "Khách tư vấn trả góp",
-              phone: phone.trim(),
-              car: `Gói vay xe ${price}`,
+              phone: phone,
+              car: loanInfo.car,
               date: new Date().toISOString().split("T")[0],
-              note: `Trả trước ${downPercent}%, kỳ hạn ${months} tháng`,
+              note: loanInfo.note
             }),
           });
 
@@ -1827,7 +1847,11 @@ webbanxe/
             return;
           }
 
-          showToast("Đã gửi yêu cầu thành công! Chuyên viên sẽ gửi bảng tính qua Zalo " + phone.trim(), "success");
+          localStorage.setItem("4tl_customer_phone", phone.replace(/[^0-9]/g, ""));
+          showToast("Đã gửi yêu cầu thành công! Chuyên viên sẽ gửi bảng tính qua Zalo " + phone, "success");
+          
+          if (phoneInput) phoneInput.value = "";
+          closeModal("zaloModal");
         } catch (err) {
           showToast("Lỗi kết nối máy chủ: Không thể gửi yêu cầu tư vấn.", "error");
         }
@@ -1922,9 +1946,66 @@ webbanxe/
 
       // Initialize App
       fetchCars();
+
+      // Hàm định dạng số thành chuỗi tiền tệ (ví dụ: 2000000000 -> 2.000.000.000)
+      function formatCurrency(num) {
+          if (!num) return '';
+          return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+
+      // Hàm loại bỏ dấu chấm để lấy số thuần tính toán
+      function parseCurrency(str) {
+          if (!str) return 0;
+          return parseInt(str.toString().replace(/\./g, '')) || 0;
+      }
+
+      // Xử lý sự kiện khi gõ vào ô nhập giá xe (giả sử input giá xe có id là 'carPriceInput')
+      const priceInput = document.getElementById('carPriceInput'); // Thay ID này bằng id thực tế của ô input giá trong code của bạn
+      if (priceInput) {
+          priceInput.addEventListener('input', function (e) {
+              let value = this.value.replace(/\D/g, ''); // Chỉ giữ lại số
+              this.value = formatCurrency(value);
+              // Gọi lại hàm tính toán trả góp của bạn ở đây nếu cần
+          });
+      }
     </script>
+
+    <!-- Modal Nhập Số Điện Thoại Nhận Bảng Tính Zalo -->
+    <div id="zaloModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4 hidden" style="display: none">
+      <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-md w-full p-6 relative shadow-2xl border border-gray-200 dark:border-white/15 space-y-4">
+        <button onclick="closeModal('zaloModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center justify-center transition">
+          ✕
+        </button>
+        
+        <div class="w-12 h-12 rounded-full bg-indigo-600/10 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-500 mx-auto flex items-center justify-center text-xl">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+        </div>
+
+        <h3 class="text-lg font-black uppercase text-slate-900 dark:text-white font-heading text-center">
+          NHẬN BẢNG TÍNH CHI TIẾT QUA ZALO
+        </h3>
+        <p class="text-xs text-gray-500 dark:text-gray-300 text-center">
+          Quý khách vui lòng nhập số điện thoại Zalo để nhận bảng tính trả góp chi tiết và biểu đồ dư nợ:
+        </p>
+
+        <div class="space-y-3 text-left">
+          <label for="zaloPhoneInput" class="block text-gray-600 dark:text-gray-400 mb-1 text-xs">Số điện thoại Zalo *</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+              <i class="fas fa-phone-alt text-xs"></i>
+            </span>
+            <input type="tel" id="zaloPhoneInput" placeholder="Nhập số điện thoại (VD: 0901234567)" class="w-full pl-9 pr-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+          </div>
+        </div>
+
+        <button onclick="submitZaloConsult()" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30">
+          <i class="fa-solid fa-circle-check mr-1.5"></i> Gửi Yêu Cầu Nhận Bảng Tính
+        </button>
+      </div>
+    </div>
   </body>
 </html>
+
 ```
 
 ### file admin.html:
