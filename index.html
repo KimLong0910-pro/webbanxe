@@ -317,11 +317,11 @@
                 </select>
                 <div class="relative">
                   <input
-                    type="number"
+                    type="text"
+                    inputmode="numeric"
                     id="calcPriceInput"
-                    value="2000000000"
-                    step="50000000"
-                    oninput="calculateLoan()"
+                    value="2.000.000.000"
+                    oninput="handlePriceInput(this)"
                     class="w-full px-3.5 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500" />
                   <span class="absolute right-3.5 top-3 text-xs text-gray-400 font-bold">VNĐ</span>
                 </div>
@@ -372,11 +372,11 @@
                 value="60"
                 oninput="calculateLoan()"
                 class="w-full" />
-              <div class="flex justify-between text-[11px] text-gray-400">
-                <span>1 năm (12T)</span>
-                <span>3 năm (36T)</span>
-                <span>5 năm (60T)</span>
-                <span>7 năm (84T)</span>
+              <div class="relative h-4 text-[11px] text-gray-400">
+                <span class="absolute left-0">1 năm (12T)</span>
+                <span class="absolute left-[calc(33.33%+3px)] -translate-x-1/2 whitespace-nowrap">3 năm (36T)</span>
+                <span class="absolute left-[calc(66.67%-3px)] -translate-x-1/2 whitespace-nowrap">5 năm (60T)</span>
+                <span class="absolute right-0">7 năm (84T)</span>
               </div>
             </div>
 
@@ -1486,6 +1486,20 @@
         });
       }
 
+      // Định dạng số có dấu chấm (VD: 2000000000 -> "2.000.000.000")
+      function formatNumberDots(num) {
+        const cleanNum = Math.round(Number(num) || 0);
+        if (cleanNum === 0) return "";
+        return cleanNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+
+      // Chuyển chuỗi có dấu chấm về số nguyên để tính toán (VD: "2.000.000.000" -> 2000000000)
+      function parseCurrency(str) {
+        if (!str) return 0;
+        return parseInt(String(str).replace(/\D/g, ""), 10) || 0;
+      }
+
+      // Định dạng tiền tệ hiển thị ở cột kết quả (có kèm VNĐ)
       function formatCurrency(num) {
         return Math.round(Number(num) || 0).toLocaleString("vi-VN") + " VNĐ";
       }
@@ -1498,10 +1512,17 @@
         return (num / 1000000).toFixed(0) + " Triệu VNĐ";
       }
 
+      // Xử lý khi người dùng gõ trực tiếp vào ô giá xe
+      function handlePriceInput(inputEl) {
+        const rawNumber = parseCurrency(inputEl.value);
+        inputEl.value = formatNumberDots(rawNumber);
+        calculateLoan();
+      }
+
       function applyCarToCalculator() {
         const val = document.getElementById("calcCarSelect").value;
         if (val) {
-          document.getElementById("calcPriceInput").value = val;
+          document.getElementById("calcPriceInput").value = formatNumberDots(val);
           calculateLoan();
         }
       }
@@ -1520,7 +1541,8 @@
           slider.style.background = `linear-gradient(to right, #6d28d9 0%, #a78bfa ${percent}%, ${trackBg} ${percent}%, ${trackBg} 100%)`;
         });
 
-        const price = parseFloat(document.getElementById("calcPriceInput").value) || 0;
+        // Dùng parseCurrency thay vì parseFloat để đọc đúng số có dấu chấm
+        const price = parseCurrency(document.getElementById("calcPriceInput").value);
         const downPercent = parseInt(document.getElementById("calcDownPercent").value) || 20;
         const months = parseInt(document.getElementById("calcMonths").value) || 60;
         const rateYear = parseFloat(document.getElementById("calcInterest").value) || 8.5;
@@ -1757,14 +1779,14 @@
 
       async function requestLoanConsult() {
         // Điền trước thông tin hoặc mở modal trực tiếp
-        const price = formatCurrency(document.getElementById("calcPriceInput").value);
+        const price = formatCurrency(parseCurrency(document.getElementById("calcPriceInput").value));
         const downPercent = document.getElementById("calcDownPercent").value;
         const months = document.getElementById("calcMonths").value;
-        
+
         // Lưu tạm thông tin gói vay để gửi khi khách bấm xác nhận
         window.currentLoanData = {
           car: `Gói vay xe ${price}`,
-          note: `Trả trước ${downPercent}%, kỳ hạn ${months} tháng`
+          note: `Trả trước ${downPercent}%, kỳ hạn ${months} tháng`,
         };
 
         openModal("zaloModal");
@@ -1793,7 +1815,7 @@
               phone: phone,
               car: loanInfo.car,
               date: new Date().toISOString().split("T")[0],
-              note: loanInfo.note
+              note: loanInfo.note,
             }),
           });
 
@@ -1805,7 +1827,7 @@
 
           localStorage.setItem("4tl_customer_phone", phone.replace(/[^0-9]/g, ""));
           showToast("Đã gửi yêu cầu thành công! Chuyên viên sẽ gửi bảng tính qua Zalo " + phone, "success");
-          
+
           if (phoneInput) phoneInput.value = "";
           closeModal("zaloModal");
         } catch (err) {
@@ -1902,38 +1924,23 @@
 
       // Initialize App
       fetchCars();
-
-      // Hàm định dạng số thành chuỗi tiền tệ (ví dụ: 2000000000 -> 2.000.000.000)
-      function formatCurrency(num) {
-          if (!num) return '';
-          return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      }
-
-      // Hàm loại bỏ dấu chấm để lấy số thuần tính toán
-      function parseCurrency(str) {
-          if (!str) return 0;
-          return parseInt(str.toString().replace(/\./g, '')) || 0;
-      }
-
-      // Xử lý sự kiện khi gõ vào ô nhập giá xe (giả sử input giá xe có id là 'carPriceInput')
-      const priceInput = document.getElementById('carPriceInput'); // Thay ID này bằng id thực tế của ô input giá trong code của bạn
-      if (priceInput) {
-          priceInput.addEventListener('input', function (e) {
-              let value = this.value.replace(/\D/g, ''); // Chỉ giữ lại số
-              this.value = formatCurrency(value);
-              // Gọi lại hàm tính toán trả góp của bạn ở đây nếu cần
-          });
-      }
     </script>
 
     <!-- Modal Nhập Số Điện Thoại Nhận Bảng Tính Zalo -->
-    <div id="zaloModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4 hidden" style="display: none">
-      <div class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-md w-full p-6 relative shadow-2xl border border-gray-200 dark:border-white/15 space-y-4">
-        <button onclick="closeModal('zaloModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center justify-center transition">
+    <div
+      id="zaloModal"
+      class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4 hidden"
+      style="display: none">
+      <div
+        class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-md w-full p-6 relative shadow-2xl border border-gray-200 dark:border-white/15 space-y-4">
+        <button
+          onclick="closeModal('zaloModal')"
+          class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center justify-center transition">
           ✕
         </button>
-        
-        <div class="w-12 h-12 rounded-full bg-indigo-600/10 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-500 mx-auto flex items-center justify-center text-xl">
+
+        <div
+          class="w-12 h-12 rounded-full bg-indigo-600/10 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-500 mx-auto flex items-center justify-center text-xl">
           <i class="fa-solid fa-file-invoice-dollar"></i>
         </div>
 
@@ -1945,17 +1952,26 @@
         </p>
 
         <div class="space-y-3 text-left">
-          <label for="zaloPhoneInput" class="block text-gray-600 dark:text-gray-400 mb-1 text-xs">Số điện thoại Zalo *</label>
+          <label for="zaloPhoneInput" class="block text-gray-600 dark:text-gray-400 mb-1 text-xs">
+            Số điện thoại Zalo *
+          </label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
               <i class="fas fa-phone-alt text-xs"></i>
             </span>
-            <input type="tel" id="zaloPhoneInput" placeholder="Nhập số điện thoại (VD: 0901234567)" class="w-full pl-9 pr-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+            <input
+              type="tel"
+              id="zaloPhoneInput"
+              placeholder="Nhập số điện thoại (VD: 0901234567)"
+              class="w-full pl-9 pr-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
           </div>
         </div>
 
-        <button onclick="submitZaloConsult()" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30">
-          <i class="fa-solid fa-circle-check mr-1.5"></i> Gửi Yêu Cầu Nhận Bảng Tính
+        <button
+          onclick="submitZaloConsult()"
+          class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30">
+          <i class="fa-solid fa-circle-check mr-1.5"></i>
+          Gửi Yêu Cầu Nhận Bảng Tính
         </button>
       </div>
     </div>
