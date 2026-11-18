@@ -33,7 +33,7 @@ webbanxe/
 │   ├── logout.php                       # Đăng xuất quản trị
 │   ├── manage_orders.php                # Quản lý lịch hẹn và đơn đặt cọc
 │   ├── save_order.php                   # Lưu lịch hẹn và thông tin đặt cọc
-|   ├── get_customer_orders.php         
+|   ├── get_customer_orders.php          #
 │   └── train_bot.php                    # Quản lý dữ liệu huấn luyện chatbot
 ├── sql/
 │   └── schema.sql                       # Tạo bảng và nạp dữ liệu mẫu
