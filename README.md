@@ -155,11 +155,11 @@ webbanxe/
 
           <!-- Hotline VIP Button -->
           <a
-            href="tel:0706850014"
+            href="tel:0765650114"
             class="shine-hover relative group bg-gradient-to-r from-indigo-600 to-violet-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-indigo-600/25 transition">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             <i class="fa-solid fa-phone-volume"></i>
-            <span class="hidden sm:inline">0706.850.014</span>
+            <span class="hidden sm:inline">0765.650.114</span>
             <span class="sm:hidden">Gọi VIP</span>
           </a>
         </div>
@@ -694,7 +694,7 @@ webbanxe/
                 <i class="fa-solid fa-phone text-indigo-600 dark:text-indigo-500"></i>
                 <span>
                   Hotline Bán Hàng:
-                  <strong class="text-slate-900 dark:text-white">0706.850.014</strong>
+                  <strong class="text-slate-900 dark:text-white">0765.650.114</strong>
                 </span>
               </div>
               <div class="flex items-center gap-3">
@@ -961,7 +961,7 @@ webbanxe/
           </div>
           <div class="flex justify-between">
             <span>Số tài khoản:</span>
-            <strong class="text-indigo-600 dark:text-indigo-400 font-mono tracking-wider">0706850014</strong>
+            <strong class="text-indigo-600 dark:text-indigo-400 font-mono tracking-wider">0765650114</strong>
           </div>
           <div class="flex justify-between">
             <span>Chủ TK:</span>
@@ -1911,7 +1911,7 @@ webbanxe/
 
         qrImg.onerror = function () {
           this.onerror = null;
-          this.src = `https://img.vietqr.io/image/MB-0706850014-compact2.png?amount=500000000&addInfo=${encodeURIComponent(memo)}&accountName=SHOWROOM%204TL%20AUTO`;
+          this.src = `https://img.vietqr.io/image/MB-0765650114-compact2.png?amount=500000000&addInfo=${encodeURIComponent(memo)}&accountName=SHOWROOM%204TL%20AUTO`;
         };
 
         openModal("qrModal");
@@ -2146,7 +2146,7 @@ webbanxe/
 
           chatBox.innerHTML += `
                     <div class="bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 shadow-sm leading-relaxed">
-                        Dạ quý khách cần tư vấn chi tiết về mẫu xe nào, xin vui lòng gọi trực tiếp Hotline VIP <strong>0706.850.014</strong> để được phục vụ 24/7 ạ!
+                        Dạ quý khách cần tư vấn chi tiết về mẫu xe nào, xin vui lòng gọi trực tiếp Hotline VIP <strong>0765.650.114</strong> để được phục vụ 24/7 ạ!
                     </div>
                 `;
           chatBox.scrollTop = chatBox.scrollHeight;
@@ -3084,7 +3084,7 @@ webbanxe/
 
           chatBox.innerHTML += `
                     <div class="bg-white dark:bg-slate-800 text-slate-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 leading-relaxed shadow-sm">
-                        Dạ em đã ghi nhận câu hỏi. Quý khách có thể liên hệ trực tiếp Hotline VIP <strong>0706.850.014</strong> để chuyên viên tư vấn phục vụ quý khách ngay ạ!
+                        Dạ em đã ghi nhận câu hỏi. Quý khách có thể liên hệ trực tiếp Hotline VIP <strong>0765.650.114</strong> để chuyên viên tư vấn phục vụ quý khách ngay ạ!
                     </div>
                 `;
           chatBox.scrollTop = chatBox.scrollHeight;
@@ -3144,7 +3144,7 @@ webbanxe/
             <i id="themeIcon" class="fa-solid fa-sun text-sm"></i>
           </button>
           <a
-            href="tel:0706850014"
+            href="tel:0765650114"
             class="bg-indigo-600 hover:bg-violet-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
             <i class="fa-solid fa-phone"></i>
             Hotline VIP
@@ -3590,8 +3590,8 @@ webbanxe/
 
                         <!-- Actions -->
                         <div class="space-y-2">
-                            <a href="tel:0706850014" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3.5 rounded-2xl text-xs flex items-center justify-center gap-2 transition shadow-lg shadow-indigo-600/30">
-                                <i class="fa-solid fa-phone"></i> Gọi Hotline Tư Vấn Ngay: 0706.850.014
+                            <a href="tel:0765650114" class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3.5 rounded-2xl text-xs flex items-center justify-center gap-2 transition shadow-lg shadow-indigo-600/30">
+                                <i class="fa-solid fa-phone"></i> Gọi Hotline Tư Vấn Ngay: 0765.650.114
                             </a>
                             <a href="bo_suu_tap_xe.html" class="w-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-gray-300 font-bold py-3 rounded-2xl text-xs flex items-center justify-center gap-2 border border-gray-200 dark:border-white/10 transition">
                                 <i class="fa-solid fa-car"></i> Xem Các Mẫu Xe Khác
@@ -4357,7 +4357,7 @@ if (!$reply) {
     } elseif (strpos($msgNoAccent, 'lai thu') !== false) {
         $reply = "Quý khách hãy bấm nút <strong>'Lái Thử'</strong> trên bất kỳ mẫu xe nào, điền tên và SĐT, hệ thống sẽ lưu lịch hẹn ngay để chuyên viên mang xe tới tận nơi ạ!";
     } else {
-        $reply = "Cảm ơn quý khách đã nhắn tin! Quý khách có thể hỏi về giá xe cụ thể (VD: <em>giá VF3, G63, Porsche 911</em>), theo hãng (<em>xe VinFast, Mercedes</em>), ngân sách (<em>xe dưới 2 tỷ</em>) hoặc gọi Hotline VIP <strong>0706.850.014</strong> ạ!";
+        $reply = "Cảm ơn quý khách đã nhắn tin! Quý khách có thể hỏi về giá xe cụ thể (VD: <em>giá VF3, G63, Porsche 911</em>), theo hãng (<em>xe VinFast, Mercedes</em>), ngân sách (<em>xe dưới 2 tỷ</em>) hoặc gọi Hotline VIP <strong>0765.650.114</strong> ạ!";
     }
 }
 
@@ -6011,7 +6011,7 @@ try {
           </div>
           <div class="flex justify-between">
             <span>Số tài khoản:</span>
-            <strong class="text-indigo-600 dark:text-indigo-400 font-mono">0706850014</strong>
+            <strong class="text-indigo-600 dark:text-indigo-400 font-mono">0765650114</strong>
           </div>
           <div class="flex justify-between">
             <span>Nội dung CK:</span>
@@ -6479,7 +6479,7 @@ try {
         document.getElementById("qrCarName").innerText = `Đặt cọc ưu tiên mẫu: ${car.name}`;
         document.getElementById("qrMemo").innerText = `COC ${car.id} ${car.name}`.substring(0, 30);
         const qrImg = document.getElementById("qrImage");
-        qrImg.src = `https://img.vietqr.io/image/MB-0706850014-compact2.png?amount=500000000&addInfo=${encodeURIComponent("COC " + car.name)}`;
+        qrImg.src = `https://img.vietqr.io/image/MB-0765650114-compact2.png?amount=500000000&addInfo=${encodeURIComponent("COC " + car.name)}`;
         openModal("qrModal");
       }
 
@@ -6737,7 +6737,7 @@ try {
 
           chatBox.innerHTML += `
             <div class="bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-200 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start border border-gray-200 dark:border-white/10 shadow-sm leading-relaxed">
-                Dạ quý khách cần tư vấn chi tiết về mẫu xe nào, xin vui lòng gọi trực tiếp Hotline VIP <strong>0706.850.014</strong> để được phục vụ 24/7 ạ!
+                Dạ quý khách cần tư vấn chi tiết về mẫu xe nào, xin vui lòng gọi trực tiếp Hotline VIP <strong>0765.650.114</strong> để được phục vụ 24/7 ạ!
             </div>
           `;
           chatBox.scrollTop = chatBox.scrollHeight;
