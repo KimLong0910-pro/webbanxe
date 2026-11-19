@@ -1839,12 +1839,30 @@ webbanxe/
       // Xử lý khi khách bấm nút "Gửi Yêu Cầu" trong Modal Zalo
       async function submitZaloConsult() {
         const phoneInput = document.getElementById("zaloPhoneInput");
+        const errorEl = document.getElementById("zaloPhoneError");
         const phone = phoneInput ? phoneInput.value.trim() : "";
 
         let phoneRegex = /^(84|0[3|5|7|8|9])+([0-9]{8})$/;
         if (!phoneRegex.test(phone)) {
-          showToast("Vui lòng nhập số điện thoại Zalo hợp lệ!", "error");
+          if (errorEl) {
+            errorEl.textContent = "Vui lòng nhập số điện thoại Zalo hợp lệ!";
+            errorEl.classList.remove("hidden");
+          }
+          if (phoneInput) {
+            phoneInput.classList.remove("border-gray-300", "dark:border-white/10");
+            phoneInput.classList.add("border-red-500");
+            phoneInput.focus();
+          }
           return;
+        }
+
+        // Hợp lệ -> ẩn thông báo lỗi bên trong modal
+        if (errorEl) {
+          errorEl.classList.add("hidden");
+        }
+        if (phoneInput) {
+          phoneInput.classList.remove("border-red-500");
+          phoneInput.classList.add("border-gray-300", "dark:border-white/10");
         }
 
         const loanInfo = window.currentLoanData || { car: "Gói vay trả góp", note: "Tính toán trả góp" };
@@ -2007,8 +2025,13 @@ webbanxe/
               type="tel"
               id="zaloPhoneInput"
               placeholder="Nhập số điện thoại (VD: 0901234567)"
-              class="w-full pl-9 pr-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+              class="w-full pl-9 pr-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white"
+            />
           </div>
+          <!-- Thêm dòng thông báo lỗi ngay tại đây -->
+          <p id="zaloPhoneError" class="hidden text-xs text-red-400 font-medium">
+            Vui lòng nhập số điện thoại Zalo hợp lệ!
+          </p>
         </div>
 
         <button
