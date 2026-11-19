@@ -18,6 +18,8 @@ if (!$pdo) {
 }
 
 try {
+    $phonePattern = '/^(0[35789])[0-9]{8}$/';
+
     if ($type === 'booking') {
         $name = trim($data['name'] ?? '');
         $phone = trim($data['phone'] ?? '');
@@ -25,8 +27,8 @@ try {
         $date = trim($data['date'] ?? date('Y-m-d'));
         $note = trim($data['note'] ?? 'Đăng ký lái thử từ website');
 
-        if (empty($name) || empty($phone)) {
-            echo json_encode(["status" => "error", "message" => "Vui lòng nhập tên và số điện thoại"], JSON_UNESCAPED_UNICODE);
+        if (empty($name) || !preg_match($phonePattern, $phone)) {
+            echo json_encode(["status" => "error", "message" => "Số điện thoại không hợp lệ (phải gồm 10 chữ số di động Việt Nam)!"], JSON_UNESCAPED_UNICODE);
             exit();
         }
 
@@ -41,8 +43,8 @@ try {
         $cusName = trim($data['customer_name'] ?? 'Khách quét QR');
         $cusPhone = trim($data['customer_phone'] ?? '');
 
-        if (empty($carName) || empty($cusPhone)) {
-            echo json_encode(["status" => "error", "message" => "Thiếu tên xe hoặc số điện thoại xác nhận đặt cọc!"], JSON_UNESCAPED_UNICODE);
+        if (empty($carName) || !preg_match($phonePattern, $cusPhone)) {
+            echo json_encode(["status" => "error", "message" => "Số điện thoại xác nhận đặt cọc không hợp lệ!"], JSON_UNESCAPED_UNICODE);
             exit();
         }
 

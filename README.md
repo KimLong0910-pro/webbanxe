@@ -962,6 +962,9 @@ webbanxe/
             id="qrCustomerPhone"
             placeholder="Số điện thoại xác nhận *"
             class="w-full px-3 py-2 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+          <p id="qrCustomerPhoneError" class="hidden text-xs text-red-400 font-medium">
+            Vui lòng nhập số điện thoại hợp lệ (10 số, bắt đầu bằng 03, 05, 07, 08, 09)!
+          </p>
         </div>
 
         <button
@@ -1718,12 +1721,27 @@ webbanxe/
 
       async function confirmDepositSuccess() {
         const cusName = document.getElementById("qrCustomerName").value.trim() || "Khách đặt cọc online";
-        const cusPhone = document.getElementById("qrCustomerPhone").value.trim();
+        const phoneInput = document.getElementById("qrCustomerPhone");
+        const errorEl = document.getElementById("qrCustomerPhoneError");
+        const cusPhone = phoneInput ? phoneInput.value.trim() : "";
         const memo = document.getElementById("qrMemo").innerText;
 
-        if (!cusPhone) {
-          showToast("Vui lòng nhập Số điện thoại để kế toán đối soát!", "error");
+        const vnPhoneRegex = /^(0[35789])[0-9]{8}$/;
+        if (!vnPhoneRegex.test(cusPhone)) {
+          if (errorEl) errorEl.classList.remove("hidden");
+          if (phoneInput) {
+            phoneInput.classList.remove("border-gray-300", "dark:border-white/10");
+            phoneInput.classList.add("border-red-500");
+            phoneInput.focus();
+          }
+          showToast("Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 số di động VN.", "error");
           return;
+        }
+
+        if (errorEl) errorEl.classList.add("hidden");
+        if (phoneInput) {
+          phoneInput.classList.remove("border-red-500");
+          phoneInput.classList.add("border-gray-300", "dark:border-white/10");
         }
 
         try {
@@ -2102,7 +2120,6 @@ webbanxe/
     </div>
   </body>
 </html>
-
 ```
 
 ### file admin.html:
@@ -5708,6 +5725,8 @@ if (!$pdo) {
 }
 
 try {
+    $phonePattern = '/^(0[35789])[0-9]{8}$/';
+
     if ($type === 'booking') {
         $name = trim($data['name'] ?? '');
         $phone = trim($data['phone'] ?? '');
@@ -5715,8 +5734,8 @@ try {
         $date = trim($data['date'] ?? date('Y-m-d'));
         $note = trim($data['note'] ?? 'Đăng ký lái thử từ website');
 
-        if (empty($name) || empty($phone)) {
-            echo json_encode(["status" => "error", "message" => "Vui lòng nhập tên và số điện thoại"], JSON_UNESCAPED_UNICODE);
+        if (empty($name) || !preg_match($phonePattern, $phone)) {
+            echo json_encode(["status" => "error", "message" => "Số điện thoại không hợp lệ (phải gồm 10 chữ số di động Việt Nam)!"], JSON_UNESCAPED_UNICODE);
             exit();
         }
 
@@ -5724,7 +5743,6 @@ try {
         $stmt->execute([$name, $phone, $car, $date, $note]);
 
         echo json_encode(["status" => "success", "message" => "Đã lưu lịch hẹn lái thử vào hệ thống!"], JSON_UNESCAPED_UNICODE);
-
     } elseif ($type === 'deposit') {
         $carName = trim($data['car_name'] ?? '');
         $carPrice = floatval($data['car_price'] ?? 0);
@@ -5732,8 +5750,8 @@ try {
         $cusName = trim($data['customer_name'] ?? 'Khách quét QR');
         $cusPhone = trim($data['customer_phone'] ?? '');
 
-        if (empty($carName) || empty($cusPhone)) {
-            echo json_encode(["status" => "error", "message" => "Thiếu tên xe hoặc số điện thoại xác nhận đặt cọc!"], JSON_UNESCAPED_UNICODE);
+        if (empty($carName) || !preg_match($phonePattern, $cusPhone)) {
+            echo json_encode(["status" => "error", "message" => "Số điện thoại xác nhận đặt cọc không hợp lệ!"], JSON_UNESCAPED_UNICODE);
             exit();
         }
 
@@ -5745,7 +5763,6 @@ try {
 } catch (Exception $e) {
     echo json_encode(["status" => "error", "message" => "Lỗi hệ thống: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
 }
-?>
 ```
 
 ### file manage_orders.php:
@@ -6298,6 +6315,9 @@ function escapeHtml(str) {
               required
               placeholder="0900.xxx.xxx"
               class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+            <p id="modalBookingPhoneError" class="hidden text-xs text-red-400 font-medium mt-1">
+              Vui lòng nhập số điện thoại hợp lệ (10 số)!
+            </p>
           </div>
           <div>
             <label class="block text-gray-600 dark:text-gray-400 mb-1">Thời gian dự kiến</label>
@@ -6688,10 +6708,10 @@ function escapeHtml(str) {
           return;
         }
 
-        const depositPhoneRegex = /^(03|08|09)[0-9]{8}$/;
-        if (!depositPhoneRegex.test(phone)) {
+        const vnPhoneRegex = /^(0[35789])[0-9]{8}$/;
+        if (!vnPhoneRegex.test(phone)) {
           if (errorEl) {
-            errorEl.textContent = "Vui lòng nhập số điện thoại hợp lệ!";
+            errorEl.textContent = "Vui lòng nhập số điện thoại hợp lệ (10 số, bắt đầu bằng 03, 05, 07, 08, 09)!";
             errorEl.classList.remove("hidden");
           }
           if (phoneInput) {
@@ -6699,6 +6719,7 @@ function escapeHtml(str) {
             phoneInput.classList.add("border-red-500");
             phoneInput.focus();
           }
+          showToast("Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 số di động VN.", "error");
           return;
         }
 
@@ -6729,7 +6750,10 @@ function escapeHtml(str) {
             showToast(result.message || "Lỗi lưu giao dịch đặt cọc!", "error");
             return;
           }
-        } catch (e) {}
+        } catch (e) {
+          showToast("Lỗi kết nối máy chủ! Vui lòng thử lại sau.", "error");
+          return;
+        }
 
         localStorage.setItem("4tl_customer_phone", phone.replace(/[^0-9]/g, ""));
 
@@ -6751,21 +6775,70 @@ function escapeHtml(str) {
 
       async function handleModalBooking(e) {
         e.preventDefault();
+
         const car = document.getElementById("modalBookingCar").value;
-        const name = document.getElementById("modalBookingName").value;
-        const phone = document.getElementById("modalBookingPhone").value;
+        const name = document.getElementById("modalBookingName").value.trim();
+        const phoneInput = document.getElementById("modalBookingPhone");
+        const errorEl = document.getElementById("modalBookingPhoneError");
+        const phone = phoneInput ? phoneInput.value.trim() : "";
         const date = document.getElementById("modalBookingDate").value;
+
+        if (!name || !phone) {
+          showToast("Vui lòng điền đầy đủ họ tên và số điện thoại!", "error");
+          return;
+        }
+
+        const vnPhoneRegex = /^(0[35789])[0-9]{8}$/;
+        if (!vnPhoneRegex.test(phone)) {
+          if (errorEl) {
+            errorEl.textContent = "Vui lòng nhập số điện thoại hợp lệ (10 số, bắt đầu bằng 03, 05, 07, 08, 09)!";
+            errorEl.classList.remove("hidden");
+          }
+          if (phoneInput) {
+            phoneInput.classList.remove("border-gray-300", "dark:border-white/10", "focus:border-indigo-500");
+            phoneInput.classList.add("border-red-500");
+            phoneInput.focus();
+          }
+          showToast("Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 số di động VN.", "error");
+          return;
+        }
+
+        if (errorEl) {
+          errorEl.classList.add("hidden");
+        }
+        if (phoneInput) {
+          phoneInput.classList.remove("border-red-500");
+          phoneInput.classList.add("border-gray-300", "dark:border-white/10", "focus:border-indigo-500");
+        }
+
         try {
-          await fetch("../php/save_order.php", {
+          const res = await fetch("../php/save_order.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ type: "booking", name, phone, car, date, note: "Đặt lái thử từ trang Bộ sưu tập" }),
+            body: JSON.stringify({
+              type: "booking",
+              name: name,
+              phone: phone,
+              car: car,
+              date: date,
+              note: "Đặt lái thử từ trang Bộ sưu tập",
+            }),
           });
-        } catch (e) {}
+
+          const result = await res.json();
+          if (result.status !== "success") {
+            showToast(result.message || "Lỗi đăng ký lịch lái thử!", "error");
+            return;
+          }
+        } catch (e) {
+          showToast("Lỗi kết nối máy chủ! Vui lòng thử lại sau.", "error");
+          return;
+        }
 
         localStorage.setItem("4tl_customer_phone", phone.replace(/[^0-9]/g, ""));
 
         showToast("Đăng ký lịch lái thử thành công cho quý khách: " + name, "success");
+        e.target.reset();
         closeModal("bookingModal");
       }
 
@@ -7073,7 +7146,6 @@ function escapeHtml(str) {
     </div>
   </body>
 </html>
-
 ```
 
 ### file orders_history.html:
