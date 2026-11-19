@@ -720,7 +720,11 @@ webbanxe/
                   id="drivePhone"
                   placeholder="Số điện thoại liên hệ"
                   required
-                  class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+                  class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                />
+                <p id="drivePhoneError" class="hidden text-xs text-red-400 font-medium">
+                  Vui lòng nhập số điện thoại hợp lệ!
+                </p>
                 <select
                   id="driveCar"
                   class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500">
@@ -1786,9 +1790,34 @@ webbanxe/
 
       async function handleTestDriveSubmit(e) {
         e.preventDefault();
+
         const name = document.getElementById("driveName").value;
-        const phone = document.getElementById("drivePhone").value;
+        const phoneInput = document.getElementById("drivePhone");
+        const errorEl = document.getElementById("drivePhoneError");
+        const phone = phoneInput ? phoneInput.value.trim() : "";
         const car = document.getElementById("driveCar").value;
+
+        const drivePhoneRegex = /^(03|08|09)[0-9]{8}$/;
+        if (!drivePhoneRegex.test(phone)) {
+          if (errorEl) {
+            errorEl.textContent = "Vui lòng nhập số điện thoại hợp lệ!";
+            errorEl.classList.remove("hidden");
+          }
+          if (phoneInput) {
+            phoneInput.classList.remove("border-gray-300", "dark:border-white/10", "focus:border-indigo-500");
+            phoneInput.classList.add("border-red-500");
+            phoneInput.focus();
+          }
+          return;
+        }
+
+        if (errorEl) {
+          errorEl.classList.add("hidden");
+        }
+        if (phoneInput) {
+          phoneInput.classList.remove("border-red-500");
+          phoneInput.classList.add("border-gray-300", "dark:border-white/10", "focus:border-indigo-500");
+        }
 
         try {
           const res = await fetch("php/save_order.php", {
@@ -6158,7 +6187,11 @@ function escapeHtml(str) {
             type="tel"
             id="qrCustomerPhone"
             placeholder="Số điện thoại xác nhận *"
-            class="w-full px-3 py-2 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+            class="w-full px-3 py-2 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+          />
+          <p id="qrCustomerPhoneError" class="hidden text-xs text-red-400 font-medium">
+            Vui lòng nhập số điện thoại hợp lệ!
+          </p>
         </div>
         <button
           onclick="confirmDepositSuccess()"
@@ -6615,12 +6648,36 @@ function escapeHtml(str) {
 
       async function confirmDepositSuccess() {
         const name = document.getElementById("qrCustomerName").value.trim();
-        const phone = document.getElementById("qrCustomerPhone").value.trim();
+        const phoneInput = document.getElementById("qrCustomerPhone");
+        const errorEl = document.getElementById("qrCustomerPhoneError");
+        const phone = phoneInput ? phoneInput.value.trim() : "";
         const memo = document.getElementById("qrMemo").innerText;
 
         if (!name || !phone) {
           showToast("Vui lòng điền đầy đủ họ tên và số điện thoại!", "error");
           return;
+        }
+
+        const depositPhoneRegex = /^(03|08|09)[0-9]{8}$/;
+        if (!depositPhoneRegex.test(phone)) {
+          if (errorEl) {
+            errorEl.textContent = "Vui lòng nhập số điện thoại hợp lệ!";
+            errorEl.classList.remove("hidden");
+          }
+          if (phoneInput) {
+            phoneInput.classList.remove("border-gray-300", "dark:border-white/10", "focus:border-indigo-500");
+            phoneInput.classList.add("border-red-500");
+            phoneInput.focus();
+          }
+          return;
+        }
+
+        if (errorEl) {
+          errorEl.classList.add("hidden");
+        }
+        if (phoneInput) {
+          phoneInput.classList.remove("border-red-500");
+          phoneInput.classList.add("border-gray-300", "dark:border-white/10", "focus:border-indigo-500");
         }
 
         try {
@@ -6636,6 +6693,7 @@ function escapeHtml(str) {
               customer_phone: phone,
             }),
           });
+
           const result = await res.json();
           if (result.status !== "success") {
             showToast(result.message || "Lỗi lưu giao dịch đặt cọc!", "error");
@@ -6985,6 +7043,7 @@ function escapeHtml(str) {
     </div>
   </body>
 </html>
+
 ```
 
 ### file orders_history.html:
