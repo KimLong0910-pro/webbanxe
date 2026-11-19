@@ -1015,7 +1015,11 @@ webbanxe/
               id="modalBookingPhone"
               required
               placeholder="0900.xxx.xxx"
-              class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
+              class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+            />
+            <p id="modalBookingPhoneError" class="hidden text-xs text-red-400 font-medium mt-1">
+              Vui lòng nhập số điện thoại hợp lệ!
+            </p>
           </div>
           <div>
             <label class="block text-gray-600 dark:text-gray-400 mb-1">Thời gian dự kiến</label>
@@ -1758,10 +1762,35 @@ webbanxe/
 
       async function handleModalBooking(e) {
         e.preventDefault();
+
         const car = document.getElementById("modalBookingCar").value;
         const name = document.getElementById("modalBookingName").value;
-        const phone = document.getElementById("modalBookingPhone").value;
+        const phoneInput = document.getElementById("modalBookingPhone");
+        const errorEl = document.getElementById("modalBookingPhoneError");
+        const phone = phoneInput ? phoneInput.value.trim() : "";
         const date = document.getElementById("modalBookingDate").value;
+
+        const modalBookingPhoneRegex = /^(03|08|09)[0-9]{8}$/;
+        if (!modalBookingPhoneRegex.test(phone)) {
+          if (errorEl) {
+            errorEl.textContent = "Vui lòng nhập số điện thoại hợp lệ!";
+            errorEl.classList.remove("hidden");
+          }
+          if (phoneInput) {
+            phoneInput.classList.remove("border-gray-300", "dark:border-white/10", "focus:border-indigo-500");
+            phoneInput.classList.add("border-red-500");
+            phoneInput.focus();
+          }
+          return;
+        }
+
+        if (errorEl) {
+          errorEl.classList.add("hidden");
+        }
+        if (phoneInput) {
+          phoneInput.classList.remove("border-red-500");
+          phoneInput.classList.add("border-gray-300", "dark:border-white/10", "focus:border-indigo-500");
+        }
 
         try {
           const res = await fetch("php/save_order.php", {
@@ -2073,6 +2102,7 @@ webbanxe/
     </div>
   </body>
 </html>
+
 ```
 
 ### file admin.html:
@@ -7222,6 +7252,15 @@ function escapeHtml(str) {
     </main>
 
     <script>
+      function escapeHtml(str) {
+        return String(str ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+      
       function showToast(message, type = "success") {
         const container = document.getElementById("toastContainer");
         if (!container) return;
@@ -7496,6 +7535,7 @@ function escapeHtml(str) {
     </script>
   </body>
 </html>
+
 ```
 
 ### file get_customer_orders.php: 
