@@ -40,9 +40,9 @@ webbanxe/
 │   ├── user_login.php                    # Xác thực tài khoản khách hàng
 │   ├── user_logout.php                   # Đăng xuất tài khoản khách hàng
 │   └── user_register.php                 # Đăng ký tài khoản khách hàng
-├── sql/
-│   └── schema.sql                        # Tạo bảng và nạp dữ liệu mẫu
-└── thongtinxe.md                         # Thông số và mô tả các mẫu xe
+└── sql/
+    ├── schema.sql                        # Tạo bảng và nạp dữ liệu mẫu
+    └── thongtinxe.md                     # Thông số và mô tả các mẫu xe
 ```
 
 ### file index.html: 
