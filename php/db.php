@@ -86,6 +86,15 @@ try {
             status ENUM('pending', 'verified', 'cancelled') DEFAULT 'pending',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+        CREATE TABLE IF NOT EXISTS customers (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            full_name VARCHAR(150) NOT NULL,
+            phone VARCHAR(20) NOT NULL UNIQUE,
+            email VARCHAR(150) DEFAULT NULL,
+            password VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ");
     // Tự động nâng cấp cột image lên TEXT để chứa được nhiều link ảnh
     $pdo->exec("ALTER TABLE cars MODIFY COLUMN image TEXT");

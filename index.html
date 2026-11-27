@@ -99,6 +99,14 @@
 
         <!-- Right Actions -->
         <div class="flex items-center gap-3">
+          <div id="user-auth-area" class="relative flex items-center">
+            <a id="user-login-link" href="html/user_login.html"
+              class="text-xs px-2.5 py-1 rounded-lg whitespace-nowrap bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 border border-gray-200 dark:border-white/10 transition flex items-center gap-1">
+              <i class="fa-solid fa-user text-[10px] text-indigo-400"></i>
+              <span>Đăng Nhập</span>
+            </a>
+          </div>
+          <button id="themeToggle" ...>
           <!-- Theme Toggle Button (Dark / Light) -->
           <button
             id="themeToggle"
@@ -1102,6 +1110,95 @@
 
     <!-- JAVASCRIPT LOGIC & ENGINE -->
     <script>
+      window.currentUser = null;
+
+      async function initUserHeader(basePath = "") {
+        const container = document.getElementById("user-auth-area");
+        if (!container) return;
+
+        try {
+          const res = await fetch(`${basePath}php/user_auth_check.php`);
+          const data = await res.json();
+
+          if (!data.logged_in || !data.user) {
+            window.currentUser = null;
+            return;
+          }
+
+          window.currentUser = data.user;
+          if (data.user.phone) {
+            localStorage.setItem("4tl_customer_phone", data.user.phone);
+          }
+
+          const ordersHref = basePath === "" ? "html/orders_history.html" : "orders_history.html";
+          const safeName = data.user.full_name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+          container.innerHTML = `
+            <div class="relative">
+              <button type="button" onclick="toggleUserMenu()"
+                class="text-xs px-2.5 py-1 rounded-lg whitespace-nowrap bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-600 dark:text-indigo-300 border border-indigo-500/30 transition flex items-center gap-1">
+                <i class="fa-solid fa-circle-user text-[11px]"></i>
+                <span class="max-w-[90px] truncate">${safeName}</span>
+                <i class="fa-solid fa-chevron-down text-[9px] opacity-70"></i>
+              </button>
+              <div id="user-dropdown" class="hidden absolute right-0 mt-1.5 w-44 rounded-lg bg-white dark:bg-[#13131f] border border-gray-200 dark:border-white/10 shadow-xl py-1 z-50 text-xs">
+                <a href="${ordersHref}" class="flex items-center gap-2 px-3 py-1.5 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-white/5 transition">
+                  <i class="fa-solid fa-clock-rotate-left text-indigo-400 text-[10px]"></i>
+                  <span>Đơn Của Tôi</span>
+                </a>
+                <button type="button" onclick="handleUserLogout('${basePath}')"
+                  class="w-full flex items-center gap-2 px-3 py-1.5 text-left text-red-500 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-white/5 transition">
+                  <i class="fa-solid fa-right-from-bracket text-[10px]"></i>
+                  <span>Đăng Xuất</span>
+                </button>
+              </div>
+            </div>
+          `;
+
+          prefillUserInputs(data.user);
+        } catch (err) {
+          console.warn("Không kiểm tra được phiên khách hàng:", err);
+        }
+      }
+
+      function toggleUserMenu() {
+        const menu = document.getElementById("user-dropdown");
+        if (menu) menu.classList.toggle("hidden");
+      }
+
+      async function handleUserLogout(basePath = "") {
+        await fetch(`${basePath}php/user_logout.php`);
+        window.location.reload();
+      }
+
+      function prefillUserInputs(user) {
+        // Tự động điền cho các ô input tên & SĐT nếu đang trống
+        const nameSelectors = ["#deposit-name", "#booking-name", "#testdrive-name", 'input[name="customer_name"]'];
+        const phoneSelectors = ["#deposit-phone", "#booking-phone", "#testdrive-phone", 'input[name="customer_phone"]'];
+
+        nameSelectors.forEach((sel) => {
+          const el = document.querySelector(sel);
+          if (el && !el.value.trim() && user.full_name) el.value = user.full_name;
+        });
+
+        phoneSelectors.forEach((sel) => {
+          const el = document.querySelector(sel);
+          if (el && !el.value.trim() && user.phone) el.value = user.phone;
+        });
+      }
+
+      document.addEventListener("click", (e) => {
+        const area = document.getElementById("user-auth-area");
+        const menu = document.getElementById("user-dropdown");
+        if (menu && area && !area.contains(e.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const inHtmlFolder = window.location.pathname.includes("/html/");
+        initUserHeader(inHtmlFolder ? "../" : "");
+      });
       function showToast(message, type = "success") {
         const container = document.getElementById("toastContainer");
         if (!container) return;

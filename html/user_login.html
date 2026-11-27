@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="dark" lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Đăng Nhập & Đăng Ký Khách Hàng | SHOWROOM 4TL</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0066cc",
+            "secondary": "#0080ff",
+            "surface-dark": "#0a0a0c",
+            "card-dark": "#121215",
+            "border-dark": "#26262c"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "grotesk": ["Space Grotesk", "sans-serif"],
+            "syne": ["Syne", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface-dark text-white font-display min-h-screen flex flex-col justify-between selection:bg-primary selection:text-white">
+  <!-- Header -->
+  <header class="border-b border-border-dark bg-surface-dark/90 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-2.5 group">
+        <span class="font-syne font-extrabold text-xl tracking-tight text-white">SHOWROOM <span class="text-secondary">4TL</span></span>
+      </a>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="car_collection.html" class="text-slate-400 hover:text-white transition">Bộ Sưu Tập</a>
+        <a href="orders_history.html" class="text-slate-400 hover:text-white transition">Đơn Của Tôi</a>
+        <a href="../index.html" class="px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 font-medium transition">Trang Chủ</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Card -->
+  <main class="flex-1 flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md bg-card-dark border border-border-dark rounded-2xl p-6 sm:p-8 shadow-2xl">
+      <!-- Tabs -->
+      <div class="grid grid-cols-2 gap-1 p-1 bg-surface-dark border border-border-dark rounded-xl mb-6">
+        <button id="tab-login" type="button" onclick="switchTab('login')" class="py-2.5 text-sm font-bold rounded-lg bg-primary text-white transition">
+          Đăng Nhập
+        </button>
+        <button id="tab-register" type="button" onclick="switchTab('register')" class="py-2.5 text-sm font-bold rounded-lg text-slate-400 hover:text-white transition">
+          Đăng Ký
+        </button>
+      </div>
+
+      <!-- Alert -->
+      <div id="auth-alert" class="hidden mb-4 px-4 py-3 rounded-xl text-xs font-medium border"></div>
+
+      <!-- Login Form -->
+      <form id="form-login" onsubmit="handleUserLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Số điện thoại hoặc Email</label>
+          <input id="login-identifier" type="text" required placeholder="0901234567 hoặc email@domain.com"
+            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Mật khẩu</label>
+          <input id="login-password" type="password" required placeholder="••••••••"
+            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+        </div>
+        <button id="btn-login-submit" type="submit" class="w-full py-3 rounded-xl bg-primary hover:bg-secondary font-bold text-sm transition flex items-center justify-center gap-2">
+          <span>Đăng Nhập Tài Khoản</span>
+          <span class="material-symbols-outlined text-[18px]">login</span>
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="form-register" onsubmit="handleUserRegister(event)" class="space-y-4 hidden">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Họ và tên</label>
+          <input id="reg-name" type="text" required placeholder="Nguyễn Văn A"
+            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Số điện thoại (10 số)</label>
+          <input id="reg-phone" type="tel" required placeholder="0901234567"
+            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Email (không bắt buộc)</label>
+          <input id="reg-email" type="email" placeholder="khachhang@example.com"
+            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Mật khẩu (tối thiểu 6 ký tự)</label>
+          <input id="reg-password" type="password" minlength="6" required placeholder="••••••••"
+            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+        </div>
+        <button id="btn-register-submit" type="submit" class="w-full py-3 rounded-xl bg-primary hover:bg-secondary font-bold text-sm transition flex items-center justify-center gap-2">
+          <span>Tạo Tài Khoản</span>
+          <span class="material-symbols-outlined text-[18px]">person_add</span>
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-border-dark py-5 text-center text-xs text-slate-500">
+    © SHOWROOM 4TL — Hệ thống đặt xe &amp; lái thử trực tuyến
+  </footer>
+
+  <script>
+    function switchTab(tab) {
+      const isLogin = tab === "login";
+      document.getElementById("form-login").classList.toggle("hidden", !isLogin);
+      document.getElementById("form-register").classList.toggle("hidden", isLogin);
+
+      const tabLogin = document.getElementById("tab-login");
+      const tabReg = document.getElementById("tab-register");
+      tabLogin.className = isLogin
+        ? "py-2.5 text-sm font-bold rounded-lg bg-primary text-white transition"
+        : "py-2.5 text-sm font-bold rounded-lg text-slate-400 hover:text-white transition";
+      tabReg.className = !isLogin
+        ? "py-2.5 text-sm font-bold rounded-lg bg-primary text-white transition"
+        : "py-2.5 text-sm font-bold rounded-lg text-slate-400 hover:text-white transition";
+      hideAlert();
+    }
+
+    function showAlert(msg, isError = true) {
+      const box = document.getElementById("auth-alert");
+      box.textContent = msg;
+      box.className = isError
+        ? "mb-4 px-4 py-3 rounded-xl text-xs font-medium border bg-red-500/10 border-red-500/30 text-red-300"
+        : "mb-4 px-4 py-3 rounded-xl text-xs font-medium border bg-emerald-500/10 border-emerald-500/30 text-emerald-300";
+    }
+
+    function hideAlert() {
+      const box = document.getElementById("auth-alert");
+      box.className = "hidden mb-4 px-4 py-3 rounded-xl text-xs font-medium border";
+    }
+
+    function finishAuth(data) {
+      if (data.user && data.user.phone) {
+        localStorage.setItem("4tl_customer_phone", data.user.phone);
+      }
+      showAlert(data.message || "Thành công!", false);
+      const params = new URLSearchParams(window.location.search);
+      const redirectTo = params.get("redirect") || "../index.html";
+      setTimeout(() => {
+        window.location.href = redirectTo;
+      }, 600);
+    }
+
+    async function handleUserLogin(e) {
+      e.preventDefault();
+      hideAlert();
+      const btn = document.getElementById("btn-login-submit");
+      btn.disabled = true;
+
+      try {
+        const res = await fetch("../php/user_login.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            identifier: document.getElementById("login-identifier").value.trim(),
+            password: document.getElementById("login-password").value
+          })
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          finishAuth(data);
+        } else {
+          showAlert(data.message || "Đăng nhập thất bại.");
+          btn.disabled = false;
+        }
+      } catch (err) {
+        showAlert("Không thể kết nối máy chủ.");
+        btn.disabled = false;
+      }
+    }
+
+    async function handleUserRegister(e) {
+      e.preventDefault();
+      hideAlert();
+      const btn = document.getElementById("btn-register-submit");
+      btn.disabled = true;
+
+      try {
+        const res = await fetch("../php/user_register.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            full_name: document.getElementById("reg-name").value.trim(),
+            phone: document.getElementById("reg-phone").value.trim(),
+            email: document.getElementById("reg-email").value.trim(),
+            password: document.getElementById("reg-password").value
+          })
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          finishAuth(data);
+        } else {
+          showAlert(data.message || "Đăng ký thất bại.");
+          btn.disabled = false;
+        }
+      } catch (err) {
+        showAlert("Không thể kết nối máy chủ.");
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>

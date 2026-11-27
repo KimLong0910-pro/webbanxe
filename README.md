@@ -143,6 +143,14 @@ webbanxe/
 
         <!-- Right Actions -->
         <div class="flex items-center gap-3">
+          <div id="user-auth-area" class="relative flex items-center">
+            <a id="user-login-link" href="html/user_login.html"
+              class="text-xs px-2.5 py-1 rounded-lg whitespace-nowrap bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 border border-gray-200 dark:border-white/10 transition flex items-center gap-1">
+              <i class="fa-solid fa-user text-[10px] text-indigo-400"></i>
+              <span>Đăng Nhập</span>
+            </a>
+          </div>
+          <button id="themeToggle" ...>
           <!-- Theme Toggle Button (Dark / Light) -->
           <button
             id="themeToggle"
@@ -1146,6 +1154,95 @@ webbanxe/
 
     <!-- JAVASCRIPT LOGIC & ENGINE -->
     <script>
+      window.currentUser = null;
+
+      async function initUserHeader(basePath = "") {
+        const container = document.getElementById("user-auth-area");
+        if (!container) return;
+
+        try {
+          const res = await fetch(`${basePath}php/user_auth_check.php`);
+          const data = await res.json();
+
+          if (!data.logged_in || !data.user) {
+            window.currentUser = null;
+            return;
+          }
+
+          window.currentUser = data.user;
+          if (data.user.phone) {
+            localStorage.setItem("4tl_customer_phone", data.user.phone);
+          }
+
+          const ordersHref = basePath === "" ? "html/orders_history.html" : "orders_history.html";
+          const safeName = data.user.full_name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+          container.innerHTML = `
+            <div class="relative">
+              <button type="button" onclick="toggleUserMenu()"
+                class="text-xs px-2.5 py-1 rounded-lg whitespace-nowrap bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-600 dark:text-indigo-300 border border-indigo-500/30 transition flex items-center gap-1">
+                <i class="fa-solid fa-circle-user text-[11px]"></i>
+                <span class="max-w-[90px] truncate">${safeName}</span>
+                <i class="fa-solid fa-chevron-down text-[9px] opacity-70"></i>
+              </button>
+              <div id="user-dropdown" class="hidden absolute right-0 mt-1.5 w-44 rounded-lg bg-white dark:bg-[#13131f] border border-gray-200 dark:border-white/10 shadow-xl py-1 z-50 text-xs">
+                <a href="${ordersHref}" class="flex items-center gap-2 px-3 py-1.5 text-gray-700 dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-white/5 transition">
+                  <i class="fa-solid fa-clock-rotate-left text-indigo-400 text-[10px]"></i>
+                  <span>Đơn Của Tôi</span>
+                </a>
+                <button type="button" onclick="handleUserLogout('${basePath}')"
+                  class="w-full flex items-center gap-2 px-3 py-1.5 text-left text-red-500 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-white/5 transition">
+                  <i class="fa-solid fa-right-from-bracket text-[10px]"></i>
+                  <span>Đăng Xuất</span>
+                </button>
+              </div>
+            </div>
+          `;
+
+          prefillUserInputs(data.user);
+        } catch (err) {
+          console.warn("Không kiểm tra được phiên khách hàng:", err);
+        }
+      }
+
+      function toggleUserMenu() {
+        const menu = document.getElementById("user-dropdown");
+        if (menu) menu.classList.toggle("hidden");
+      }
+
+      async function handleUserLogout(basePath = "") {
+        await fetch(`${basePath}php/user_logout.php`);
+        window.location.reload();
+      }
+
+      function prefillUserInputs(user) {
+        // Tự động điền cho các ô input tên & SĐT nếu đang trống
+        const nameSelectors = ["#deposit-name", "#booking-name", "#testdrive-name", 'input[name="customer_name"]'];
+        const phoneSelectors = ["#deposit-phone", "#booking-phone", "#testdrive-phone", 'input[name="customer_phone"]'];
+
+        nameSelectors.forEach((sel) => {
+          const el = document.querySelector(sel);
+          if (el && !el.value.trim() && user.full_name) el.value = user.full_name;
+        });
+
+        phoneSelectors.forEach((sel) => {
+          const el = document.querySelector(sel);
+          if (el && !el.value.trim() && user.phone) el.value = user.phone;
+        });
+      }
+
+      document.addEventListener("click", (e) => {
+        const area = document.getElementById("user-auth-area");
+        const menu = document.getElementById("user-dropdown");
+        if (menu && area && !area.contains(e.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const inHtmlFolder = window.location.pathname.includes("/html/");
+        initUserHeader(inHtmlFolder ? "../" : "");
+      });
       function showToast(message, type = "success") {
         const container = document.getElementById("toastContainer");
         if (!container) return;
@@ -2120,6 +2217,7 @@ webbanxe/
     </div>
   </body>
 </html>
+
 ```
 
 ### file admin.html:
@@ -4416,6 +4514,15 @@ try {
             customer_name VARCHAR(150) DEFAULT 'Khách đặt online',
             customer_phone VARCHAR(20) DEFAULT '',
             status ENUM('pending', 'verified', 'cancelled') DEFAULT 'pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+        CREATE TABLE IF NOT EXISTS customers (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            full_name VARCHAR(150) NOT NULL,
+            phone VARCHAR(20) NOT NULL UNIQUE,
+            email VARCHAR(150) DEFAULT NULL,
+            password VARCHAR(255) NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ");
@@ -7671,5 +7778,402 @@ try {
         "status" => "error",
         "message" => "Lỗi truy vấn dữ liệu: " . $e->getMessage()
     ], JSON_UNESCAPED_UNICODE);
+}
+```
+
+### file user_login.html:
+```html
+<!DOCTYPE html>
+<html class="dark" lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Đăng Nhập & Đăng Ký Khách Hàng | SHOWROOM 4TL</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0066cc",
+            "secondary": "#0080ff",
+            "surface-dark": "#0a0a0c",
+            "card-dark": "#121215",
+            "border-dark": "#26262c"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "grotesk": ["Space Grotesk", "sans-serif"],
+            "syne": ["Syne", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface-dark text-white font-display min-h-screen flex flex-col justify-between selection:bg-primary selection:text-white">
+  <!-- Header -->
+  <header class="border-b border-border-dark bg-surface-dark/90 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-2.5 group">
+        <span class="font-syne font-extrabold text-xl tracking-tight text-white">SHOWROOM <span class="text-secondary">4TL</span></span>
+      </a>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="car_collection.html" class="text-slate-400 hover:text-white transition">Bộ Sưu Tập</a>
+        <a href="orders_history.html" class="text-slate-400 hover:text-white transition">Đơn Của Tôi</a>
+        <a href="../index.html" class="px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 font-medium transition">Trang Chủ</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Card -->
+  <main class="flex-1 flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md bg-card-dark border border-border-dark rounded-2xl p-6 sm:p-8 shadow-2xl">
+      <!-- Tabs -->
+      <div class="grid grid-cols-2 gap-1 p-1 bg-surface-dark border border-border-dark rounded-xl mb-6">
+        <button id="tab-login" type="button" onclick="switchTab('login')" class="py-2.5 text-sm font-bold rounded-lg bg-primary text-white transition">
+          Đăng Nhập
+        </button>
+        <button id="tab-register" type="button" onclick="switchTab('register')" class="py-2.5 text-sm font-bold rounded-lg text-slate-400 hover:text-white transition">
+          Đăng Ký
+        </button>
+      </div>
+
+      <!-- Alert -->
+      <div id="auth-alert" class="hidden mb-4 px-4 py-3 rounded-xl text-xs font-medium border"></div>
+
+      <!-- Login Form -->
+      <form id="form-login" onsubmit="handleUserLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Số điện thoại hoặc Email</label>
+          <input id="login-identifier" type="text" required placeholder="0901234567 hoặc email@domain.com"
+            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Mật khẩu</label>
+          <input id="login-password" type="password" required placeholder="••••••••"
+            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+        </div>
+        <button id="btn-login-submit" type="submit" class="w-full py-3 rounded-xl bg-primary hover:bg-secondary font-bold text-sm transition flex items-center justify-center gap-2">
+          <span>Đăng Nhập Tài Khoản</span>
+          <span class="material-symbols-outlined text-[18px]">login</span>
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="form-register" onsubmit="handleUserRegister(event)" class="space-y-4 hidden">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Họ và tên</label>
+          <input id="reg-name" type="text" required placeholder="Nguyễn Văn A"
+            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Số điện thoại (10 số)</label>
+          <input id="reg-phone" type="tel" required placeholder="0901234567"
+            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Email (không bắt buộc)</label>
+          <input id="reg-email" type="email" placeholder="khachhang@example.com"
+            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Mật khẩu (tối thiểu 6 ký tự)</label>
+          <input id="reg-password" type="password" minlength="6" required placeholder="••••••••"
+            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+        </div>
+        <button id="btn-register-submit" type="submit" class="w-full py-3 rounded-xl bg-primary hover:bg-secondary font-bold text-sm transition flex items-center justify-center gap-2">
+          <span>Tạo Tài Khoản</span>
+          <span class="material-symbols-outlined text-[18px]">person_add</span>
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-border-dark py-5 text-center text-xs text-slate-500">
+    © SHOWROOM 4TL — Hệ thống đặt xe &amp; lái thử trực tuyến
+  </footer>
+
+  <script>
+    function switchTab(tab) {
+      const isLogin = tab === "login";
+      document.getElementById("form-login").classList.toggle("hidden", !isLogin);
+      document.getElementById("form-register").classList.toggle("hidden", isLogin);
+
+      const tabLogin = document.getElementById("tab-login");
+      const tabReg = document.getElementById("tab-register");
+      tabLogin.className = isLogin
+        ? "py-2.5 text-sm font-bold rounded-lg bg-primary text-white transition"
+        : "py-2.5 text-sm font-bold rounded-lg text-slate-400 hover:text-white transition";
+      tabReg.className = !isLogin
+        ? "py-2.5 text-sm font-bold rounded-lg bg-primary text-white transition"
+        : "py-2.5 text-sm font-bold rounded-lg text-slate-400 hover:text-white transition";
+      hideAlert();
+    }
+
+    function showAlert(msg, isError = true) {
+      const box = document.getElementById("auth-alert");
+      box.textContent = msg;
+      box.className = isError
+        ? "mb-4 px-4 py-3 rounded-xl text-xs font-medium border bg-red-500/10 border-red-500/30 text-red-300"
+        : "mb-4 px-4 py-3 rounded-xl text-xs font-medium border bg-emerald-500/10 border-emerald-500/30 text-emerald-300";
+    }
+
+    function hideAlert() {
+      const box = document.getElementById("auth-alert");
+      box.className = "hidden mb-4 px-4 py-3 rounded-xl text-xs font-medium border";
+    }
+
+    function finishAuth(data) {
+      if (data.user && data.user.phone) {
+        localStorage.setItem("4tl_customer_phone", data.user.phone);
+      }
+      showAlert(data.message || "Thành công!", false);
+      const params = new URLSearchParams(window.location.search);
+      const redirectTo = params.get("redirect") || "../index.html";
+      setTimeout(() => {
+        window.location.href = redirectTo;
+      }, 600);
+    }
+
+    async function handleUserLogin(e) {
+      e.preventDefault();
+      hideAlert();
+      const btn = document.getElementById("btn-login-submit");
+      btn.disabled = true;
+
+      try {
+        const res = await fetch("../php/user_login.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            identifier: document.getElementById("login-identifier").value.trim(),
+            password: document.getElementById("login-password").value
+          })
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          finishAuth(data);
+        } else {
+          showAlert(data.message || "Đăng nhập thất bại.");
+          btn.disabled = false;
+        }
+      } catch (err) {
+        showAlert("Không thể kết nối máy chủ.");
+        btn.disabled = false;
+      }
+    }
+
+    async function handleUserRegister(e) {
+      e.preventDefault();
+      hideAlert();
+      const btn = document.getElementById("btn-register-submit");
+      btn.disabled = true;
+
+      try {
+        const res = await fetch("../php/user_register.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            full_name: document.getElementById("reg-name").value.trim(),
+            phone: document.getElementById("reg-phone").value.trim(),
+            email: document.getElementById("reg-email").value.trim(),
+            password: document.getElementById("reg-password").value
+          })
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          finishAuth(data);
+        } else {
+          showAlert(data.message || "Đăng ký thất bại.");
+          btn.disabled = false;
+        }
+      } catch (err) {
+        showAlert("Không thể kết nối máy chủ.");
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
+```
+
+### file user_auth_check.php:
+```php
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+function requireUserApi()
+{
+    if (empty($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true) {
+        http_response_code(401);
+        header("Content-Type: application/json; charset=UTF-8");
+        echo json_encode([
+            "status" => "unauthorized",
+            "message" => "Vui lòng đăng nhập tài khoản khách hàng!"
+        ], JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+}
+
+if (basename($_SERVER['SCRIPT_FILENAME']) === 'user_auth_check.php') {
+    header("Content-Type: application/json; charset=UTF-8");
+    $loggedIn = (!empty($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true);
+    echo json_encode([
+        "logged_in" => $loggedIn,
+        "user" => $loggedIn ? [
+            "id" => $_SESSION['user_id'] ?? null,
+            "full_name" => $_SESSION['user_name'] ?? '',
+            "phone" => $_SESSION['user_phone'] ?? '',
+            "email" => $_SESSION['user_email'] ?? ''
+        ] : null
+    ], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+```
+
+### file user_login.php:
+```php
+<?php
+session_start();
+require_once 'db.php';
+header("Content-Type: application/json; charset=UTF-8");
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(["status" => "error", "message" => "Phương thức không hợp lệ"], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
+$input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+$identifier = trim($input['identifier'] ?? ''); // SĐT hoặc Email
+$password = $input['password'] ?? '';
+
+if (empty($identifier) || empty($password)) {
+    echo json_encode(["status" => "error", "message" => "Vui lòng nhập SĐT/Email và mật khẩu!"], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
+if (!$pdo) {
+    echo json_encode(["status" => "error", "message" => "Chưa kết nối được CSDL MySQL"], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
+try {
+    $cleanPhone = preg_replace('/\D/', '', $identifier);
+    $stmt = $pdo->prepare("SELECT id, full_name, phone, email, password FROM customers WHERE phone = ? OR email = ? LIMIT 1");
+    $stmt->execute([$cleanPhone, $identifier]);
+    $user = $stmt->fetch();
+
+    if ($user && password_verify($password, $user['password'])) {
+        session_regenerate_id(true);
+        $_SESSION['user_logged_in'] = true;
+        $_SESSION['user_id'] = (int)$user['id'];
+        $_SESSION['user_name'] = $user['full_name'];
+        $_SESSION['user_phone'] = $user['phone'];
+        $_SESSION['user_email'] = $user['email'] ?? '';
+
+        echo json_encode([
+            "status" => "success",
+            "message" => "Đăng nhập thành công!",
+            "user" => [
+                "full_name" => $user['full_name'],
+                "phone" => $user['phone']
+            ]
+        ], JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+
+    echo json_encode(["status" => "error", "message" => "Thông tin đăng nhập hoặc mật khẩu không chính xác!"], JSON_UNESCAPED_UNICODE);
+} catch (Exception $e) {
+    echo json_encode(["status" => "error", "message" => "Lỗi truy vấn: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+}
+```
+
+### file user_logout.php:
+```php
+<?php
+session_start();
+unset($_SESSION['user_logged_in'], $_SESSION['user_id'], $_SESSION['user_name'], $_SESSION['user_phone'], $_SESSION['user_email']);
+
+header("Content-Type: application/json; charset=UTF-8");
+if (isset($_GET['redirect']) && $_GET['redirect'] === '1') {
+    header('Location: ../index.html');
+    exit();
+}
+echo json_encode(["status" => "success", "message" => "Đã đăng xuất tài khoản khách hàng."], JSON_UNESCAPED_UNICODE);
+```
+
+### file user_register.php:
+```php
+<?php
+session_start();
+require_once 'db.php';
+header("Content-Type: application/json; charset=UTF-8");
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(["status" => "error", "message" => "Phương thức không hợp lệ"], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
+$input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+$fullName = trim($input['full_name'] ?? '');
+$phone = preg_replace('/\D/', '', trim($input['phone'] ?? ''));
+$email = trim($input['email'] ?? '');
+$password = $input['password'] ?? '';
+
+if (empty($fullName) || !preg_match('/^(0[35789])[0-9]{8}$/', $phone)) {
+    echo json_encode(["status" => "error", "message" => "Vui lòng nhập họ tên và số điện thoại di động VN hợp lệ (10 số)!"], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
+if (strlen($password) < 6) {
+    echo json_encode(["status" => "error", "message" => "Mật khẩu phải có ít nhất 6 ký tự!"], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
+if (!$pdo) {
+    echo json_encode(["status" => "error", "message" => "Chưa kết nối được CSDL MySQL"], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
+try {
+    $check = $pdo->prepare("SELECT id FROM customers WHERE phone = ?");
+    $check->execute([$phone]);
+    if ($check->fetch()) {
+        echo json_encode(["status" => "error", "message" => "Số điện thoại này đã được đăng ký tài khoản!"], JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    $stmt = $pdo->prepare("INSERT INTO customers (full_name, phone, email, password) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$fullName, $phone, $email ?: null, $hash]);
+
+    session_regenerate_id(true);
+    $_SESSION['user_logged_in'] = true;
+    $_SESSION['user_id'] = (int)$pdo->lastInsertId();
+    $_SESSION['user_name'] = $fullName;
+    $_SESSION['user_phone'] = $phone;
+    $_SESSION['user_email'] = $email;
+
+    echo json_encode([
+        "status" => "success",
+        "message" => "Đăng ký tài khoản thành công!",
+        "user" => [
+            "full_name" => $fullName,
+            "phone" => $phone
+        ]
+    ], JSON_UNESCAPED_UNICODE);
+} catch (Exception $e) {
+    echo json_encode(["status" => "error", "message" => "Lỗi CSDL: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
 }
 ```
