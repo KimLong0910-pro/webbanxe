@@ -769,7 +769,7 @@ webbanxe/
     <footer
       class="bg-gray-900 dark:bg-slate-950 border-t border-gray-800 dark:border-white/10 pt-16 pb-8 text-gray-400 text-xs">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
           <!-- Col 1: Bio -->
           <div class="lg:col-span-2 space-y-4">
             <a href="index.html" class="flex items-center gap-3">
@@ -884,6 +884,66 @@ webbanxe/
           </div>
         </div>
 
+        <!-- Col 5: Đội Ngũ Quản Lý -->
+        <div class="space-y-3">
+          <h4 class="text-white font-bold uppercase text-xs tracking-wider">Ban Quản Lý Showroom</h4>
+          <ul class="space-y-3 text-gray-400">
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-user-tie text-indigo-400 mt-1 shrink-0"></i>
+              <div class="min-w-0">
+                <p class="text-gray-200 font-medium leading-tight">TRẦN KIM LONG</p>
+                <span class="block text-xs text-gray-500">Giám đốc điều hành (CEO)</span>
+                <a
+                  href="mailto:[email1@showroom4tl.vn]"
+                  class="block text-xs text-indigo-400/80 hover:text-indigo-300 transition truncate mt-0.5">
+                  <i class="fa-regular fa-envelope mr-1"></i>
+                  long.2574802010420@vanlanguni.vn
+                </a>
+              </div>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-user-tie text-indigo-400 mt-1 shrink-0"></i>
+              <div class="min-w-0">
+                <p class="text-gray-200 font-medium leading-tight">VŨ NGÔ QUỐC ANH</p>
+                <span class="block text-xs text-gray-500">Quản lý kinh doanh</span>
+                <!-- <span class="block text-xs text-gray-500">Con ông cháu cha → ưu điểm: ỉa bất kỳ đâu, nhược điểm: thích bốc cứt</span> -->
+                <a
+                  href="mailto:[email2@showroom4tl.vn]"
+                  class="block text-xs text-indigo-400/80 hover:text-indigo-300 transition truncate mt-0.5">
+                  <i class="fa-regular fa-envelope mr-1"></i>
+                  anh.2574802012312@vanlanguni.vn
+                </a>
+              </div>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-user-tie text-indigo-400 mt-1 shrink-0"></i>
+              <div class="min-w-0">
+                <p class="text-gray-200 font-medium leading-tight">NGÔ PHÚC NHÂN</p>
+                <span class="block text-xs text-gray-500">Trưởng phòng kỹ thuật</span>
+                <a
+                  href="mailto:[email3@showroom4tl.vn]"
+                  class="block text-xs text-indigo-400/80 hover:text-indigo-300 transition truncate mt-0.5">
+                  <i class="fa-regular fa-envelope mr-1"></i>
+                  nhan.2574802011945@vanlanguni.vn
+                </a>
+              </div>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-user-tie text-indigo-400 mt-1 shrink-0"></i>
+              <div class="min-w-0">
+                <p class="text-gray-200 font-medium leading-tight">NGUYỄN THỊ XUÂN HƯƠNG</p>
+                <span class="block text-xs text-gray-500">Chăm sóc khách hàng</span>
+                <a
+                  href="mailto:[email4@showroom4tl.vn]"
+                  class="block text-xs text-indigo-400/80 hover:text-indigo-300 transition truncate mt-0.5">
+                  <i class="fa-regular fa-envelope mr-1"></i>
+                  huong.2574802012346@vanlanguni.vn
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
         <!-- Bottom Copyright -->
         <div
           class="pt-8 border-t border-gray-800 dark:border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left text-gray-500">
@@ -896,22 +956,6 @@ webbanxe/
     </footer>
 
     <!-- STICKY COMPARISON DOCK (Appears when >= 1 car is selected) -->
-
-    <!-- MODAL 1: CHI TIẾT XE -->
-    <div
-      id="detailModal"
-      class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4 overflow-y-auto hidden"
-      style="display: none">
-      <div
-        class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 relative shadow-2xl border border-gray-200 dark:border-white/15 max-h-[90vh] overflow-y-auto space-y-6">
-        <button
-          onclick="closeModal('detailModal')"
-          class="absolute top-5 right-5 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center justify-center transition">
-          ✕
-        </button>
-        <div id="modalContent"></div>
-      </div>
-    </div>
 
     <!-- MODAL 2: MÃ QR ĐẶT CỌC (VietQR Style) -->
     <div
@@ -1220,9 +1264,14 @@ webbanxe/
       }
 
       function prefillUserInputs(user) {
-        // Tự động điền cho các ô input tên & SĐT nếu đang trống
-        const nameSelectors = ["#deposit-name", "#booking-name", "#testdrive-name", 'input[name="customer_name"]'];
-        const phoneSelectors = ["#deposit-phone", "#booking-phone", "#testdrive-phone", 'input[name="customer_phone"]'];
+        const nameSelectors = ["#qrCustomerName", "#modalBookingName", "#driveName", 'input[name="customer_name"]'];
+        const phoneSelectors = [
+          "#qrCustomerPhone",
+          "#modalBookingPhone",
+          "#drivePhone",
+          "#zaloPhoneInput",
+          'input[name="customer_phone"]',
+        ];
 
         nameSelectors.forEach((sel) => {
           const el = document.querySelector(sel);
@@ -1732,69 +1781,6 @@ webbanxe/
         attributeFilter: ["class"],
       });
 
-      function openDetailModal(id) {
-        const targetId = Number(id);
-        const car = allCars.find((c) => Number(c.id) === targetId);
-        if (!car) return;
-
-        document.getElementById("modalContent").innerHTML = `
-                <div class="relative rounded-2xl overflow-hidden mb-5">
-                    <img src="${getCarImage(car.image)}" class="w-full h-80 object-cover" onerror="this.onerror=null; this.src=FALLBACK_CAR_IMG">
-                    <span class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                        ${escapeHtml(car.brand)}
-                    </span>
-                </div>
-
-                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-4">
-                    <div>
-                        <h2 class="text-2xl sm:text-3xl font-black font-heading text-slate-900 dark:text-white">${escapeHtml(car.name)}</h2>
-                        <span class="text-xs text-gray-500 dark:text-gray-400">Mã SKU: 4TL-00${car.id} | Tình trạng: Xe mới có sẵn giao ngay</span>
-                    </div>
-                    <div class="text-2xl sm:text-3xl font-black text-indigo-600 dark:text-indigo-500 font-heading">
-                        ${formatCurrency(car.price)}
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-3 gap-3 my-4">
-                    <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
-                        <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Động cơ</span>
-                        <strong class="text-xs text-slate-900 dark:text-white">${escapeHtml(car.engine || "N/A")}</strong>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
-                        <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Hộp số</span>
-                        <strong class="text-xs text-slate-900 dark:text-white">${escapeHtml(car.transmission || "Tự động")}</strong>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-slate-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 text-center">
-                        <span class="text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold block mb-1">Nhiên liệu</span>
-                        <strong class="text-xs text-slate-900 dark:text-white">${escapeHtml(car.fuel || "Xăng")}</strong>
-                    </div>
-                </div>
-
-                <div class="space-y-2">
-                    <h4 class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Giới thiệu tổng quan & Trang bị nổi bật</h4>
-                    <p class="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed bg-gray-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-gray-200 dark:border-white/5 break-words whitespace-pre-line">
-                        ${escapeHtml(car.description || "Mẫu xe sở hữu thiết kế thể thao đột phá, vật liệu nội thất cao cấp cùng hệ thống trợ lái và an toàn tối tân hàng đầu phân khúc.")}
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3">
-                    <button onclick="closeModal('detailModal'); openQRModalById(${car.id})" class="bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3 rounded-2xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-qrcode"></i> Đặt Cọc Giữ Xe
-                    </button>
-                    <button onclick="closeModal('detailModal'); openBookingModalById(${car.id})" class="bg-gray-100 hover:bg-gray-200 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-white font-bold py-3 rounded-2xl text-xs border border-gray-300 dark:border-white/10 transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-car-side"></i> Lái Thử Tận Nơi
-                </div>
-                
-                <div class="pt-1 text-center">
-                    <a href="html/detail.html?id=${car.id}" class="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 underline underline-offset-4 transition">
-                        <i class="fa-solid fa-up-right-from-square"></i> Mở trang chi tiết đầy đủ (Chia sẻ link)
-                    </a>
-                </div>
-            `;
-
-        openModal("detailModal");
-      }
-
       function openQRModal(carName, price) {
         window.currentDepositCar = { name: carName, price: price };
         document.getElementById("qrCarName").innerText = `Đặt cọc ưu tiên mẫu: ${carName}`;
@@ -1889,7 +1875,7 @@ webbanxe/
         const phone = phoneInput ? phoneInput.value.trim() : "";
         const date = document.getElementById("modalBookingDate").value;
 
-        const modalBookingPhoneRegex = /^(03|08|09)[0-9]{8}$/;
+        const modalBookingPhoneRegex = /^(0[35789])[0-9]{8}$/;
         if (!modalBookingPhoneRegex.test(phone)) {
           if (errorEl) {
             errorEl.textContent = "Vui lòng nhập số điện thoại hợp lệ!";
@@ -1945,7 +1931,7 @@ webbanxe/
         const phone = phoneInput ? phoneInput.value.trim() : "";
         const car = document.getElementById("driveCar").value;
 
-        const drivePhoneRegex = /^(03|08|09)[0-9]{8}$/;
+        const drivePhoneRegex = /^(0[35789])[0-9]{8}$/;
         if (!drivePhoneRegex.test(phone)) {
           if (errorEl) {
             errorEl.textContent = "Vui lòng nhập số điện thoại hợp lệ!";
