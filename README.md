@@ -4,40 +4,45 @@
 
 ```bash
 webbanxe/
-├── .gitignore                           # Quy tắc bỏ qua tệp khi dùng Git
-├── README.md                            # Giới thiệu và cây thư mục dự án
+├── .gitignore                            # Quy tắc bỏ qua tệp khi dùng Git
+├── README.md                             # Giới thiệu và cây thư mục dự án
 ├── css/
-│   └── style.css                        # Kiểu dáng dùng chung cho website
+│   └── style.css                         # Kiểu dáng dùng chung cho website
 ├── html/
-│   ├── admin.html                       # Trang quản trị xe và đơn hàng
-│   ├── bot_train.html                   # Giao diện chatbot tư vấn xe
-│   ├── car_collection.html              # Trang danh sách, lọc và so sánh xe
-│   ├── detail.html                      # Trang thông tin chi tiết xe
-│   ├── login.html                       # Trang đăng nhập quản trị
-│   ├── orders_history.html              # Tra cứu lịch sử đặt cọc và lịch hẹn
-│   └── train_bot.html                   # Trang quản lý dữ liệu huấn luyện chatbot
+│   ├── admin.html                        # Quản trị xe và đơn hàng
+│   ├── bot_train.html                    # Giao diện chatbot tư vấn xe
+│   ├── car_collection.html               # Danh sách, lọc và so sánh xe
+│   ├── detail.html                       # Trang thông tin chi tiết xe
+│   ├── login.html                        # Đăng nhập quản trị
+│   ├── orders_history.html               # Tra cứu lịch sử đặt cọc và lịch hẹn
+│   ├── train_bot.html                    # Quản lý dữ liệu huấn luyện chatbot
+│   └── user_login.html                   # Đăng nhập và đăng ký khách hàng
 ├── images/
-│   └── qrcode.jpg                       # Mã QR đặt cọc
-├── index.html                           # Trang chủ showroom
+│   └── qrcode.jpg                        # Mã QR đặt cọc
+├── index.html                            # Trang chủ showroom
 ├── js/
-│   └── theme.js                         # Cấu hình giao diện và tiện ích dùng chung
+│   └── theme.js                          # Cấu hình giao diện và tiện ích dùng chung
 ├── php/
-│   ├── add_car.php                      # Thêm xe vào cơ sở dữ liệu
-│   ├── auth_check.php                   # Kiểm tra phiên đăng nhập quản trị
-│   ├── bot_train.php                    # Xử lý câu hỏi và phản hồi chatbot
-│   ├── db.php                           # Kết nối và khởi tạo cơ sở dữ liệu
-│   ├── delete_car.php                   # Xóa xe khỏi cơ sở dữ liệu
-│   ├── edit_car.php                     # Cập nhật thông tin xe
-│   ├── get_cars.php                     # Lấy danh sách xe
-│   ├── get_customer_orders.php          # Tra cứu đơn hàng theo số điện thoại
-│   ├── login.php                        # Xác thực tài khoản quản trị
-│   ├── logout.php                       # Đăng xuất quản trị
-│   ├── manage_orders.php                # Quản lý lịch hẹn và đơn đặt cọc
-│   ├── save_order.php                   # Lưu lịch hẹn và thông tin đặt cọc
-│   └── train_bot.php                    # Quản lý dữ liệu huấn luyện chatbot
+│   ├── add_car.php                       # Thêm xe vào cơ sở dữ liệu
+│   ├── auth_check.php                    # Kiểm tra phiên đăng nhập quản trị
+│   ├── bot_train.php                     # Xử lý câu hỏi và phản hồi chatbot
+│   ├── db.php                            # Kết nối và khởi tạo cơ sở dữ liệu
+│   ├── delete_car.php                    # Xóa xe khỏi cơ sở dữ liệu
+│   ├── edit_car.php                      # Cập nhật thông tin xe
+│   ├── get_cars.php                      # Lấy danh sách xe
+│   ├── get_customer_orders.php           # Tra cứu đơn hàng theo số điện thoại
+│   ├── login.php                         # Xác thực tài khoản quản trị
+│   ├── logout.php                        # Đăng xuất quản trị
+│   ├── manage_orders.php                 # Quản lý lịch hẹn và đơn đặt cọc
+│   ├── save_order.php                    # Lưu lịch hẹn và thông tin đặt cọc
+│   ├── train_bot.php                     # Quản lý dữ liệu huấn luyện chatbot
+│   ├── user_auth_check.php               # Kiểm tra phiên đăng nhập khách hàng
+│   ├── user_login.php                    # Xác thực tài khoản khách hàng
+│   ├── user_logout.php                   # Đăng xuất tài khoản khách hàng
+│   └── user_register.php                 # Đăng ký tài khoản khách hàng
 ├── sql/
-│   └── schema.sql                       # Tạo bảng và nạp dữ liệu mẫu
-└── thongtinxe.md                        # Thông số và mô tả các mẫu xe
+│   └── schema.sql                        # Tạo bảng và nạp dữ liệu mẫu
+└── thongtinxe.md                         # Thông số và mô tả các mẫu xe
 ```
 
 ### file index.html: 
@@ -144,13 +149,14 @@ webbanxe/
         <!-- Right Actions -->
         <div class="flex items-center gap-3">
           <div id="user-auth-area" class="relative flex items-center">
-            <a id="user-login-link" href="html/user_login.html"
+            <a
+              id="user-login-link"
+              href="html/user_login.html"
               class="text-xs px-2.5 py-1 rounded-lg whitespace-nowrap bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 border border-gray-200 dark:border-white/10 transition flex items-center gap-1">
               <i class="fa-solid fa-user text-[10px] text-indigo-400"></i>
               <span>Đăng Nhập</span>
             </a>
           </div>
-          <button id="themeToggle" ...>
           <!-- Theme Toggle Button (Dark / Light) -->
           <button
             id="themeToggle"
@@ -728,8 +734,7 @@ webbanxe/
                   id="drivePhone"
                   placeholder="Số điện thoại liên hệ"
                   required
-                  class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
-                />
+                  class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
                 <p id="drivePhoneError" class="hidden text-xs text-red-400 font-medium">
                   Vui lòng nhập số điện thoại hợp lệ!
                 </p>
@@ -1026,8 +1031,7 @@ webbanxe/
               id="modalBookingPhone"
               required
               placeholder="0900.xxx.xxx"
-              class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
-            />
+              class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
             <p id="modalBookingPhoneError" class="hidden text-xs text-red-400 font-medium mt-1">
               Vui lòng nhập số điện thoại hợp lệ!
             </p>
@@ -2198,8 +2202,7 @@ webbanxe/
               type="tel"
               id="zaloPhoneInput"
               placeholder="Nhập số điện thoại (VD: 0901234567)"
-              class="w-full pl-9 pr-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white"
-            />
+              class="w-full pl-9 pr-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white" />
           </div>
           <!-- Thêm dòng thông báo lỗi ngay tại đây -->
           <p id="zaloPhoneError" class="hidden text-xs text-red-400 font-medium">
@@ -2217,7 +2220,6 @@ webbanxe/
     </div>
   </body>
 </html>
-
 ```
 
 ### file admin.html:
@@ -7783,224 +7785,414 @@ try {
 
 ### file user_login.html:
 ```html
-<!DOCTYPE html>
-<html class="dark" lang="vi">
-<head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Đăng Nhập & Đăng Ký Khách Hàng | SHOWROOM 4TL</title>
-  <link href="https://fonts.googleapis.com" rel="preconnect" />
-  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "primary": "#0066cc",
-            "secondary": "#0080ff",
-            "surface-dark": "#0a0a0c",
-            "card-dark": "#121215",
-            "border-dark": "#26262c"
-          },
-          fontFamily: {
-            "display": ["Plus Jakarta Sans", "sans-serif"],
-            "grotesk": ["Space Grotesk", "sans-serif"],
-            "syne": ["Syne", "sans-serif"]
+<!doctype html>
+<html lang="vi" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tài Khoản Khách Hàng - SHOWROOM 4TL</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../js/theme.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body
+    class="bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-gray-100 min-h-screen flex flex-col justify-between font-sans hero-gradient-mesh transition-colors duration-300 selection:bg-indigo-600 selection:text-white">
+    <!-- KHUNG CHỨA TOAST -->
+    <div
+      id="toastContainer"
+      class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none"></div>
+
+    <!-- TOP NAVBAR ĐỒNG BỘ -->
+    <header
+      class="sticky top-0 z-40 bg-white/85 dark:bg-slate-950/85 backdrop-blur-xl border-b border-gray-200/80 dark:border-white/10 px-4 md:px-8 py-3.5 transition-all duration-300 shadow-sm">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a href="../index.html" class="flex items-center gap-3 group">
+          <div
+            class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-900 flex items-center justify-center text-white shadow-lg shadow-indigo-600/30 group-hover:scale-105 transition duration-300">
+            <i class="fa-solid fa-shield-halved text-lg"></i>
+          </div>
+          <div>
+            <div
+              class="text-2xl font-black tracking-wider text-slate-900 dark:text-white font-heading leading-none flex items-center gap-1">
+              4TL
+              <span class="text-indigo-600 dark:text-indigo-500">MOTORS</span>
+            </div>
+            <span class="text-[10px] font-semibold text-gray-500 dark:text-gray-400 tracking-widest uppercase">
+              VIP Member Portal
+            </span>
+          </div>
+        </a>
+
+        <div class="flex items-center gap-3">
+          <a
+            href="../index.html"
+            class="bg-gray-100 hover:bg-gray-200 text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-gray-200 px-4 py-2 rounded-xl text-xs font-bold border border-gray-200 dark:border-white/10 transition flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-arrow-left text-indigo-500"></i>
+            <span>Trang Chủ</span>
+          </a>
+
+          <button
+            id="themeToggle"
+            type="button"
+            title="Chuyển chế độ Sáng / Tối"
+            class="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 text-amber-500 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-yellow-400 flex items-center justify-center border border-gray-200 dark:border-white/10 transition shadow-sm">
+            <i id="themeIcon" class="fa-solid fa-sun text-base"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN AUTH CARD -->
+    <main class="flex-1 flex items-center justify-center p-4 py-10">
+      <div
+        class="w-full max-w-md glass-panel bg-white/90 dark:bg-slate-900/90 p-7 sm:p-8 rounded-3xl border border-gray-200 dark:border-indigo-500/25 shadow-2xl space-y-6 relative overflow-hidden">
+        <!-- Ambient Glow -->
+        <div
+          class="pointer-events-none absolute -top-20 -right-20 w-48 h-48 rounded-full bg-indigo-600/20 blur-3xl"></div>
+
+        <!-- Header Card -->
+        <div class="text-center space-y-2 relative">
+          <div
+            class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-700 flex items-center justify-center text-white mx-auto shadow-lg shadow-indigo-600/30">
+            <i class="fa-solid fa-crown text-xl"></i>
+          </div>
+          <h1 class="text-2xl font-black text-slate-900 dark:text-white font-heading tracking-wide">
+            ĐĂNG NHẬP
+          </h1>
+          <p class="text-xs text-gray-500 dark:text-gray-400">
+            Đăng nhập để đặt cọc, lái thử và nhận các ưu đãi độc quyền
+          </p>
+        </div>
+
+        <!-- Tabs Chuyển Đăng Nhập / Đăng Ký -->
+        <div
+          class="grid grid-cols-2 p-1 rounded-2xl bg-gray-100 dark:bg-slate-950/80 border border-gray-200 dark:border-white/10 text-xs font-bold">
+          <button
+            type="button"
+            id="tabLoginBtn"
+            onclick="switchAuthTab('login')"
+            class="py-2.5 rounded-xl bg-indigo-600 text-white shadow-md transition">
+            Đăng Nhập
+          </button>
+          <button
+            type="button"
+            id="tabRegisterBtn"
+            onclick="switchAuthTab('register')"
+            class="py-2.5 rounded-xl text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-white transition">
+            Đăng Ký Mới
+          </button>
+        </div>
+
+        <!-- Alert Box -->
+        <div
+          id="authAlert"
+          class="hidden p-3.5 rounded-2xl text-xs text-center flex items-center justify-center gap-2 border">
+          <i id="authAlertIcon" class="fa-solid fa-triangle-exclamation"></i>
+          <span id="authAlertText"></span>
+        </div>
+
+        <!-- FORM 1: ĐĂNG NHẬP KHÁCH HÀNG -->
+        <form id="userLoginForm" class="space-y-4 text-xs">
+          <div>
+            <label class="block text-slate-700 dark:text-gray-300 mb-1.5 font-bold">
+              Số điện thoại hoặc Email
+            </label>
+            <div class="relative">
+              <i class="fa-solid fa-phone absolute left-3.5 top-3.5 text-gray-400"></i>
+              <input
+                type="text"
+                id="loginIdentity"
+                required
+                placeholder="VD: 0901234567 hoặc email@domain.com"
+                class="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-800/90 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-slate-700 dark:text-gray-300 mb-1.5 font-bold">Mật khẩu</label>
+            <div class="relative">
+              <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-gray-400"></i>
+              <input
+                type="password"
+                id="loginPassword"
+                required
+                placeholder="Nhập mật khẩu của bạn"
+                class="w-full pl-10 pr-11 py-3 bg-gray-50 dark:bg-slate-800/90 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition" />
+              <button
+                type="button"
+                onclick="toggleFieldPassword('loginPassword', 'loginEyeIcon')"
+                class="absolute right-3.5 top-3 text-gray-400 hover:text-indigo-500 transition">
+                <i id="loginEyeIcon" class="fa-solid fa-eye text-sm"></i>
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            <span>Đăng Nhập Tài Khoản</span>
+          </button>
+        </form>
+
+        <!-- FORM 2: ĐĂNG KÝ KHÁCH HÀNG -->
+        <form id="userRegisterForm" class="hidden space-y-3.5 text-xs">
+          <div>
+            <label class="block text-slate-700 dark:text-gray-300 mb-1 font-bold">Họ và tên *</label>
+            <div class="relative">
+              <i class="fa-solid fa-user absolute left-3.5 top-3.5 text-gray-400"></i>
+              <input
+                type="text"
+                id="regFullName"
+                required
+                placeholder="Nguyễn Văn A"
+                class="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-800/90 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-slate-700 dark:text-gray-300 mb-1 font-bold">Số điện thoại di động *</label>
+            <div class="relative">
+              <i class="fa-solid fa-phone absolute left-3.5 top-3.5 text-gray-400"></i>
+              <input
+                type="tel"
+                id="regPhone"
+                required
+                placeholder="0901234567"
+                class="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-800/90 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-slate-700 dark:text-gray-300 mb-1 font-bold">Email (Không bắt buộc)</label>
+            <div class="relative">
+              <i class="fa-solid fa-envelope absolute left-3.5 top-3.5 text-gray-400"></i>
+              <input
+                type="email"
+                id="regEmail"
+                placeholder="khachhang@gmail.com"
+                class="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-800/90 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-slate-700 dark:text-gray-300 mb-1 font-bold">Mật khẩu *</label>
+            <div class="relative">
+              <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-gray-400"></i>
+              <input
+                type="password"
+                id="regPassword"
+                required
+                minlength="6"
+                placeholder="Tối thiểu 6 ký tự"
+                class="w-full pl-10 pr-11 py-3 bg-gray-50 dark:bg-slate-800/90 border border-gray-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition" />
+              <button
+                type="button"
+                onclick="toggleFieldPassword('regPassword', 'regEyeIcon')"
+                class="absolute right-3.5 top-3 text-gray-400 hover:text-indigo-500 transition">
+                <i id="regEyeIcon" class="fa-solid fa-eye text-sm"></i>
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-indigo-600 hover:bg-violet-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>Tạo Tài Khoản Thành Viên</span>
+          </button>
+        </form>
+
+        <!-- Footer Links -->
+        <div
+          class="pt-4 border-t border-gray-200 dark:border-white/10 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+          <a href="orders_history.html" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+            <i class="fa-solid fa-magnifying-glass mr-1"></i>
+            Tra cứu đơn bằng SĐT
+          </a>
+          <a href="login.html" class="hover:text-amber-500 transition">
+            <i class="fa-solid fa-shield-halved mr-1"></i>
+            Cổng Admin
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- MINI FOOTER -->
+    <footer class="py-4 text-center text-[11px] text-gray-500 dark:text-gray-400 border-t border-gray-200/60 dark:border-white/10">
+      © 2026 SHOWROOM 4TL MOTORS • Đẳng Cấp • Minh Bạch • Tận Tâm
+    </footer>
+
+    <script>
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toastContainer");
+        if (!container) return;
+
+        const toast = document.createElement("div");
+        toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl text-xs font-bold transition-all duration-300 transform translate-y-[-20px] opacity-0 border backdrop-blur-xl ${
+          type === "success"
+            ? "bg-emerald-950/90 border-emerald-500/40 text-emerald-300"
+            : "bg-rose-950/90 border-rose-500/40 text-rose-300"
+        }`;
+
+        toast.innerHTML = `
+          <i class="fa-solid ${type === "success" ? "fa-circle-check text-emerald-400" : "fa-triangle-exclamation text-rose-400"} text-base"></i>
+          <span>${escapeHtml(message)}</span>
+        `;
+
+        container.appendChild(toast);
+        setTimeout(() => toast.classList.remove("translate-y-[-20px]", "opacity-0"), 10);
+        setTimeout(() => {
+          toast.classList.add("translate-y-[-20px]", "opacity-0");
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+
+      function showAuthAlert(message, type = "error") {
+        const box = document.getElementById("authAlert");
+        const icon = document.getElementById("authAlertIcon");
+        const text = document.getElementById("authAlertText");
+        text.innerText = message;
+
+        if (type === "success") {
+          box.className =
+            "p-3.5 rounded-2xl text-xs text-center flex items-center justify-center gap-2 border bg-emerald-500/10 border-emerald-500/40 text-emerald-600 dark:text-emerald-400";
+          icon.className = "fa-solid fa-circle-check";
+        } else {
+          box.className =
+            "p-3.5 rounded-2xl text-xs text-center flex items-center justify-center gap-2 border bg-rose-500/10 border-rose-500/40 text-rose-600 dark:text-rose-400";
+          icon.className = "fa-solid fa-triangle-exclamation";
+        }
+        box.classList.remove("hidden");
+      }
+
+      function switchAuthTab(tab) {
+        const loginForm = document.getElementById("userLoginForm");
+        const regForm = document.getElementById("userRegisterForm");
+        const tabLogin = document.getElementById("tabLoginBtn");
+        const tabReg = document.getElementById("tabRegisterBtn");
+        document.getElementById("authAlert").classList.add("hidden");
+
+        if (tab === "register") {
+          loginForm.classList.add("hidden");
+          regForm.classList.remove("hidden");
+
+          tabReg.className = "py-2.5 rounded-xl bg-indigo-600 text-white shadow-md transition";
+          tabLogin.className =
+            "py-2.5 rounded-xl text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-white transition";
+        } else {
+          regForm.classList.add("hidden");
+          loginForm.classList.remove("hidden");
+
+          tabLogin.className = "py-2.5 rounded-xl bg-indigo-600 text-white shadow-md transition";
+          tabReg.className =
+            "py-2.5 rounded-xl text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-white transition";
+        }
+      }
+
+      function toggleFieldPassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        const isPwd = input.type === "password";
+        input.type = isPwd ? "text" : "password";
+        icon.className = isPwd ? "fa-solid fa-eye-slash text-sm text-indigo-500" : "fa-solid fa-eye text-sm";
+      }
+
+      // Kiểm tra nếu đã đăng nhập khách hàng thì về trang chủ
+      (async function checkUserSession() {
+        try {
+          const res = await fetch("../php/user_auth_check.php");
+          const data = await res.json();
+          if (data.logged_in) {
+            window.location.replace("../index.html");
           }
+        } catch (e) {}
+      })();
+
+      // Xử lý Đăng nhập khách hàng
+      document.getElementById("userLoginForm").onsubmit = async function (e) {
+        e.preventDefault();
+        const identity = document.getElementById("loginIdentity").value.trim();
+        const password = document.getElementById("loginPassword").value;
+
+        try {
+          const res = await fetch("../php/user_login.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              phone: identity,
+              email: identity,
+              username: identity,
+              password: password,
+            }),
+          });
+          const data = await res.json();
+
+          if (data.status === "success") {
+            if (data.user?.phone) {
+              localStorage.setItem("4tl_customer_phone", data.user.phone);
+            }
+            showToast("Đăng nhập thành công! Đang chuyển hướng...", "success");
+            setTimeout(() => window.location.replace("../index.html"), 700);
+          } else {
+            showAuthAlert(data.message || "Thông tin đăng nhập không chính xác!");
+          }
+        } catch (err) {
+          showAuthAlert("Lỗi kết nối máy chủ PHP!");
         }
-      }
-    };
-  </script>
-</head>
-<body class="bg-surface-dark text-white font-display min-h-screen flex flex-col justify-between selection:bg-primary selection:text-white">
-  <!-- Header -->
-  <header class="border-b border-border-dark bg-surface-dark/90 backdrop-blur-md sticky top-0 z-30">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <a href="../index.html" class="flex items-center gap-2.5 group">
-        <span class="font-syne font-extrabold text-xl tracking-tight text-white">SHOWROOM <span class="text-secondary">4TL</span></span>
-      </a>
-      <div class="flex items-center gap-4 text-sm">
-        <a href="car_collection.html" class="text-slate-400 hover:text-white transition">Bộ Sưu Tập</a>
-        <a href="orders_history.html" class="text-slate-400 hover:text-white transition">Đơn Của Tôi</a>
-        <a href="../index.html" class="px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 font-medium transition">Trang Chủ</a>
-      </div>
-    </div>
-  </header>
+      };
 
-  <!-- Main Card -->
-  <main class="flex-1 flex items-center justify-center px-4 py-12">
-    <div class="w-full max-w-md bg-card-dark border border-border-dark rounded-2xl p-6 sm:p-8 shadow-2xl">
-      <!-- Tabs -->
-      <div class="grid grid-cols-2 gap-1 p-1 bg-surface-dark border border-border-dark rounded-xl mb-6">
-        <button id="tab-login" type="button" onclick="switchTab('login')" class="py-2.5 text-sm font-bold rounded-lg bg-primary text-white transition">
-          Đăng Nhập
-        </button>
-        <button id="tab-register" type="button" onclick="switchTab('register')" class="py-2.5 text-sm font-bold rounded-lg text-slate-400 hover:text-white transition">
-          Đăng Ký
-        </button>
-      </div>
+      // Xử lý Đăng ký khách hàng
+      document.getElementById("userRegisterForm").onsubmit = async function (e) {
+        e.preventDefault();
+        const fullName = document.getElementById("regFullName").value.trim();
+        const phone = document.getElementById("regPhone").value.trim();
+        const email = document.getElementById("regEmail").value.trim();
+        const password = document.getElementById("regPassword").value;
 
-      <!-- Alert -->
-      <div id="auth-alert" class="hidden mb-4 px-4 py-3 rounded-xl text-xs font-medium border"></div>
-
-      <!-- Login Form -->
-      <form id="form-login" onsubmit="handleUserLogin(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Số điện thoại hoặc Email</label>
-          <input id="login-identifier" type="text" required placeholder="0901234567 hoặc email@domain.com"
-            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
-        </div>
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Mật khẩu</label>
-          <input id="login-password" type="password" required placeholder="••••••••"
-            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
-        </div>
-        <button id="btn-login-submit" type="submit" class="w-full py-3 rounded-xl bg-primary hover:bg-secondary font-bold text-sm transition flex items-center justify-center gap-2">
-          <span>Đăng Nhập Tài Khoản</span>
-          <span class="material-symbols-outlined text-[18px]">login</span>
-        </button>
-      </form>
-
-      <!-- Register Form -->
-      <form id="form-register" onsubmit="handleUserRegister(event)" class="space-y-4 hidden">
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Họ và tên</label>
-          <input id="reg-name" type="text" required placeholder="Nguyễn Văn A"
-            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
-        </div>
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Số điện thoại (10 số)</label>
-          <input id="reg-phone" type="tel" required placeholder="0901234567"
-            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
-        </div>
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Email (không bắt buộc)</label>
-          <input id="reg-email" type="email" placeholder="khachhang@example.com"
-            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
-        </div>
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Mật khẩu (tối thiểu 6 ký tự)</label>
-          <input id="reg-password" type="password" minlength="6" required placeholder="••••••••"
-            class="w-full px-4 py-3 rounded-xl bg-surface-dark border border-border-dark text-white placeholder-slate-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
-        </div>
-        <button id="btn-register-submit" type="submit" class="w-full py-3 rounded-xl bg-primary hover:bg-secondary font-bold text-sm transition flex items-center justify-center gap-2">
-          <span>Tạo Tài Khoản</span>
-          <span class="material-symbols-outlined text-[18px]">person_add</span>
-        </button>
-      </form>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="border-t border-border-dark py-5 text-center text-xs text-slate-500">
-    © SHOWROOM 4TL — Hệ thống đặt xe &amp; lái thử trực tuyến
-  </footer>
-
-  <script>
-    function switchTab(tab) {
-      const isLogin = tab === "login";
-      document.getElementById("form-login").classList.toggle("hidden", !isLogin);
-      document.getElementById("form-register").classList.toggle("hidden", isLogin);
-
-      const tabLogin = document.getElementById("tab-login");
-      const tabReg = document.getElementById("tab-register");
-      tabLogin.className = isLogin
-        ? "py-2.5 text-sm font-bold rounded-lg bg-primary text-white transition"
-        : "py-2.5 text-sm font-bold rounded-lg text-slate-400 hover:text-white transition";
-      tabReg.className = !isLogin
-        ? "py-2.5 text-sm font-bold rounded-lg bg-primary text-white transition"
-        : "py-2.5 text-sm font-bold rounded-lg text-slate-400 hover:text-white transition";
-      hideAlert();
-    }
-
-    function showAlert(msg, isError = true) {
-      const box = document.getElementById("auth-alert");
-      box.textContent = msg;
-      box.className = isError
-        ? "mb-4 px-4 py-3 rounded-xl text-xs font-medium border bg-red-500/10 border-red-500/30 text-red-300"
-        : "mb-4 px-4 py-3 rounded-xl text-xs font-medium border bg-emerald-500/10 border-emerald-500/30 text-emerald-300";
-    }
-
-    function hideAlert() {
-      const box = document.getElementById("auth-alert");
-      box.className = "hidden mb-4 px-4 py-3 rounded-xl text-xs font-medium border";
-    }
-
-    function finishAuth(data) {
-      if (data.user && data.user.phone) {
-        localStorage.setItem("4tl_customer_phone", data.user.phone);
-      }
-      showAlert(data.message || "Thành công!", false);
-      const params = new URLSearchParams(window.location.search);
-      const redirectTo = params.get("redirect") || "../index.html";
-      setTimeout(() => {
-        window.location.href = redirectTo;
-      }, 600);
-    }
-
-    async function handleUserLogin(e) {
-      e.preventDefault();
-      hideAlert();
-      const btn = document.getElementById("btn-login-submit");
-      btn.disabled = true;
-
-      try {
-        const res = await fetch("../php/user_login.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            identifier: document.getElementById("login-identifier").value.trim(),
-            password: document.getElementById("login-password").value
-          })
-        });
-        const data = await res.json();
-        if (data.status === "success") {
-          finishAuth(data);
-        } else {
-          showAlert(data.message || "Đăng nhập thất bại.");
-          btn.disabled = false;
+        const vnPhoneRegex = /^(0[35789])[0-9]{8}$/;
+        if (!vnPhoneRegex.test(phone)) {
+          showAuthAlert("Số điện thoại không hợp lệ (gồm 10 số, bắt đầu bằng 03, 05, 07, 08, 09)!");
+          return;
         }
-      } catch (err) {
-        showAlert("Không thể kết nối máy chủ.");
-        btn.disabled = false;
-      }
-    }
 
-    async function handleUserRegister(e) {
-      e.preventDefault();
-      hideAlert();
-      const btn = document.getElementById("btn-register-submit");
-      btn.disabled = true;
+        try {
+          const res = await fetch("../php/user_register.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              full_name: fullName,
+              phone: phone,
+              email: email,
+              password: password,
+            }),
+          });
+          const data = await res.json();
 
-      try {
-        const res = await fetch("../php/user_register.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            full_name: document.getElementById("reg-name").value.trim(),
-            phone: document.getElementById("reg-phone").value.trim(),
-            email: document.getElementById("reg-email").value.trim(),
-            password: document.getElementById("reg-password").value
-          })
-        });
-        const data = await res.json();
-        if (data.status === "success") {
-          finishAuth(data);
-        } else {
-          showAlert(data.message || "Đăng ký thất bại.");
-          btn.disabled = false;
+          if (data.status === "success") {
+            localStorage.setItem("4tl_customer_phone", phone);
+            showToast("Đăng ký thành công! Vui lòng đăng nhập.", "success");
+            this.reset();
+            switchAuthTab("login");
+            document.getElementById("loginIdentity").value = phone;
+            showAuthAlert("Tạo tài khoản thành công! Mời quý khách đăng nhập.", "success");
+          } else {
+            showAuthAlert(data.message || "Đăng ký thất bại!");
+          }
+        } catch (err) {
+          showAuthAlert("Lỗi kết nối máy chủ PHP!");
         }
-      } catch (err) {
-        showAlert("Không thể kết nối máy chủ.");
-        btn.disabled = false;
-      }
-    }
-  </script>
-</body>
+      };
+    </script>
+  </body>
 </html>
 ```
 

@@ -108,7 +108,7 @@ html.dark footer {
 }
 
 /* Giữ nền đặc vừa đủ cho Popup Modal và Cửa sổ Chat */
-html.dark :is(#detailModal, #qrModal, #compareModal, #bookingModal, #editCarModal) > div,
+html.dark :is(#detailModal, #qrModal, #compareModal, #bookingModal, #editCarModal, #zaloModal) > div,
 html.dark #chatWindow {
     background-color: rgba(18, 11, 40, 0.95) !important;
     border-color: rgba(139, 92, 246, 0.38) !important;
